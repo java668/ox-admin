@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 24H
+spring:
+  profiles:
+    active: @profileActive@
+
+logging:
+  file-location: ./logs
+
+

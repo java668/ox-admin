@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java668.oxadmin.mapper.MenuMapper">
+
+    <resultMap type="com.java668.oxadmin.entity.Menu" id="MenuMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="iframe" column="iframe" jdbcType="VARCHAR"/>
+        <result property="cache" column="cache" jdbcType="VARCHAR"/>
+        <result property="hidden" column="hidden" jdbcType="VARCHAR"/>
+        <result property="permission" column="permission" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectMenuByUserId" resultType="com.java668.oxadmin.entity.Menu">
+        SELECT
+        p.*,
+        r.code as code
+        FROM
+        sys_menu AS p
+        LEFT JOIN sys_role_menu AS rp ON rp.menu_id = p.id
+        LEFT JOIN sys_user_role AS ur ON ur.role_id = rp.role_id
+        LEFT JOIN sys_role AS r ON r.id = ur.role_id
+        WHERE
+        ur.user_id = #{userId}
+        <if test="isRouter == true">
+            and p.type &lt; 2
+        </if>
+    </select>
+</mapper>
+
