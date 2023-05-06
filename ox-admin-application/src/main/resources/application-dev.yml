@@ -73,14 +73,14 @@ knife4j:
   enable: true
   openapi:
     title: OX-ADMIN
-    description: "`一个轻量级开源后端管理框架`,**你知道吗**
+    description: 一个轻量级开源后端管理框架
     email: java668_real@163.com
     concat: 青牛
-    url: java668.com
+    url: https://github.com/java668/ox-admin
     version: v4.0
     license: Apache 2.0
-    license-url: java668.com
-    terms-of-service-url: java668.com
+    license-url: https://github.com/java668/ox-admin
+    terms-of-service-url: https://github.com/java668/ox-admin
     group:
       record-platform:
         group-name: 系统管理
