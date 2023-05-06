@@ -13,6 +13,8 @@
 - 工具类集合：Hutool
 
 ## 项目截图
+![输入图片说明](https://github.com/java668/ox-admin/blob/main/docs/images/1683383586326.jpg?raw=true
+ "微信图片_20190422175210.png")
 
 ## 项目演示地址
 - 项目演示地址
