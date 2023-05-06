@@ -11,7 +11,7 @@
  Target Server Version : 50732
  File Encoding         : 65001
 
- Date: 17/04/2023 21:41:48
+ Date: 06/05/2023 21:58:11
 */
 
 SET NAMES utf8mb4;
@@ -52,12 +52,12 @@ INSERT INTO `sys_menu` VALUES (1645812820081729537, 1647248318234886145, 1, '二
 INSERT INTO `sys_menu` VALUES (1645813802001850369, 1645812231633461249, 1, '三级菜单2', 'menu3-2', 'nested/menu1/menu1-2/index', 1000, 'email', 'menu3-2', b'0', b'0', b'0', '', 'system', 'system', '2023-04-11 23:39:23', '2023-04-11 23:39:23', 0);
 INSERT INTO `sys_menu` VALUES (1646104022067286017, 1647247627433017346, 1, '树形表格', 'TreeTable', 'tree-table/index.vue', 1000, 'tree-table', 'tree-table', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-12 18:52:37', '2023-04-15 22:43:12', 0);
 INSERT INTO `sys_menu` VALUES (1646917148414611458, 0, 0, '系统管理', 'System', '', 100, 'system1', '/system', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 00:43:41', '2023-04-17 13:38:25', 0);
-INSERT INTO `sys_menu` VALUES (1646917867762913282, 1646917148414611458, 1, '用户管理', 'User', 'record/system/user/index.vue', 100, 'user', 'user', b'0', b'0', b'0', 'user:list', 'admin', 'admin', '2023-04-15 00:46:33', '2023-04-17 20:27:56', 0);
-INSERT INTO `sys_menu` VALUES (1646924883273224193, 1646917148414611458, 1, '角色管理', 'Role', 'record/system/role/index.vue', 500, 'role', 'role', b'0', b'0', b'0', 'role:list', 'admin', 'admin', '2023-04-15 01:14:25', '2023-04-17 20:28:19', 0);
-INSERT INTO `sys_menu` VALUES (1646925326502105089, 1646917148414611458, 1, '菜单管理', 'Menu', 'record/system/menu/index.vue', 1000, 'menu', 'menu', b'0', b'1', b'0', 'menu:list', 'admin', 'admin', '2023-04-15 01:16:11', '2023-04-16 00:32:34', 0);
+INSERT INTO `sys_menu` VALUES (1646917867762913282, 1646917148414611458, 1, '用户管理', 'User', 'system/user/index.vue', 100, 'user', 'user', b'0', b'0', b'0', 'user:list', 'admin', 'admin', '2023-04-15 00:46:33', '2023-04-17 20:27:56', 0);
+INSERT INTO `sys_menu` VALUES (1646924883273224193, 1646917148414611458, 1, '角色管理', 'Role', 'system/role/index.vue', 500, 'role', 'role', b'0', b'0', b'0', 'role:list', 'admin', 'admin', '2023-04-15 01:14:25', '2023-04-17 20:28:19', 0);
+INSERT INTO `sys_menu` VALUES (1646925326502105089, 1646917148414611458, 1, '菜单管理', 'Menu', 'system/menu/index.vue', 1000, 'menu', 'menu', b'0', b'1', b'0', 'menu:list', 'admin', 'admin', '2023-04-15 01:16:11', '2023-04-16 00:32:34', 0);
 INSERT INTO `sys_menu` VALUES (1647245235475972097, 0, 0, '系统监控', 'Monitor', '', 200, 'monitor', '/monitor', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:27:23', '2023-04-17 13:38:47', 0);
-INSERT INTO `sys_menu` VALUES (1647245914567344129, 1647245235475972097, 1, 'SQL监控', 'Druid', 'record/monitor/druid/index.vue', 1000, 'sqlMonitor', 'druid', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:30:05', '2023-04-15 22:30:05', 0);
-INSERT INTO `sys_menu` VALUES (1647246715431944194, 1647245235475972097, 1, '接口文档', 'Swagger', 'record/monitor/swagger/index.vue', 1000, 'doc', 'swagger', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:33:16', '2023-04-15 22:33:31', 0);
+INSERT INTO `sys_menu` VALUES (1647245914567344129, 1647245235475972097, 1, 'SQL监控', 'Druid', 'monitor/druid/index.vue', 1000, 'sqlMonitor', 'druid', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:30:05', '2023-04-15 22:30:05', 0);
+INSERT INTO `sys_menu` VALUES (1647246715431944194, 1647245235475972097, 1, '接口文档', 'Swagger', 'monitor/swagger/index.vue', 1000, 'doc', 'swagger', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:33:16', '2023-04-15 22:33:31', 0);
 INSERT INTO `sys_menu` VALUES (1647247627433017346, 0, 0, '组件管理', 'Components', '', 300, 'zujian', '/components', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:36:53', '2023-04-17 13:39:02', 0);
 INSERT INTO `sys_menu` VALUES (1647248318234886145, 0, 0, '多级菜单', 'Menus', '', 1000, 'theme', '/menus', b'0', b'0', b'0', '', 'admin', 'admin', '2023-04-15 22:39:38', '2023-04-15 22:55:08', 0);
 INSERT INTO `sys_menu` VALUES (1647462845975158785, 1646917867762913282, 2, '新增用户', '', '', 1000, '', '', b'0', b'0', b'0', 'user:add', 'admin', 'admin', '2023-04-16 12:52:06', '2023-04-16 12:53:52', 0);
@@ -70,7 +70,6 @@ INSERT INTO `sys_menu` VALUES (1647463829535252482, 1646924883273224193, 2, '保
 INSERT INTO `sys_menu` VALUES (1647464115179937793, 1646925326502105089, 2, '新增菜单', '', '', 1000, '', '', b'0', b'0', b'0', 'menu:add', 'admin', 'admin', '2023-04-16 12:57:08', '2023-04-16 12:57:08', 0);
 INSERT INTO `sys_menu` VALUES (1647464298655571970, 1646925326502105089, 2, '编辑菜单', '', '', 1000, '', '', b'0', b'0', b'0', 'menu:update', 'admin', 'admin', '2023-04-16 12:57:52', '2023-04-16 12:57:52', 0);
 INSERT INTO `sys_menu` VALUES (1647464398773608449, 1646925326502105089, 2, '删除菜单', '', '', 1000, '', '', b'0', b'0', b'0', 'menu:delete', 'admin', 'admin', '2023-04-16 12:58:16', '2023-04-16 12:58:16', 0);
-INSERT INTO `sys_menu` VALUES (1647541882525442050, 1647245235475972097, 1, '在线用户', 'OnlineUser', 'OnlineUser', 1000, 'Steve-Jobs', 'onlineUser', b'0', b'0', b'0', 'onlineUser:list', 'admin', 'admin', '2023-04-16 18:06:09', '2023-04-16 18:06:21', 0);
 
 -- ----------------------------
 -- Table structure for sys_role
