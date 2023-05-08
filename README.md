@@ -32,13 +32,6 @@
 ```sh
 1、修改/resources/application-prod.properties配置文件中对应配置，根据部署环境不同，切换配置文件
    mvn clean package -DskipTests -Pprod
-2、Copy项目中/bin目录下三个脚本，和打包之后的coffeewx-admin-api-1.0.jar文件放在同一个目录
-3、脚本授权
-    chmod +x startup.sh
-    chmod +x stop.sh
-    chmod +x restart.sh
-4、启动脚本
-    ./startup.sh
     
 ```
 
@@ -47,7 +40,7 @@
 
 1、修改打包对应环境的配置文件
 例如：打包prod环境
-修改/coffeewx-web-ui/config/prod中的BASE_API变量，修改为对应后台地址
+修改/ox-admin-web/config/prod中的BASE_API变量，修改为对应后台地址
 2、打包部署
 $ npm install
 $ npm run dev
@@ -57,7 +50,7 @@ $ npm run build:prod
 ### nginx 参考配置
 ```sh
     location / {
-        root   /usr/local/coffeewx/coffeewx-web-ui;
+        root   /usr/local/ox-admin/ox-admin-web;
         try_files $uri $uri/ @router;
         index  index.html index.htm;
     }
@@ -72,8 +65,8 @@ $ npm run build:prod
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header REMOTE-HOST $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        access_log /usr/local/nginx/logs/coffeewx-admin-access.log main;
-        error_log /usr/local/nginx/logs/coffeewx-admin-error.log warn;
+        access_log /usr/local/nginx/logs/ox-admin-access.log main;
+        error_log /usr/local/nginx/logs/ox-admin-error.log warn;
     }
 
 ```
