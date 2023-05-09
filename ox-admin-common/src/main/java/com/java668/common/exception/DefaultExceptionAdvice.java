@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
@@ -126,7 +124,7 @@ public class DefaultExceptionAdvice {
      *
      * @param e
      * @return
-     */
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ConstraintViolationException.class})
     public R parameterExceptionHandler(ConstraintViolationException e) {
@@ -134,7 +132,7 @@ public class DefaultExceptionAdvice {
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         String message = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(";"));
         return defHandler(message, e);
-    }
+    }*/
 
 
     private R defHandler(String msg, Exception e) {

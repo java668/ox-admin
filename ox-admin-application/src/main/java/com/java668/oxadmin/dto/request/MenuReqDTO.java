@@ -15,7 +15,8 @@ import javax.validation.constraints.NotNull;
  * @since 2023-03-25 19:55:38
  */
 @Data
-public class MenuReqDTO {
+public class
+MenuReqDTO {
 
     @NotNull(message = "菜单id必填", groups = {Update.class})
     private Long id;
