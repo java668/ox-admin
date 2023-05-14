@@ -4,8 +4,8 @@ def harbor_url = "ccr.ccs.tencentyun.com"
 def harbor_project_name = "java668"
 // 构建版本的名称
 def PROJECT_NAME = "ox-admin-application"
-
-def port = 8080
+// 端口
+def port = 8081
 // tag
 def tag = "latest"
 // 镜像名称
@@ -56,7 +56,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'c86b0e91-f186-47cc-8e1c-310efd56399b', passwordVariable: 'password', usernameVariable: 'username')]) {
                     // some block
                     // 环境变量参数
-                    echo "执行的命令:/opt/jenkins_shell/deploy1.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e JAVA_OPTS=\"-Djava668.mysql.host=mysql_pro -Djava668.mysql.username=${username} -Djava668.mysql.password=${password}\" ${link}\""
+                    echo "执行的命令:/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e JAVA_OPTS=\"-Djava668.mysql.host=mysql_pro -Djava668.mysql.username=${username} -Djava668.mysql.password=${password}\" ${link}\""
                     sshPublisher(publishers: [sshPublisherDesc(
                     configName: '81.69.220.64',
                     transfers: [sshTransfer(cleanRemote: false, excludes: '',
