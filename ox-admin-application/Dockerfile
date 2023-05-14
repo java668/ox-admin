@@ -13,4 +13,4 @@ ENV JAVA_OPTS=""
 
 EXPOSE 8080
 
-ENTRYPOINT ["java","-jar","$JAVA_OPTS","/app/ox-admin/app.jar"]
+CMD ["java","-jar","$JAVA_OPTS","/app/ox-admin/app.jar"]
