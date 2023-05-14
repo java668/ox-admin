@@ -21,7 +21,7 @@ pipeline {
         stage('拉取代码') {
             steps {
                 echo '=============拉取代码============='
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '38dd7ab4-5c12-4624-b2d3-ea1d43e53d6a', url: 'git@github.com:java668/ox-admin.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '38dd7ab4-5c12-4624-b2d3-ea1d43e53d6a', url: 'git@github.com:java668/ox-admin.git']])
                 echo '=============拉取代码完成============='
             }
         }
