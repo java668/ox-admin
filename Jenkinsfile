@@ -3,7 +3,7 @@ def harbor_url = "ccr.ccs.tencentyun.com"
 // Harbor的项目名称
 def harbor_project_name = "java668"
 // 构建版本的名称
-def PROJECT_NAME = "ox-admin"
+def PROJECT_NAME = "ox-admin-application"
 
 def port = 8080
 // tag
