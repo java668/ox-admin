@@ -56,11 +56,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'c86b0e91-f186-47cc-8e1c-310efd56399b', passwordVariable: 'password', usernameVariable: 'username')]) {
                     // some block
                     // 环境变量参数
-                    echo "执行的命令:/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e JAVA_OPTS=\"-Djava668.mysql.host=mysql_pro -Djava668.mysql.username=${username} -Djava668.mysql.password=${password}\" ${link}\""
+                    echo "执行的命令:/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e url=mysql_pro -e username=${username} -e password=${password} ${link}\""
                     sshPublisher(publishers: [sshPublisherDesc(
                     configName: '81.69.220.64',
                     transfers: [sshTransfer(cleanRemote: false, excludes: '',
-                                            execCommand: "/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e JAVA_OPTS=\"-Djava668.mysql.host=mysql_pro -Djava668.mysql.username=${username} -Djava668.mysql.password=${password}\" ${link}\"",
+                                            execCommand: "/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project_name $PROJECT_NAME $tag $port \"-e url=mysql_pro -e username=${username} -e password=${password} ${link}\"",
                                             execTimeout: 120000,
                                             flatten: false,
                                             makeEmptyDirs: false,

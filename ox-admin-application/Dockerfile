@@ -9,8 +9,10 @@ ENV TZ=Asia/Shanghai
 RUN ln -sf /usr/share/zoneinfo/{TZ} /etc/localtime && echo "{TZ}" > /etc/timezone
 
 # 设置环境变量，可选
-ENV JAVA_OPTS=""
+ENV username=""
+ENV password=""
+ENV url=""
 
 EXPOSE 8080
 
-CMD ["java","-jar","$JAVA_OPTS","/app/ox-admin/app.jar"]
+ENTRYPOINT ["sh","-c","java -jar /app/ox-admin/app.jar --java668.mysql.host=$url --java668.mysql.username=$username  --java668.mysql.password=$password"]
