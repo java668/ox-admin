@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo '=============编译构建============='
                 // 编译，打包，构建本地镜像
-                sh 'mvn -DskipTests=true -Pprod clean package dockerfile:build'
+                sh 'mvn -f ox-admin-application -DskipTests=true -Pprod clean package dockerfile:build'
                 echo '=============编译构建完成============='
             }
         }
