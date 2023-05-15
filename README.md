@@ -17,7 +17,7 @@
  "微信图片_20190422175210.png")
 
 ## 项目演示地址
-- 项目演示地址
+- 项目演示地址：[ox-admin-web](http://oxadmin.java668.com)
 ```
    演示账号:test/test123456
    管理员账号:admin/admin123456【自觉点，莫要乱操作】
@@ -31,8 +31,7 @@
 ### ox-admin 打包部署
 ```sh
 1、修改/resources/application-prod.properties配置文件中对应配置，根据部署环境不同，切换配置文件
-   mvn clean package -DskipTests -Pprod
-    
+   mvn clean package -DskipTests -Pprod 
 ```
 
 ### ox-admin-web 打包部署
@@ -60,6 +59,7 @@ $ npm run build:prod
     }
     
     location ^~ /api {
+        rewrite ^/api(.*)$ $1 break;
         proxy_pass  http://localhost:9999/api;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
