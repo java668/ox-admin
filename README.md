@@ -25,8 +25,8 @@ OX-ADMIN 名字由来：自己的花名叫青牛，英文中 Cow Bull Ox 都可�
 ## 项目演示地址
 - 项目演示地址：[ox-admin-web](http://oxadmin.java668.com)
 ```
-   测试账号:test/aa123456
    管理员账号:admin/123456【自觉点，莫要乱操作】
+   测试账号:test/aa123456
 ```
 
 ## 前后端项目地址
