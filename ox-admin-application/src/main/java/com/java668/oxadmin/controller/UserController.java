@@ -4,6 +4,7 @@ import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.oxadmin.dto.request.UserPageReqDTO;
 import com.java668.oxadmin.dto.request.UserReqDTO;
+import com.java668.oxadmin.dto.request.groups.Insert;
 import com.java668.oxadmin.dto.request.groups.Update;
 import com.java668.oxadmin.dto.response.UserRespDTO;
 import com.java668.oxadmin.service.UserService;
@@ -37,7 +38,7 @@ public class UserController {
     @PostMapping
     @ApiOperation("新增用户")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<Boolean> add(@RequestBody @Validated UserReqDTO body) {
+    public R<Boolean> add(@RequestBody @Validated(Insert.class) UserReqDTO body) {
         Boolean userId = userService.add(body);
         return R.succeed(userId);
     }
