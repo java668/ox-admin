@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ox-code-generator</artifactId>
+    <artifactId>ox-admin-generator</artifactId>
     <description>代码生成器</description>
 
     <properties>

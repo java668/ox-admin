@@ -18,7 +18,7 @@
     <modules>
         <module>ox-admin-application</module>
         <module>ox-admin-common</module>
-        <module>ox-code-generator</module>
+        <module>ox-admin-generator</module>
     </modules>
 
     <properties>
