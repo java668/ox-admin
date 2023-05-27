@@ -1,5 +1,7 @@
 package com.java668.common.exception;
 
+import com.java668.common.enums.ResultCodeEnum;
+
 /**
  * @author Jerry.chen
  * @desc 业务异常
@@ -8,7 +10,24 @@ package com.java668.common.exception;
 public class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 6610083281801529147L;
 
+    public static final String DEFAULT_MESSAGE = "网络错误，请稍后重试！";
+
+    /**
+     * 异常消息
+     */
+    private String message = DEFAULT_MESSAGE;
+
+    /**
+     * 错误码
+     */
+    private ResultCodeEnum resultCode;
+
     public BusinessException(String message) {
-        super(message);
+        this.resultCode = ResultCodeEnum.ERROR;
+        this.message = message;
+    }
+
+    public BusinessException(ResultCodeEnum resultCode) {
+        this.resultCode = resultCode;
     }
 }

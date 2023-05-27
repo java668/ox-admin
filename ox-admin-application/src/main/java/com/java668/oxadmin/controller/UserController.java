@@ -37,7 +37,7 @@ public class UserController {
      */
     @PostMapping
     @ApiOperation("新增用户")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Boolean> add(@RequestBody @Validated(Insert.class) UserReqDTO body) {
         Boolean userId = userService.add(body);
         return R.succeed(userId);
@@ -102,7 +102,7 @@ public class UserController {
      */
     @PatchMapping("/changeStatus")
     @ApiOperation("修改用户状态")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Boolean> changeStatus(@RequestParam(name = "status") Integer status) {
         return R.succeed(Boolean.FALSE);
     }

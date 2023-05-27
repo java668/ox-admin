@@ -85,4 +85,8 @@ knife4j:
         api-rule-resources:
           - com.java668.oxadmin.controller
 
+oxadmin:
+  system:
+    isDemoSite: true
+
 

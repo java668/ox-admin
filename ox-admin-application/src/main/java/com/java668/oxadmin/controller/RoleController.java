@@ -34,7 +34,7 @@ public class RoleController {
      * @return
      */
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiOperation("新增角色")
     public R<Boolean> add(@RequestBody @Validated RoleReqDTO body) {
         Boolean result = roleService.add(body);

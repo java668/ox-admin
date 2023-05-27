@@ -33,7 +33,7 @@ public class MenuController {
 
     @PostMapping
     @ApiOperation("新增菜单")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Boolean> add(@RequestBody @Validated(Insert.class) MenuReqDTO body) {
         Boolean result = menuService.add(body);
         return R.succeed(result);
