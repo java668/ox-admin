@@ -30,6 +30,7 @@ public class RoleController {
 
     /**
      * 新增角色
+     *
      * @param body
      * @return
      */
@@ -43,6 +44,7 @@ public class RoleController {
 
     /**
      * 删除角色
+     *
      * @param ids
      * @return
      */
@@ -56,6 +58,7 @@ public class RoleController {
 
     /**
      * 修改角色
+     *
      * @param body
      * @return
      */
@@ -69,6 +72,7 @@ public class RoleController {
 
     /**
      * 查询角色详情
+     *
      * @param id
      * @return
      */
@@ -82,6 +86,7 @@ public class RoleController {
 
     /**
      * 查询角色列表
+     *
      * @return
      */
     @GetMapping("/list")
@@ -94,6 +99,7 @@ public class RoleController {
 
     /**
      * 分页查询角色列表
+     *
      * @param params
      * @return
      */
@@ -107,6 +113,7 @@ public class RoleController {
 
     /**
      * 保存角色菜单
+     *
      * @param roleId
      * @param menuIds
      * @return

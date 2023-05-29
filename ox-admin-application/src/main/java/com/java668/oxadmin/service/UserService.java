@@ -18,6 +18,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 新增用户
+     *
      * @param body
      * @return
      */
@@ -25,6 +26,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 删除用户
+     *
      * @param ids
      * @return
      */
@@ -32,6 +34,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 更新用户
+     *
      * @param body
      * @return
      */
@@ -39,6 +42,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 获取用户详情
+     *
      * @param id
      * @return
      */
@@ -46,6 +50,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 分页
+     *
      * @param params
      * @return
      */
@@ -53,10 +58,19 @@ public interface UserService extends IService<User> {
 
     /**
      * 根据username查询用户
+     *
      * @param userId
      * @param username
      * @return
      */
     User getByUsername(Long userId, String username);
 
+    /**
+     * 启用停用
+     *
+     * @param userId
+     * @param status
+     * @return
+     */
+    Boolean changeStatus(Long userId, Integer status);
 }

@@ -129,8 +129,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return getOne(wrapper);
     }
 
+    @Override
+    public Boolean changeStatus(Long userId, Integer status) {
+        User entity = new User();
+        entity.setId(userId);
+        entity.setEnabled(status);
+        boolean result = updateById(entity);
+        if (status == 1) {
+            authService.removeUserSession(userId);
+        }
+        return result;
+    }
+
     /**
      * 根据邮箱查询用户
+     *
      * @param email
      * @return
      */
@@ -146,11 +159,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * 参数校验
+     *
      * @param body
      */
     private void checkParams(UserReqDTO body) {
         // 检查用户名是否重复
-        if(ObjectUtil.isNotNull(getByUsername(body.getId(), body.getUsername()))) {
+        if (ObjectUtil.isNotNull(getByUsername(body.getId(), body.getUsername()))) {
             throw new BusinessException("用户名已存在，请重新输入");
         }
         // 检查邮箱是否重复

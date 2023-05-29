@@ -32,6 +32,7 @@ public class UserController {
 
     /**
      * 新增用户
+     *
      * @param body
      * @return
      */
@@ -45,6 +46,7 @@ public class UserController {
 
     /**
      * 删除用户
+     *
      * @param ids
      * @return
      */
@@ -58,6 +60,7 @@ public class UserController {
 
     /**
      * 更新用户
+     *
      * @param body
      * @return
      */
@@ -71,6 +74,7 @@ public class UserController {
 
     /**
      * 查询用户详情
+     *
      * @param id
      * @return
      */
@@ -84,6 +88,7 @@ public class UserController {
 
     /**
      * 分页查询用户列表
+     *
      * @param params
      * @return
      */
@@ -97,18 +102,21 @@ public class UserController {
 
     /**
      * 修改用户状态
+     *
      * @param status
      * @return
      */
-    @PatchMapping("/changeStatus")
+    @PatchMapping("/{userId}/changeStatus")
     @ApiOperation("修改用户状态")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public R<Boolean> changeStatus(@RequestParam(name = "status") Integer status) {
-        return R.succeed(Boolean.FALSE);
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public R<Boolean> changeStatus(@PathVariable(name = "userId") Long userId,
+                                   @RequestParam(name = "status") Integer status) {
+        return R.succeed(userService.changeStatus(userId, status));
     }
 
     /**
      * 测试接口
+     *
      * @param body
      * @return
      */
