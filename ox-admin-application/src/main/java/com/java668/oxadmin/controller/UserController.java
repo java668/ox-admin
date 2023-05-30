@@ -3,6 +3,7 @@ package com.java668.oxadmin.controller;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.oxadmin.dto.request.UserPageReqDTO;
+import com.java668.oxadmin.dto.request.UserPassReqDTO;
 import com.java668.oxadmin.dto.request.UserReqDTO;
 import com.java668.oxadmin.dto.request.groups.Insert;
 import com.java668.oxadmin.dto.request.groups.Update;
@@ -11,6 +12,8 @@ import com.java668.oxadmin.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -106,12 +109,25 @@ public class UserController {
      * @param status
      * @return
      */
-    @PatchMapping("/{userId}/changeStatus")
     @ApiOperation("修改用户状态")
+    @PatchMapping("/{userId}/changeStatus")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Boolean> changeStatus(@PathVariable(name = "userId") Long userId,
                                    @RequestParam(name = "status") Integer status) {
         return R.succeed(userService.changeStatus(userId, status));
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param dto
+     * @return
+     */
+    @ApiOperation("修改密码")
+    @PatchMapping(value = "/modifyPass")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public R<Boolean> modifyPass(@RequestBody @Validated UserPassReqDTO dto) {
+        return R.succeed(userService.modifyPass(dto));
     }
 
     /**

@@ -13,6 +13,7 @@ import com.java668.common.model.PageParam;
 import com.java668.common.model.PageResult;
 import com.java668.common.utils.AuthUtil;
 import com.java668.oxadmin.dto.request.UserPageReqDTO;
+import com.java668.oxadmin.dto.request.UserPassReqDTO;
 import com.java668.oxadmin.dto.request.UserReqDTO;
 import com.java668.oxadmin.dto.response.UserRespDTO;
 import com.java668.oxadmin.entity.User;
@@ -139,6 +140,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             authService.removeUserSession(userId);
         }
         return result;
+    }
+
+    @Override
+    public Boolean modifyPass(UserPassReqDTO dto) {
+        Long userId = AuthUtil.getUserId();
+        User user = getById(userId);
+        if(!passwordEncoder.matches(dto.getOldPass(), user.getPassword())){
+            throw new BusinessException("修改失败，旧密码错误");
+        }
+        if(passwordEncoder.matches(dto.getNewPass(), user.getPassword())){
+            throw new BusinessException("新密码不能与旧密码相同");
+        }
+        User entity = new User();
+        entity.setId(userId);
+        entity.setPassword(passwordEncoder.encode(dto.getNewPass()));
+        return updateById(entity);
     }
 
     /**

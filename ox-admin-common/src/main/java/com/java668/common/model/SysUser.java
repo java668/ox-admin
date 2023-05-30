@@ -25,6 +25,8 @@ public class SysUser implements UserDetails, CredentialsContainer {
     private String username;
     private String nickName;
     private String avatar;
+    private String phone;
+    private String email;
     private Set<GrantedAuthority> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

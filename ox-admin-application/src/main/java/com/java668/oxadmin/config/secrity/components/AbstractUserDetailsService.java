@@ -58,6 +58,8 @@ public abstract class AbstractUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .nickName(user.getNickName())
                 .avatar(user.getAvatar())
+                .phone(user.getPhone())
+                .email(user.getEmail())
                 .authorities(Sets.newHashSet())
                 .enabled(0 == user.getEnabled())
                 .accountNonLocked(Boolean.TRUE)

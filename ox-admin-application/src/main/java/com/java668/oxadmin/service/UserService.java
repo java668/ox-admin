@@ -3,6 +3,7 @@ package com.java668.oxadmin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.java668.common.model.PageResult;
 import com.java668.oxadmin.dto.request.UserPageReqDTO;
+import com.java668.oxadmin.dto.request.UserPassReqDTO;
 import com.java668.oxadmin.dto.request.UserReqDTO;
 import com.java668.oxadmin.dto.response.UserRespDTO;
 import com.java668.oxadmin.entity.User;
@@ -73,4 +74,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     Boolean changeStatus(Long userId, Integer status);
+
+    /**
+     * 修改密码
+     *
+     * @param dto
+     * @return
+     */
+    Boolean modifyPass(UserPassReqDTO dto);
 }
