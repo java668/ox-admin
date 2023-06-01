@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.java668.oxadmin.mapper.UserRoleMapper">
+<mapper namespace="com.java668.oxadmin.modules.system.mapper.UserRoleMapper">
 
-    <resultMap type="com.java668.oxadmin.entity.UserRole" id="UserRoleMap">
+    <resultMap type="com.java668.oxadmin.modules.system.entity.UserRole" id="UserRoleMap">
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>

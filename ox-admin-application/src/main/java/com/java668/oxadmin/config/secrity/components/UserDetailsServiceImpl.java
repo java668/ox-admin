@@ -1,8 +1,8 @@
 package com.java668.oxadmin.config.secrity.components;
 
-import com.java668.oxadmin.entity.User;
-import com.java668.oxadmin.service.MenuService;
-import com.java668.oxadmin.service.UserService;
+import com.java668.oxadmin.modules.system.entity.User;
+import com.java668.oxadmin.modules.system.service.MenuService;
+import com.java668.oxadmin.modules.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

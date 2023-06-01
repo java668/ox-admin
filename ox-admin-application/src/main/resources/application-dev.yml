@@ -83,7 +83,7 @@ knife4j:
         group-name: 系统管理
         api-rule: package
         api-rule-resources:
-          - com.java668.oxadmin.controller
+          - com.java668.oxadmin.modules.system.controller
 
 oxadmin:
   system:

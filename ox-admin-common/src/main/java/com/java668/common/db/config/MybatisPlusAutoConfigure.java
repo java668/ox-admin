@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Bean;
  * @date 2022/09/07 18:35
  **/
 @EnableConfigurationProperties({MybatisPlusAutoFillProperties.class})
-@MapperScan(basePackages = {"com.java668.*.mapper"})
+@MapperScan(basePackages = {"com.java668.**.mapper"})
 public class MybatisPlusAutoConfigure {
 
 
