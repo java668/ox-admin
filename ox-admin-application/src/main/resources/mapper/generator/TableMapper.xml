@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java668.oxadmin.modules.generator.mapper.TableMapper">
+
+    <resultMap type="com.java668.oxadmin.modules.generator.entity.Table" id="TableMap">
+        <result property="tableId" column="table_id" jdbcType="INTEGER"/>
+        <result property="tableName" column="table_name" jdbcType="VARCHAR"/>
+        <result property="tableComment" column="table_comment" jdbcType="VARCHAR"/>
+        <result property="subTableName" column="sub_table_name" jdbcType="VARCHAR"/>
+        <result property="subTableFkName" column="sub_table_fk_name" jdbcType="VARCHAR"/>
+        <result property="className" column="class_name" jdbcType="VARCHAR"/>
+        <result property="tplCategory" column="tpl_category" jdbcType="VARCHAR"/>
+        <result property="packageName" column="package_name" jdbcType="VARCHAR"/>
+        <result property="moduleName" column="module_name" jdbcType="VARCHAR"/>
+        <result property="businessName" column="business_name" jdbcType="VARCHAR"/>
+        <result property="functionName" column="function_name" jdbcType="VARCHAR"/>
+        <result property="functionAuthor" column="function_author" jdbcType="VARCHAR"/>
+        <result property="genType" column="gen_type" jdbcType="VARCHAR"/>
+        <result property="genPath" column="gen_path" jdbcType="VARCHAR"/>
+        <result property="options" column="options" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>
+

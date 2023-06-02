@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java668.oxadmin.modules.generator.mapper.TableColumnMapper">
+
+    <resultMap type="com.java668.oxadmin.modules.generator.entity.TableColumn" id="TableColumnMap">
+        <result property="columnId" column="column_id" jdbcType="INTEGER"/>
+        <result property="tableId" column="table_id" jdbcType="VARCHAR"/>
+        <result property="columnName" column="column_name" jdbcType="VARCHAR"/>
+        <result property="columnComment" column="column_comment" jdbcType="VARCHAR"/>
+        <result property="columnType" column="column_type" jdbcType="VARCHAR"/>
+        <result property="javaType" column="java_type" jdbcType="VARCHAR"/>
+        <result property="javaField" column="java_field" jdbcType="VARCHAR"/>
+        <result property="isPk" column="is_pk" jdbcType="VARCHAR"/>
+        <result property="isIncrement" column="is_increment" jdbcType="VARCHAR"/>
+        <result property="isRequired" column="is_required" jdbcType="VARCHAR"/>
+        <result property="isInsert" column="is_insert" jdbcType="VARCHAR"/>
+        <result property="isEdit" column="is_edit" jdbcType="VARCHAR"/>
+        <result property="isList" column="is_list" jdbcType="VARCHAR"/>
+        <result property="isQuery" column="is_query" jdbcType="VARCHAR"/>
+        <result property="queryType" column="query_type" jdbcType="VARCHAR"/>
+        <result property="htmlType" column="html_type" jdbcType="VARCHAR"/>
+        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>
+

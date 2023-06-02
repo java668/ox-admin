@@ -22,15 +22,15 @@ public class R<T> implements Serializable {
     private String message;
     private Boolean isSuccess;
 
-    public static <T> R<T> succeed(String message) {
+    public static <T> R<T> success(String message) {
         return of(null, CodeEnum.SUCCESS.getCode(), message, Boolean.TRUE);
     }
 
-    public static <T> R<T> succeed(T model, String message) {
+    public static <T> R<T> success(T model, String message) {
         return of(model, CodeEnum.SUCCESS.getCode(), message, Boolean.TRUE);
     }
 
-    public static <T> R<T> succeed(T model) {
+    public static <T> R<T> success(T model) {
         return of(model, CodeEnum.SUCCESS.getCode(), "success", Boolean.TRUE);
     }
 

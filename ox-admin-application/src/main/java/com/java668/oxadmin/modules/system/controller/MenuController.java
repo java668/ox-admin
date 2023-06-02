@@ -35,8 +35,7 @@ public class MenuController {
     @ApiOperation("新增菜单")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Boolean> add(@RequestBody @Validated(Insert.class) MenuReqDTO body) {
-        Boolean result = menuService.add(body);
-        return R.succeed(result);
+        return R.success(menuService.add(body));
     }
 
     @DeleteMapping
@@ -44,40 +43,35 @@ public class MenuController {
     @PreAuthorize("hasRole('ADMIN')")
     public R<Boolean> delete(@Size(min = 1, max = 5, message = "批量删除个数须在{min}-{max}范围")
                              @RequestParam(name = "ids", required = true) List<Long> ids) {
-        Boolean result = menuService.delete(ids);
-        return R.succeed(result);
+        return R.success(menuService.delete(ids));
     }
 
     @PatchMapping
     @ApiOperation("修改菜单")
     @PreAuthorize("hasRole('ADMIN')")
     public R<Boolean> update(@RequestBody @Validated(Update.class) MenuReqDTO body) {
-        Boolean result = menuService.update(body);
-        return R.succeed(result);
+        return R.success(menuService.update(body));
     }
 
     @GetMapping("{id}")
     @ApiOperation("查询菜单详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<MenuRespDTO> get(@PathVariable(name = "id") Long id) {
-        MenuRespDTO result = menuService.get(id);
-        return R.succeed(result);
+        return R.success(menuService.get(id));
     }
 
     @GetMapping(value = "/treeList")
     @ApiOperation("查询树型列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<Tree<Long>>> treeList() {
-        List<Tree<Long>> treeList = menuService.treeList();
-        return R.succeed(treeList);
+        return R.success(menuService.treeList());
     }
 
     @GetMapping(value = "/lazy/{pid}")
     @ApiOperation("懒加载菜单数据")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<MenuRespDTO>> lazy(@PathVariable(value = "pid") Long pid) {
-        List<MenuRespDTO> menuList = menuService.lazy(pid);
-        return R.succeed(menuList);
+        return R.success(menuService.lazy(pid));
     }
 
     @GetMapping(value = "/superior")
@@ -85,8 +79,7 @@ public class MenuController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<Tree<Long>>> superior(@Size(min = 1, max = 5, message = "ids元素个数须在{min}-{max}范围")
                                         @RequestParam(name = "ids", required = true) List<Long> ids) {
-        List<Tree<Long>> treeList = menuService.superior(ids);
-        return R.succeed(treeList);
+        return R.success(menuService.superior(ids));
     }
 
 }

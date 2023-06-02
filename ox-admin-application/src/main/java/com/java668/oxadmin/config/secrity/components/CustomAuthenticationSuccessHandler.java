@@ -24,6 +24,6 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(R.succeed(authentication, "认证成功").toJsonString());
+        response.getWriter().write(R.success(authentication, "认证成功").toJsonString());
     }
 }

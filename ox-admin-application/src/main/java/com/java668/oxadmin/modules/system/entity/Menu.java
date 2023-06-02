@@ -1,7 +1,9 @@
 package com.java668.oxadmin.modules.system.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.java668.common.db.entity.SuperEntity;
 import lombok.Data;
@@ -13,11 +15,13 @@ import lombok.Data;
  * @since 2023-03-25 19:55:38
  */
 @Data
-@TableName("sys_menu")
+@TableName("syst_menu")
 public class Menu extends SuperEntity<Menu> {
+
     /**
-     * 主键id
+     * 主键ID
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     /**
      * 上级菜单ID

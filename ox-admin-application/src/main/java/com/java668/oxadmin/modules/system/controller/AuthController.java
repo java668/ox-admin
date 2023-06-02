@@ -39,7 +39,7 @@ public class AuthController {
     @ApiOperation("获取登陆用户信息")
     @GetMapping("/info")
     public R<SysUser> userInfo() {
-        return R.succeed(AuthUtil.getCurrentUser());
+        return R.success(AuthUtil.getCurrentUser());
     }
 
     /**
@@ -50,7 +50,7 @@ public class AuthController {
     @ApiOperation("获取路由列表")
     @GetMapping("/routerList")
     public R<List<Tree<Long>>> routerList() {
-        return R.succeed(menuService.routerList());
+        return R.success(menuService.routerList());
     }
 
     /**
@@ -59,7 +59,7 @@ public class AuthController {
     @ApiOperation("在线用户列表")
     @GetMapping("/onlineUser")
     public R<PageResult<SysUser>> onlineUser(PageParam pageParam) {
-        return R.succeed(authService.onlineUser(pageParam));
+        return R.success(authService.onlineUser(pageParam));
     }
 
 }

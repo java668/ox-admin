@@ -18,11 +18,6 @@ import java.util.Date;
 @Setter
 @Getter
 public class SuperEntity<T extends Model<?>> extends Model<T> {
-    /**
-     * 主键ID
-     */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
 
     /**
      * 创建人

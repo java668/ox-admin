@@ -38,8 +38,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiOperation("新增角色")
     public R<Boolean> add(@RequestBody @Validated RoleReqDTO body) {
-        Boolean result = roleService.add(body);
-        return R.succeed(result);
+        return R.success(roleService.add(body));
     }
 
     /**
@@ -52,8 +51,7 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("删除角色")
     public R<Boolean> delete(@RequestParam(name = "ids") List<Long> ids) {
-        Boolean result = roleService.delete(ids);
-        return R.succeed(result);
+        return R.success(roleService.delete(ids));
     }
 
     /**
@@ -66,8 +64,7 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("修改角色")
     public R<Boolean> update(@RequestBody @Validated RoleReqDTO body) {
-        Boolean result = roleService.update(body);
-        return R.succeed(result);
+        return R.success(roleService.update(body));
     }
 
     /**
@@ -80,8 +77,7 @@ public class RoleController {
     @ApiOperation("查询角色详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<RoleRespDTO> get(@PathVariable("id") Long id) {
-        RoleRespDTO user = roleService.get(id);
-        return R.succeed(user);
+        return R.success(roleService.get(id));
     }
 
     /**
@@ -93,8 +89,7 @@ public class RoleController {
     @ApiOperation("查询角色列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<RoleRespDTO>> list() {
-        List<RoleRespDTO> list = roleService.findList();
-        return R.succeed(list);
+        return R.success(roleService.findList());
     }
 
     /**
@@ -107,8 +102,7 @@ public class RoleController {
     @ApiOperation("分页查询角色列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<PageResult<RoleRespDTO>> page(RolePageReqDTO params) {
-        PageResult<RoleRespDTO> pageRespDTO = roleService.page(params);
-        return R.succeed(pageRespDTO);
+        return R.success(roleService.page(params));
     }
 
     /**
@@ -123,7 +117,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Integer> saveMenu(@PathVariable(name = "roleId") Long roleId,
                                @RequestBody List<Long> menuIds) {
-        return R.succeed(roleService.saveMenu(roleId, menuIds));
+        return R.success(roleService.saveMenu(roleId, menuIds));
     }
 
 }
