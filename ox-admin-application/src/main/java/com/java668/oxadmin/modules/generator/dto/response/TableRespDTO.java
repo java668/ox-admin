@@ -1,6 +1,6 @@
 package com.java668.oxadmin.modules.generator.dto.response;
 
-import com.java668.common.model.PageParam;
+import com.java668.common.model.BaseDTO;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Data
-public class TableRespDTO extends PageParam {
+public class TableRespDTO extends BaseDTO {
     private static final long serialVersionUID = 1L;
 
     /**

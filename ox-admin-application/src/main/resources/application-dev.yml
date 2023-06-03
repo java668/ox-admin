@@ -65,6 +65,7 @@ spring:
         url-pattern: /*
         # 排除一些不必要的url
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+
 # knife4j 接口文档
 knife4j:
   enable: true
@@ -79,14 +80,20 @@ knife4j:
     license-url: https://github.com/java668/ox-admin
     terms-of-service-url: https://github.com/java668/ox-admin
     group:
-      record-platform:
+      system:
         group-name: 系统管理
         api-rule: package
         api-rule-resources:
           - com.java668.oxadmin.modules.system.controller
-
+      generator:
+        group-name: 代码生成
+        api-rule: package
+        api-rule-resources:
+          - com.java668.oxadmin.modules.generator.controller
+# 系统配置
 oxadmin:
   system:
     isDemoSite: true
+
 
 

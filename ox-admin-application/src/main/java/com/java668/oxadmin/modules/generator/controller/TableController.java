@@ -1,21 +1,20 @@
 package com.java668.oxadmin.modules.generator.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
+import com.java668.oxadmin.modules.generator.dto.request.TablePageReqDTO;
 import com.java668.oxadmin.modules.generator.dto.request.TableReqDTO;
-import com.java668.oxadmin.modules.generator.dto.response.TableColumnRespDTO;
 import com.java668.oxadmin.modules.generator.dto.response.TableRespDTO;
 import com.java668.oxadmin.modules.generator.service.ITableService;
-import com.java668.oxadmin.modules.system.dto.response.UserRespDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.apache.commons.io.IOUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,56 +36,41 @@ public class TableController {
     /**
      * 查询代码生成列表
      */
-    @GetMapping("/list")
-    public R<PageResult<UserRespDTO>> page(TableReqDTO tableReqDTO) {
-        return R.success(tableService.page(tableReqDTO));
+    @GetMapping("/page")
+    public R<PageResult<TableRespDTO>> page(TablePageReqDTO params) {
+        return R.success(tableService.page(params));
     }
 
     /**
      * 修改代码生成业务
      */
-//    @GetMapping(value = "/{tableId}")
-//    public AjaxResult getInfo(@PathVariable Long tableId) {
-//        GenTable table = genTableService.selectGenTableById(tableId);
-//        List<GenTable> tables = genTableService.selectGenTableAll();
-//        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("info", table);
-//        map.put("rows", list);
-//        map.put("tables", tables);
-//        return success(map);
-//    }
+    @GetMapping(value = "/{tableId}")
+    public R<JSONObject> getInfo(@PathVariable Long tableId) {
+        return R.success(tableService.getInfo(tableId));
+    }
 
     /**
      * 查询数据库列表
      */
-    @GetMapping("/db/list")
-    public R<PageResult<UserRespDTO>> dbTablePage(TableReqDTO tableReqDTO) {
-        return R.success(tableService.dbTablePage(tableReqDTO));
-    }
-
-    /**
-     * 查询数据表字段列表
-     */
-    @GetMapping(value = "/column/{tableId}")
-    public R<List<TableColumnRespDTO>> columnList(@PathVariable("tableId") Long tableId) {
-        return R.success(tableService.columnList(tableId));
+    @GetMapping("/dbTablePage")
+    public R<PageResult<TableRespDTO>> dbTablePage(TablePageReqDTO params) {
+        return R.success(tableService.dbTablePage(params));
     }
 
     /**
      * 导入表结构（保存）
      */
     @PostMapping("/importTable")
-    public R<Boolean> importTableSave(String tables) {
-        return R.success(tableService.importTableSave(tables));
+    public R<Boolean> importTable(@RequestParam("tables") List<String> tables) {
+        return R.success(tableService.importTable(tables));
     }
 
     /**
      * 修改保存代码生成业务
      */
     @PutMapping
-    public R<Boolean> editSave(@Validated @RequestBody TableReqDTO genTable) {
-        return R.success(tableService.editSave(genTable));
+    public R<Boolean> update(@Validated @RequestBody TableReqDTO genTable) {
+        return R.success(tableService.update(genTable));
     }
 
     /**
@@ -102,8 +86,7 @@ public class TableController {
      */
     @GetMapping("/preview/{tableId}")
     public R<Map<String, String>> preview(@PathVariable("tableId") Long tableId) throws IOException {
-        Map<String, String> dataMap = tableService.previewCode(tableId);
-        return R.success(dataMap);
+        return R.success(tableService.previewCode(tableId));
     }
 
     /**
@@ -120,17 +103,16 @@ public class TableController {
      */
     @GetMapping("/genCode/{tableName}")
     public R<Boolean> genCode(@PathVariable("tableName") String tableName) {
-        tableService.generatorCode(tableName);
-        return R.success();
+        return R.success(tableService.generatorCode(tableName));
     }
 
     /**
      * 同步数据库
      */
-    @GetMapping("/synchDb/{tableName}")
-    public R<Boolean> synchDb(@PathVariable("tableName") String tableName) {
-        tableService.synchDb(tableName);
-        return R.success();
+    @GetMapping("/syncDb/{tableName}")
+    public R<Boolean> syncDb(@PathVariable("tableName") String tableName) {
+        tableService.syncDb(tableName);
+        return R.success(Boolean.TRUE);
     }
 
     /**
@@ -138,7 +120,7 @@ public class TableController {
      */
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
-        byte[] data = tableService.downloadCode(tableNames);
+        byte[] data = tableService.downloadCode(tables);
         genCode(response, data);
     }
 

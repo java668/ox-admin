@@ -95,7 +95,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public PageResult<RoleRespDTO> page(RolePageReqDTO params) {
-        Page<Role> page = PageParam.convertPage(params);
+        Page<Role> page = params.buildPage();
         LambdaQueryWrapper<Role> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.and(
                 StrUtil.isNotBlank(params.getQ()),

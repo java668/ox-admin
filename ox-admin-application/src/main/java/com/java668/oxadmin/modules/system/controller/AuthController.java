@@ -5,7 +5,7 @@ import com.java668.common.model.PageParam;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.common.model.SysUser;
-import com.java668.common.utils.AuthUtil;
+import com.java668.common.utils.AuthUtils;
 import com.java668.oxadmin.modules.system.service.AuthService;
 import com.java668.oxadmin.modules.system.service.MenuService;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +39,7 @@ public class AuthController {
     @ApiOperation("获取登陆用户信息")
     @GetMapping("/info")
     public R<SysUser> userInfo() {
-        return R.success(AuthUtil.getCurrentUser());
+        return R.success(AuthUtils.getCurrentUser());
     }
 
     /**

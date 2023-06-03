@@ -1,11 +1,13 @@
 package com.java668.oxadmin.modules.generator.dto.request;
 
 import com.java668.common.model.PageParam;
+import com.java668.oxadmin.modules.generator.dto.response.TableColumnRespDTO;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 业务表 gen_table
@@ -13,7 +15,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Data
-public class TableReqDTO extends PageParam {
+public class TableReqDTO {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -123,5 +125,12 @@ public class TableReqDTO extends PageParam {
      * 上级菜单名称字段
      */
     private String parentMenuName;
+
+    private List<TableColumnReqDTO> columns;
+
+    /**
+     * 请求参数
+     */
+    private Map<String, Object> params;
 
 }

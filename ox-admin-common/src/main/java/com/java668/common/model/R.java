@@ -1,6 +1,6 @@
 package com.java668.common.model;
 
-import com.java668.common.utils.JSONUtil;
+import com.java668.common.utils.JSONUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,6 +47,6 @@ public class R<T> implements Serializable {
     }
 
     public String toJsonString() {
-        return JSONUtil.toJsonString(this);
+        return JSONUtils.toJsonString(this);
     }
 }

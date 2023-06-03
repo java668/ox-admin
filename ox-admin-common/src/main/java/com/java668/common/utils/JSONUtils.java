@@ -9,13 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @date 2023/03/29 18:05
  **/
 @SuppressWarnings("all")
-public class JSONUtil {
+public class JSONUtils {
 
     private static final ObjectMapper om = new ObjectMapper();
 
 
     /**
      * jackson 转json
+     *
      * @param obj
      * @return
      */

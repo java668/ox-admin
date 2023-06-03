@@ -1,10 +1,13 @@
 package com.java668.oxadmin.modules.generator.entity;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.java668.common.db.entity.SuperEntity;
+import com.java668.oxadmin.modules.generator.utils.StringUtils;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,8 +19,8 @@ import java.io.Serializable;
  * @since 2023-06-02 10:23:29
  */
 @Data
-@TableName("syst_menu")
-public class TableColumn extends Model<TableColumn> {
+@TableName("gene_table_column")
+public class TableColumn extends SuperEntity<TableColumn> {
     /**
      * 主键ID
      */
@@ -26,7 +29,7 @@ public class TableColumn extends Model<TableColumn> {
     /**
      * 归属表编号
      */
-    private String tableId;
+    private Long tableId;
     /**
      * 列名称
      */
@@ -91,6 +94,35 @@ public class TableColumn extends Model<TableColumn> {
      * 排序
      */
     private Integer sort;
+
+    public boolean isPk() {
+        return isPk(this.isPk);
+    }
+
+    public boolean isPk(String isPk) {
+        return isPk != null && StrUtil.equals("1", isPk);
+    }
+
+    public boolean isSuperColumn() {
+        return isSuperColumn(this.javaField);
+    }
+
+    public static boolean isSuperColumn(String javaField) {
+        return StringUtils.equalsAnyIgnoreCase(javaField,
+                // BaseEntity
+                "createBy", "createTime", "updateBy", "updateTime", "remark",
+                // TreeEntity
+                "parentName", "parentId", "orderNum", "ancestors");
+    }
+
+    public boolean isList() {
+        return isList(this.isList);
+    }
+
+    public boolean isList(String isList) {
+        return isList != null && StringUtils.equals("1", isList);
+    }
+
 
 }
 

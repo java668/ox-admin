@@ -24,5 +24,47 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <select id="dbTablePage" parameterType="com.java668.oxadmin.modules.generator.dto.request.TablePageReqDTO"
+            resultMap="TableMap">
+        select `table_name`, table_comment, create_time, update_time from information_schema.tables
+        <where>
+            table_schema = (select database())
+            AND table_name NOT LIKE 'gene_%'
+            AND table_name NOT IN (select table_name from gene_table)
+            <if test="params.tableName != null and params.tableName != ''">
+                AND lower(table_name) like lower(concat('%', #{params.tableName}, '%'))
+            </if>
+            <if test="params.tableComment != null and params.tableComment != ''">
+                AND lower(table_comment) like lower(concat('%', #{params.tableComment}, '%'))
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="dbTableListByNames" resultMap="TableMap">
+        select table_name, table_comment, create_time, update_time from information_schema.tables
+        where
+        table_name NOT LIKE 'qrtz_%'
+        and table_name NOT LIKE 'gene_%'
+        and table_schema = (select database())
+        and table_name in
+        <foreach collection="list" item="name" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </select>
+    <select id="selectTableByName" parameterType="String" resultMap="TableMap">
+	    SELECT t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.gen_type, t.gen_path, t.options, t.remark,
+			   c.column_id, c.column_name, c.column_comment, c.column_type, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
+		FROM gen_table t
+			 LEFT JOIN gen_table_column c ON t.table_id = c.table_id
+		where t.table_name = #{tableName} order by c.sort
+	</select>
+
 </mapper>
 

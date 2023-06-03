@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 系统设置
+ * @author Jerry
  */
 @Data
 @Configuration

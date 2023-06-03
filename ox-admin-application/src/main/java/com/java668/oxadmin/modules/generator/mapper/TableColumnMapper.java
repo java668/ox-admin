@@ -16,5 +16,7 @@ import com.java668.oxadmin.modules.generator.entity.TableColumn;
 public interface TableColumnMapper extends EasyBaseMapper<TableColumn> {
 
 
+    List<TableColumn> listByTableName(@Param("tableName") String tableName);
+
 }
 

@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.java668.common.exception.BusinessException;
 import com.java668.common.model.PageParam;
 import com.java668.common.model.PageResult;
-import com.java668.common.utils.AuthUtil;
+import com.java668.common.utils.AuthUtils;
 import com.java668.oxadmin.modules.system.dto.request.UserPageReqDTO;
 import com.java668.oxadmin.modules.system.dto.request.UserPassReqDTO;
 import com.java668.oxadmin.modules.system.dto.request.UserReqDTO;
@@ -61,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Transactional(rollbackFor = Exception.class)
     public Boolean delete(List<Long> ids) {
         // 不能删除自己
-        Long userId = AuthUtil.getUserId();
+        Long userId = AuthUtils.getUserId();
         if (CollUtil.contains(ids, userId)) {
             throw new BusinessException("不能删除自己登录的账号");
         }
@@ -102,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public PageResult<UserRespDTO> page(UserPageReqDTO params) {
-        Page<User> page = PageParam.convertPage(params);
+        Page<User> page = params.buildPage();
         LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.and(
                 StrUtil.isNotBlank(params.getQ()),
@@ -144,7 +144,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Boolean modifyPass(UserPassReqDTO dto) {
-        Long userId = AuthUtil.getUserId();
+        Long userId = AuthUtils.getUserId();
         User user = getById(userId);
         if(!passwordEncoder.matches(dto.getOldPass(), user.getPassword())){
             throw new BusinessException("修改失败，旧密码错误");

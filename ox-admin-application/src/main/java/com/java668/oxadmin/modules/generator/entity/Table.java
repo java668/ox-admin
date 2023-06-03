@@ -2,10 +2,14 @@ package com.java668.oxadmin.modules.generator.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.java668.common.db.entity.SuperEntity;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 代码生成业务表(Table)表实体类
@@ -14,8 +18,8 @@ import lombok.Data;
  * @since 2023-06-02 10:23:28
  */
 @Data
-@TableName("syst_menu")
-public class Table extends Model<Table> {
+@TableName("gene_table")
+public class Table extends SuperEntity<Table> {
     /**
      * 主键ID
      */
@@ -77,6 +81,19 @@ public class Table extends Model<Table> {
      * 其它生成选项
      */
     private String options;
+
+
+    /** 子表信息 */
+    @TableField(exist = false)
+    private Table subTable;
+
+    /** 表列信息 */
+    @TableField(exist = false)
+    private List<TableColumn> columns;
+
+    /** 主键信息 */
+    @TableField(exist = false)
+    private TableColumn pkColumn;
 
 }
 

@@ -13,10 +13,11 @@ import java.util.Optional;
  * @date 2023/04/10 12:21
  **/
 @Slf4j
-public class AuthUtil {
+public class AuthUtils {
 
     /**
      * 获取登录用户
+     *
      * @return
      */
     public static SysUser getCurrentUser() {
@@ -32,6 +33,7 @@ public class AuthUtil {
 
     /**
      * 获取登陆的用户id
+     *
      * @return
      */
     public static Long getUserId() {
@@ -41,6 +43,7 @@ public class AuthUtil {
 
     /**
      * 获取登陆的用户名
+     *
      * @return
      */
     public static String getUsername() {

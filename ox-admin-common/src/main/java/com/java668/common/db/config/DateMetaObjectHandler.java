@@ -2,7 +2,7 @@ package com.java668.common.db.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.java668.common.db.properties.MybatisPlusAutoFillProperties;
-import com.java668.common.utils.AuthUtil;
+import com.java668.common.utils.AuthUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.util.StringUtils;
 
@@ -45,7 +45,7 @@ public class DateMetaObjectHandler implements MetaObjectHandler {
         String updateBy = (String) getFieldValByName(autoFillProperties.getUpdateByField(), metaObject);
 
         if (StringUtils.isEmpty(createBy) || StringUtils.isEmpty(updateBy)) {
-            String username = AuthUtil.getUsername();
+            String username = AuthUtils.getUsername();
             // 获取当前登录用户
             if (StringUtils.isEmpty(createBy)) {
                 setFieldValByName(autoFillProperties.getCreateByField(), username, metaObject);
@@ -79,7 +79,7 @@ public class DateMetaObjectHandler implements MetaObjectHandler {
 
         String updateBy = (String) getFieldValByName(autoFillProperties.getUpdateByField(), metaObject);
         if (StringUtils.isEmpty(updateBy)) {
-            String username = AuthUtil.getUsername();
+            String username = AuthUtils.getUsername();
             setFieldValByName(autoFillProperties.getUpdateByField(), username, metaObject);
         }
     }

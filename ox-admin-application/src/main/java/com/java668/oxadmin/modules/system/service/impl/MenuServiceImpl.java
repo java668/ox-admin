@@ -13,7 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.java668.common.exception.BusinessException;
-import com.java668.common.utils.AuthUtil;
+import com.java668.common.utils.AuthUtils;
 import com.java668.oxadmin.modules.system.dto.request.MenuReqDTO;
 import com.java668.oxadmin.modules.system.dto.response.MenuRespDTO;
 import com.java668.oxadmin.modules.system.entity.Menu;
@@ -125,7 +125,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<Tree<Long>> routerList() {
-        Long userId = AuthUtil.getUserId();
+        Long userId = AuthUtils.getUserId();
         log.info("userId: {}", userId);
         List<Menu> menuList = findByUserId(userId, Boolean.TRUE);
         List<Tree<Long>> treeList = TreeUtil.<Menu, Long>build(menuList, 0L, treeNodeConfig, (treeNode, tree) -> {
