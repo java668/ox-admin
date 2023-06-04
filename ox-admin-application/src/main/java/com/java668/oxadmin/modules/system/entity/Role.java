@@ -4,8 +4,9 @@ package com.java668.oxadmin.modules.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.java668.common.db.entity.SuperEntity;
+import com.java668.common.db.entity.BaseEntity;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * 角色表(Role)表实体类
@@ -14,8 +15,9 @@ import lombok.Data;
  * @since 2023-03-25 19:48:41
  */
 @Data
+@ToString
 @TableName("syst_role")
-public class Role extends SuperEntity<Role> {
+public class Role extends BaseEntity<Role> {
     /**
      * 主键ID
      */

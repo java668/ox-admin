@@ -1,0 +1,41 @@
+package ${packageName}.entity;
+
+#foreach ($import in $importList)
+import ${import};
+#end
+import lombok.Data;
+import lombok.ToString;
+import com.java668.common.model.PageParam;
+
+/**
+ * ${functionName}对象 ${tableName}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@ToString
+public class ${ClassName}PageReqDTO extends PageParam {
+    private static final long serialVersionUID = 1L;
+#foreach($column in $columns)
+    #if(!$table.isSuperColumn($column.javaField))
+    /**
+     * $column.columnComment
+     */
+    #set($queryType=$column.queryType)
+    #set($javaField=$column.javaField)
+    #set($javaType=$column.javaType)
+    #set($columnName=$column.columnName)
+    #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.query)
+#if($queryType == "BETWEEN")
+    private $column.javaType begin$AttrName;
+    private $column.javaType end$AttrName;
+#else
+    private $column.javaType $column.javaField;
+#end
+    #end
+    #end
+#end
+
+}

@@ -1,7 +1,11 @@
 package com.java668.oxadmin.modules.generator.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.java668.oxadmin.modules.generator.dto.request.TableColumnReqDTO;
 import com.java668.oxadmin.modules.generator.dto.response.TableColumnRespDTO;
@@ -36,6 +40,13 @@ public class TableColumnServiceImpl extends ServiceImpl<TableColumnMapper, Table
     public Boolean update(TableColumnReqDTO tableColumn) {
         TableColumn entity = BeanUtil.copyProperties(tableColumn, TableColumn.class);
         return updateById(entity);
+    }
+
+    @Override
+    public Boolean removeByTableIds(List<Long> tableIds) {
+        LambdaQueryWrapper<TableColumn> queryWrapper = Wrappers.<TableColumn>lambdaQuery()
+                .in(TableColumn::getTableId, tableIds);
+        return remove(queryWrapper);
     }
 
 }

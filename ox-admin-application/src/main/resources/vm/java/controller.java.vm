@@ -1,26 +1,15 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.enums.BusinessType;
+import org.springframework.web.bind.annotation.*;
+
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import lombok.RequiredArgsConstructor;
+import com.java668.common.model.R;
 #if($table.crud || $table.sub)
-import com.ruoyi.common.core.page.TableDataInfo;
+import com.java668.common.model.PageResult;
 #elseif($table.tree)
 #end
 
@@ -30,86 +19,79 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author ${author}
  * @date ${datetime}
  */
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/${moduleName}/${businessName}")
-public class ${ClassName}Controller extends BaseController
-{
-    @Autowired
-    private I${ClassName}Service ${className}Service;
+public class ${ClassName}Controller {
 
-    /**
-     * 查询${functionName}列表
-     */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:list')")
-    @GetMapping("/list")
-#if($table.crud || $table.sub)
-    public TableDataInfo list(${ClassName} ${className})
-    {
-        startPage();
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return getDataTable(list);
-    }
-#elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className})
-    {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        return success(list);
-    }
-#end
-
-    /**
-     * 导出${functionName}列表
-     */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:export')")
-    @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, ${ClassName} ${className})
-    {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-        ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
-        util.exportExcel(response, list, "${functionName}数据");
-    }
-
-    /**
-     * 获取${functionName}详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:query')")
-    @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
-    {
-        return success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
-    }
+    private final I${ClassName}Service ${className}Service;
 
     /**
      * 新增${functionName}
+     *
+     * @param body
+     * @return
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:add')")
-    @Log(title = "${functionName}", businessType = BusinessType.INSERT)
+    @PreAuthorize("hasAuthority('${permissionPrefix}:add')")
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className})
-    {
-        return toAjax(${className}Service.insert${ClassName}(${className}));
-    }
-
-    /**
-     * 修改${functionName}
-     */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:edit')")
-    @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className})
-    {
-        return toAjax(${className}Service.update${ClassName}(${className}));
+    public R<Boolean> add(@RequestBody ${ClassName}ReqDTO body) {
+        return R.success(${className}Service.add(body));
     }
 
     /**
      * 删除${functionName}
+     *
+     * @param ${pkColumn.javaField}s
+     * @return
      */
-    @PreAuthorize("@ss.hasPermi('${permissionPrefix}:remove')")
-    @Log(title = "${functionName}", businessType = BusinessType.DELETE)
+    @PreAuthorize("hasAuthority('${permissionPrefix}:remove')")
 	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
-    {
-        return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
+    public R<Boolean> remove(@PathVariable List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
+        return R.success(${className}Service.remove(${pkColumn.javaField}s));
     }
+
+    /**
+     * 修改${functionName}
+     *
+     * @param body
+     * @return
+     */
+    @PreAuthorize("hasAuthority('${permissionPrefix}:edit')")
+    @PutMapping
+    public R<Boolean> update(@RequestBody ${ClassName}ReqDTO body) {
+        return R.success(${className}Service.update(${className}));
+    }
+
+    /**
+     * 获取${functionName}详细信息
+     *
+     * @param ${pkColumn.javaField}
+     * @return
+     */
+    @PreAuthorize("hasAuthority('${permissionPrefix}:query')")
+    @GetMapping(value = "/{${pkColumn.javaField}}")
+    public R<${ClassName}RespDTO> detail(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
+        return R.success(${className}Service.detail(${pkColumn.javaField}));
+    }
+
+    /**
+     * 查询${functionName}列表
+     *
+     * @param req
+     * @return
+     */
+    @PreAuthorize("hasAuthority('${permissionPrefix}:list')")
+    @GetMapping("/list")
+    #if($table.crud || $table.sub)
+    public R<PageResult<${ClassName}RespDTO>> page(${ClassName}PageReqDTO req}) {
+        return R.success(${className}Service.page(req));
+    }
+    #elseif($table.tree)
+        public AjaxResult list(${ClassName} ${className})
+        {
+            List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+            return success(list);
+        }
+    #end
+
 }

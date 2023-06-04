@@ -69,5 +69,7 @@ public interface ITableService extends IService<Table> {
     Boolean generatorCode(String tableName);
 
     void syncDb(String tableName);
+
+    Boolean delete(List<Long> tableIds);
 }
 

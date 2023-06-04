@@ -1,23 +1,17 @@
 package ${packageName}.service.impl;
 
 import java.util.List;
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
-import com.ruoyi.common.utils.DateUtils;
-#break
-#end
-#end
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.hutool.core.bean.BeanUtil;
 import org.springframework.stereotype.Service;
 #if($table.sub)
 import java.util.ArrayList;
-import com.ruoyi.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
-import ${packageName}.domain.${subClassName};
+import ${packageName}.entity.${subClassName};
 #end
 import ${packageName}.mapper.${ClassName}Mapper;
-import ${packageName}.domain.${ClassName};
+import ${packageName}.entity.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
+import lombok.RequiredArgsConstructor;
 
 /**
  * ${functionName}Service业务层处理
@@ -26,59 +20,45 @@ import ${packageName}.service.I${ClassName}Service;
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
-{
-    @Autowired
-    private ${ClassName}Mapper ${className}Mapper;
-
-    /**
-     * 查询${functionName}
-     * 
-     * @param ${pkColumn.javaField} ${functionName}主键
-     * @return ${functionName}
-     */
-    @Override
-    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
-    {
-        return ${className}Mapper.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
-    }
-
-    /**
-     * 查询${functionName}列表
-     * 
-     * @param ${className} ${functionName}
-     * @return ${functionName}
-     */
-    @Override
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className})
-    {
-        return ${className}Mapper.select${ClassName}List(${className});
-    }
+@RequiredArgsConstructor
+public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}> implements I${ClassName}Service {
 
     /**
      * 新增${functionName}
-     * 
+     *
      * @param ${className} ${functionName}
      * @return 结果
      */
-#if($table.sub)
+    #if($table.sub)
     @Transactional
-#end
+    #end
     @Override
-    public int insert${ClassName}(${ClassName} ${className})
-    {
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime')
-        ${className}.setCreateTime(DateUtils.getNowDate());
-#end
-#end
-#if($table.sub)
+    public Boolean add(${ClassName}ReqDTO body) {
+    #if($table.sub)
         int rows = ${className}Mapper.insert${ClassName}(${className});
         insert${subClassName}(${className});
         return rows;
-#else
-        return ${className}Mapper.insert${ClassName}(${className});
-#end
+    #else
+        ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
+        return save(entity);
+    #end
+    }
+
+    /**
+     * 批量删除${functionName}
+     *
+     * @param ${pkColumn.javaField}s 需要删除的${functionName}主键
+     * @return 结果
+     */
+    #if($table.sub)
+    @Transactional
+    #end
+    @Override
+    public Boolean remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
+        #if($table.sub)
+        ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
+        #end
+        return removeBatchByIds(${pkColumn.javaField}s);
     }
 
     /**
@@ -91,55 +71,99 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Transactional
 #end
     @Override
-    public int update${ClassName}(${ClassName} ${className})
-    {
-#foreach ($column in $columns)
-#if($column.javaField == 'updateTime')
-        ${className}.setUpdateTime(DateUtils.getNowDate());
-#end
-#end
+    public Boolean update${ClassName}(${ClassName} ${className}) {
 #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
 #end
-        return ${className}Mapper.update${ClassName}(${className});
+        ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
+        return updateById(entity);
     }
 
-    /**
-     * 批量删除${functionName}
-     * 
-     * @param ${pkColumn.javaField}s 需要删除的${functionName}主键
-     * @return 结果
-     */
-#if($table.sub)
-    @Transactional
-#end
-    @Override
-    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s)
-    {
-#if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
-#end
-        return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s);
-    }
 
     /**
-     * 删除${functionName}信息
-     * 
+     * 查询${functionName}
+     *
      * @param ${pkColumn.javaField} ${functionName}主键
-     * @return 结果
+     * @return ${functionName}
      */
-#if($table.sub)
-    @Transactional
-#end
     @Override
-    public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
-    {
-#if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${pkColumn.javaField});
-#end
-        return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+    public ${ClassName}RespDTO detail(${pkColumn.javaType} ${pkColumn.javaField}) {
+        ${ClassName} entity = getById(${pkColumn.javaField});
+        return BeanUtil.copyProperties(entity, ${ClassName}RespDTO.class);
     }
+
+    /**
+     * 查询${functionName}列表
+     *
+     * @param req
+     * @return ${functionName}
+     */
+    @Override
+    public PageResult<${ClassName}RespDTO> page(${ClassName}PageReqDTO req);
+        LambdaQueryWrapper<${ClassName}> queryWrapper = Wrappers.lambdaQuery();
+#foreach($column in $columns)
+    #set($queryType=$column.queryType)
+    #set($javaField=$column.javaField)
+    #set($javaType=$column.javaType)
+    #set($columnName=$column.columnName)
+    #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #if($column.query)
+        #if($column.queryType == "EQ")
+        #if($javaType == 'String')
+        queryWrapper.eq(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+        #else
+        queryWrapper.eq(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+        #end
+#elseif($queryType == "NE")
+    #if($javaType == 'String')
+        queryWrapper.ne(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.ne(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "GT")
+    #if($javaType == 'String')
+        queryWrapper.gt(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.gt(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "GTE")
+    #if($javaType == 'String')
+        queryWrapper.ge(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.ge(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LT")
+    #if($javaType == 'String')
+        queryWrapper.lt(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.lt(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LTE")
+    #if($javaType == 'String')
+        queryWrapper.le(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.le(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LIKE")
+    #if($javaType == 'String')
+        queryWrapper.like(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.like(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "BETWEEN")
+    #if($javaType == 'String')
+        queryWrapper.between(StrUtil.isAllNotBlank(req.getBegin$AttrName(), req.getEnd$AttrName()), ${ClassName}::get$AttrName, req.getBegin$AttrName(), req.getEnd$AttrName());
+    #else
+        queryWrapper.between(ObjectUtil.isAllNotEmpty(req.getBegin$AttrName(), req.getEnd$AttrName()), ${ClassName}::get$AttrName, req.getBegin$AttrName(),req.getEnd$AttrName());
+    #end
+#end
+    #end
+#end
+        Page<${ClassName}> page = page(req.buildPage(), queryWrapper);
+        return PageResult.of(page, ${ClassName}RespDTO.class);
+    }
+
 #if($table.sub)
 
     /**

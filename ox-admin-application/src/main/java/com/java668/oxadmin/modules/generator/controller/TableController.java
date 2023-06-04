@@ -77,15 +77,15 @@ public class TableController {
      * 删除代码生成
      */
     @DeleteMapping("/{tableIds}")
-    public R<Boolean> remove(@PathVariable List<Long> tableIds) {
-        return R.success(tableService.removeBatchByIds(tableIds));
+    public R<Boolean> delete(@PathVariable List<Long> tableIds) {
+        return R.success(tableService.delete(tableIds));
     }
 
     /**
      * 预览代码
      */
     @GetMapping("/preview/{tableId}")
-    public R<Map<String, String>> preview(@PathVariable("tableId") Long tableId) throws IOException {
+    public R<Map<String, String>> preview(@PathVariable("tableId") Long tableId) {
         return R.success(tableService.previewCode(tableId));
     }
 

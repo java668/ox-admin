@@ -20,5 +20,7 @@ public interface ITableColumnService extends IService<TableColumn> {
     List<TableColumn> listByTableName(String tableName);
 
     Boolean update(TableColumnReqDTO tableColumn);
+
+    Boolean removeByTableIds(List<Long> tableIds);
 }
 

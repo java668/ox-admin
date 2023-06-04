@@ -12,47 +12,7 @@ import ${packageName}.domain.${subClassName};
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${ClassName}Mapper 
-{
-    /**
-     * 查询${functionName}
-     * 
-     * @param ${pkColumn.javaField} ${functionName}主键
-     * @return ${functionName}
-     */
-    public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
-
-    /**
-     * 查询${functionName}列表
-     * 
-     * @param ${className} ${functionName}
-     * @return ${functionName}集合
-     */
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
-
-    /**
-     * 新增${functionName}
-     * 
-     * @param ${className} ${functionName}
-     * @return 结果
-     */
-    public int insert${ClassName}(${ClassName} ${className});
-
-    /**
-     * 修改${functionName}
-     * 
-     * @param ${className} ${functionName}
-     * @return 结果
-     */
-    public int update${ClassName}(${ClassName} ${className});
-
-    /**
-     * 删除${functionName}
-     * 
-     * @param ${pkColumn.javaField} ${functionName}主键
-     * @return 结果
-     */
-    public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField});
+public interface ${ClassName}Mapper extends EasyBaseMapper<${ClassName}> {
 
     /**
      * 批量删除${functionName}
@@ -60,7 +20,7 @@ public interface ${ClassName}Mapper
      * @param ${pkColumn.javaField}s 需要删除的数据主键集合
      * @return 结果
      */
-    public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    int deleteBy${pkColumn.capJavaField}s(List<${pkColumn.javaType}> ${pkColumn.javaField}s);
 #if($table.sub)
 
     /**
@@ -69,7 +29,7 @@ public interface ${ClassName}Mapper
      * @param ${pkColumn.javaField}s 需要删除的数据主键集合
      * @return 结果
      */
-    public int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
     
     /**
      * 批量新增${subTable.functionName}
@@ -77,8 +37,7 @@ public interface ${ClassName}Mapper
      * @param ${subclassName}List ${subTable.functionName}列表
      * @return 结果
      */
-    public int batch${subClassName}(List<${subClassName}> ${subclassName}List);
-    
+    int batch${subClassName}(List<${subClassName}> ${subclassName}List);
 
     /**
      * 通过${functionName}主键删除${subTable.functionName}信息

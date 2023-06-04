@@ -1,60 +1,69 @@
-package com.java668.oxadmin.modules.system.entity;
+package com.java668.oxadmin.system.dto.request;
 
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.java668.common.db.entity.BaseEntity;
+import com.java668.common.model.PageParam;
 import lombok.Data;
 import lombok.ToString;
 
 /**
- * 系统用户(User)表实体类
+ * 系统用户对象 syst_user
  *
  * @author jerry.chen
- * @since 2023-03-25 19:39:34
+ * @date 2023-06-04 17:20:10
  */
 @Data
 @ToString
-@TableName("syst_user")
-public class User extends BaseEntity<User> {
+public class SystUserPageReqDTO extends PageParam {
+    private static final long serialVersionUID = 1L;
+
     /**
-     * 主键ID
+     * 主键id
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
+
     /**
      * 用户名
      */
     private String username;
+
     /**
      * 密码
      */
     private String password;
+
     /**
-     * 密码
+     * 昵称
      */
     private String nickName;
+
     /**
      * 性别
      */
     private String gender;
+
     /**
      * 手机号码
      */
     private String phone;
+
     /**
      * 邮箱
      */
     private String email;
+
     /**
      * 头像
      */
     private String avatar;
+
     /**
-     * 状态：1启用、0禁用
+     * 状态：0启用、1禁用
      */
-    private Integer enabled;
+    private Long enabled;
+
+    /**
+     * 是否删除（0:否，1：是）
+     */
+    private Long isDeleted;
+
 
 }
-

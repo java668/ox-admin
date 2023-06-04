@@ -1,0 +1,35 @@
+package ${packageName}.entity;
+
+#foreach ($import in $importList)
+import ${import};
+#end
+import lombok.Data;
+import lombok.ToString;
+import com.java668.common.model.BaseDTO;
+
+/**
+ * ${functionName}对象 ${tableName}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@ToString
+public class ${ClassName}RespDTO extends BaseDTO {
+    private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+    #if(!$table.isSuperColumn($column.javaField))
+    /**
+     * $column.columnComment
+     */
+    private $column.javaType $column.javaField;
+    #end
+#end
+#if($table.sub)
+    /**
+     * $table.subTable.functionName信息
+     */
+    private List<${subClassName}> ${subclassName}List;
+#end
+}

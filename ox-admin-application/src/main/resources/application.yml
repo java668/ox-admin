@@ -7,6 +7,9 @@ spring:
   profiles:
     active: @profileActive@
 
+mybatis-plus:
+  type-aliases-package: com.java668.oxadmin.modules.**.entity,com.java668.oxadmin.**.entity
+
 logging:
   file-location: ./logs
 

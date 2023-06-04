@@ -132,7 +132,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
     public Map<String, String> previewCode(Long tableId) {
         Map<String, String> dataMap = new LinkedHashMap<>();
         // 查询表信息
-        Table table = baseMapper.selectById(tableId);
+        Table table = baseMapper.selectTableById(tableId);
         // 设置主子表信息
         setSubTable(table);
         // 设置主键列信息
@@ -146,7 +146,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
         for (String template : templates) {
             // 渲染模板
             StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, "UTF8");
+            Template tpl = Velocity.getTemplate(template, Constants.UTF8);
             tpl.merge(context, sw);
             dataMap.put(template, sw.toString());
         }
@@ -236,6 +236,13 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
 //        }
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean delete(List<Long> tableIds) {
+        tableColumnService.removeByTableIds(tableIds);
+        return removeBatchByIds(tableIds);
+    }
+
     /**
      * 设置主键列信息
      *
@@ -316,12 +323,12 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
         for (String template : templates) {
             // 渲染模板
             StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, "UTF8");
+            Template tpl = Velocity.getTemplate(template, Constants.UTF8);
             tpl.merge(context, sw);
             try {
                 // 添加到zip
                 zip.putNextEntry(new ZipEntry(VelocityUtils.getFileName(template, table)));
-                IOUtils.write(sw.toString(), zip, "UTF8");
+                IOUtils.write(sw.toString(), zip, Constants.UTF8);
                 IOUtils.closeQuietly(sw);
                 zip.flush();
                 zip.closeEntry();

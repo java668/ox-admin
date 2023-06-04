@@ -17,7 +17,9 @@ import java.util.Date;
  **/
 @Setter
 @Getter
-public class SuperEntity<T extends Model<?>> extends Model<T> {
+public class BaseEntity<T extends Model<?>> extends Model<T> {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 创建人
