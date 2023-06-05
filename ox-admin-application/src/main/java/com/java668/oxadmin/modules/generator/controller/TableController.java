@@ -69,7 +69,7 @@ public class TableController {
      * 修改保存代码生成业务
      */
     @PutMapping
-    public R<Boolean> update(@Validated @RequestBody TableReqDTO genTable) {
+    public R<Integer> update(@Validated @RequestBody TableReqDTO genTable) {
         return R.success(tableService.update(genTable));
     }
 

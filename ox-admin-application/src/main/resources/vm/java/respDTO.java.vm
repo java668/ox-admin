@@ -1,4 +1,4 @@
-package ${packageName}.entity;
+package ${packageName}.dto.response;
 
 #foreach ($import in $importList)
 import ${import};

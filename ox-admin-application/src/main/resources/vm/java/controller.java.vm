@@ -3,8 +3,9 @@ package ${packageName}.controller;
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import ${packageName}.domain.${ClassName};
+import ${packageName}.dto.request.SystUserPageReqDTO;
+import ${packageName}.dto.request.SystUserReqDTO;
+import ${packageName}.dto.response.SystUserRespDTO;
 import ${packageName}.service.I${ClassName}Service;
 import lombok.RequiredArgsConstructor;
 import com.java668.common.model.R;
@@ -59,7 +60,7 @@ public class ${ClassName}Controller {
     @PreAuthorize("hasAuthority('${permissionPrefix}:edit')")
     @PutMapping
     public R<Integer> update(@RequestBody ${ClassName}ReqDTO body) {
-        return R.success(${className}Service.update(${className}));
+        return R.success(${className}Service.update(body));
     }
 
     /**
@@ -83,7 +84,7 @@ public class ${ClassName}Controller {
     @PreAuthorize("hasAuthority('${permissionPrefix}:list')")
     @GetMapping("/list")
     #if($table.crud || $table.sub)
-    public R<PageResult<${ClassName}RespDTO>> page(${ClassName}PageReqDTO req}) {
+    public R<PageResult<${ClassName}RespDTO>> page(${ClassName}PageReqDTO req) {
         return R.success(${className}Service.page(req));
     }
     #elseif($table.tree)

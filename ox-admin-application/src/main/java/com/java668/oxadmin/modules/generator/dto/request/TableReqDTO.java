@@ -1,10 +1,7 @@
 package com.java668.oxadmin.modules.generator.dto.request;
 
-import com.java668.common.model.PageParam;
-import com.java668.oxadmin.modules.generator.dto.response.TableColumnRespDTO;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +9,7 @@ import java.util.Map;
 /**
  * 业务表 gen_table
  *
- * @author ruoyi
+ * @author jerry.chen
  */
 @Data
 public class TableReqDTO {
@@ -126,6 +123,9 @@ public class TableReqDTO {
      */
     private String parentMenuName;
 
+    /**
+     * TableColumnReqDTO
+     */
     private List<TableColumnReqDTO> columns;
 
     /**

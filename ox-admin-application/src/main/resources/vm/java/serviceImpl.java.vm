@@ -2,7 +2,19 @@ package ${packageName}.service.impl;
 
 import java.util.List;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import com.java668.common.model.PageResult;
+import ${packageName}.dto.request.SystUserReqDTO;
+import ${packageName}.dto.response.SystUserRespDTO;
+import ${packageName}.dto.request.SystUserPageReqDTO;
+
 #if($table.sub)
 import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +38,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     /**
      * 新增${functionName}
      *
-     * @param ${className} ${functionName}
+     * @param body ${functionName}
      * @return 结果
      */
     #if($table.sub)
@@ -40,7 +52,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         return rows;
     #else
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
-        return baseMapper.insert(entity);;
+        return baseMapper.insert(entity);
     #end
     }
 
@@ -64,14 +76,14 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     /**
      * 修改${functionName}
      * 
-     * @param ${className} ${functionName}
+     * @param body ${functionName}
      * @return 结果
      */
 #if($table.sub)
     @Transactional
 #end
     @Override
-    public Integer update${ClassName}(${ClassName} ${className}) {
+    public Integer update(${ClassName}ReqDTO body) {
 #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
@@ -100,7 +112,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * @return ${functionName}
      */
     @Override
-    public PageResult<${ClassName}RespDTO> page(${ClassName}PageReqDTO req);
+    public PageResult<${ClassName}RespDTO> page(${ClassName}PageReqDTO req) {
         LambdaQueryWrapper<${ClassName}> queryWrapper = Wrappers.lambdaQuery();
 #foreach($column in $columns)
     #set($queryType=$column.queryType)

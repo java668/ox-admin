@@ -10,7 +10,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
     </resultMap>
 #if($table.sub)
-
     <resultMap id="${ClassName}${subClassName}Result" type="${ClassName}" extends="${ClassName}Result">
         <collection property="${subclassName}List" notNullColumn="sub_${subTable.pkColumn.columnName}" javaType="java.util.List" resultMap="${subClassName}Result" />
     </resultMap>
@@ -21,7 +20,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
     </resultMap>
 #end
-
 #if($table.sub)
     <select id="select${ClassName}By${pkColumn.capJavaField}" parameterType="${pkColumn.javaType}" resultMap="#if($table.sub)${ClassName}${subClassName}Result#else${ClassName}Result#end">
         select#foreach($column in $columns) a.$column.columnName#if($foreach.count != $columns.size()),#end#end,
@@ -39,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 #if($table.sub)
-    
+
     <delete id="delete${subClassName}By${subTableFkClassName}s" parameterType="String">
         delete from ${subTableName} where ${subTableFkName} in 
         <foreach item="${subTableFkclassName}" collection="array" open="(" separator="," close=")">

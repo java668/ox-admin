@@ -1,9 +1,10 @@
 package ${packageName}.mapper;
 
 import java.util.List;
-import ${packageName}.domain.${ClassName};
+import com.java668.common.db.mapper.EasyBaseMapper;
+import ${packageName}.entity.${ClassName};
 #if($table.sub)
-import ${packageName}.domain.${subClassName};
+import ${packageName}.entity.${subClassName};
 #end
 
 /**

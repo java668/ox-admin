@@ -30,7 +30,7 @@ public class VelocityUtils {
     /**
      * 默认上级菜单，系统工具
      */
-    private static final String DEFAULT_PARENT_MENU_ID = "3";
+    private static final String DEFAULT_PARENT_MENU_ID = "0";
 
     /**
      * 设置模板变量信息

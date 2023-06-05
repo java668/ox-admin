@@ -60,7 +60,7 @@ public interface ITableService extends IService<Table> {
      * @param genTable
      * @return
      */
-    Boolean update(TableReqDTO genTable);
+    Integer update(TableReqDTO genTable);
 
     Map<String, String> previewCode(Long tableId);
 

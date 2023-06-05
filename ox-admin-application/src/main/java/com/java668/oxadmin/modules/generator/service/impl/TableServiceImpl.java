@@ -114,7 +114,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean update(TableReqDTO genTable) {
+    public Integer update(TableReqDTO genTable) {
         validate(genTable);
         String options = JSON.toJSONString(genTable.getParams());
         genTable.setOptions(options);
@@ -125,7 +125,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
                 tableColumnService.update(tableColumn);
             }
         }
-        return null;
+        return row;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ${packageName}.entity;
+package ${packageName}.dto.request;
 
 #foreach ($import in $importList)
 import ${import};
@@ -19,9 +19,6 @@ public class ${ClassName}PageReqDTO extends PageParam {
     private static final long serialVersionUID = 1L;
 #foreach($column in $columns)
     #if(!$table.isSuperColumn($column.javaField))
-    /**
-     * $column.columnComment
-     */
     #set($queryType=$column.queryType)
     #set($javaField=$column.javaField)
     #set($javaType=$column.javaType)
@@ -29,9 +26,18 @@ public class ${ClassName}PageReqDTO extends PageParam {
     #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
     #if($column.query)
 #if($queryType == "BETWEEN")
+    /**
+     * $column.columnComment 开始区间
+     */
     private $column.javaType begin$AttrName;
+    /**
+     * $column.columnComment 结束区间
+     */
     private $column.javaType end$AttrName;
 #else
+    /**
+     * $column.columnComment
+     */
     private $column.javaType $column.javaField;
 #end
     #end

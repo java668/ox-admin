@@ -1,19 +1,21 @@
-package com.java668.oxadmin.system.service;
+package com.java668.oxadmin.test.service;
+
+import java.util.List;
+
+import com.java668.oxadmin.test.entity.SystUser;
+import com.java668.oxadmin.test.dto.request.SystUserPageReqDTO;
+import com.java668.oxadmin.test.dto.request.SystUserReqDTO;
+import com.java668.oxadmin.test.dto.response.SystUserRespDTO;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.java668.common.model.PageResult;
-import com.java668.oxadmin.system.dto.request.SystUserPageReqDTO;
-import com.java668.oxadmin.system.dto.request.SystUserReqDTO;
-import com.java668.oxadmin.system.dto.response.SystUserRespDTO;
-import com.java668.oxadmin.system.entity.SystUser;
 
-import java.util.List;
 
 /**
  * 系统用户Service接口
  *
  * @author jerry.chen
- * @date 2023-06-04 17:20:10
+ * @date 2023-06-05 22:45:17
  */
 public interface ISystUserService extends IService<SystUser> {
 
@@ -23,7 +25,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param body
      * @return
      */
-    int add(SystUserReqDTO body);
+    Integer add(SystUserReqDTO body);
 
     /**
      * 删除系统用户
@@ -31,7 +33,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param ids
      * @return
      */
-    int remove(List<Long> ids);
+    Integer remove(List<Long> ids);
 
     /**
      * 更新系统用户
@@ -39,7 +41,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param body
      * @return
      */
-    int update(SystUserReqDTO body);
+    Integer update(SystUserReqDTO body);
 
     /**
      * 获取系统用户详细信息
@@ -56,4 +58,5 @@ public interface ISystUserService extends IService<SystUser> {
      * @return
      */
     PageResult<SystUserRespDTO> page(SystUserPageReqDTO req);
+
 }

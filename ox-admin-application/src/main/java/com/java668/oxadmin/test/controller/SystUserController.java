@@ -1,26 +1,25 @@
-package com.java668.oxadmin.system.controller;
-
-import com.java668.common.model.PageResult;
-import com.java668.common.model.R;
-import com.java668.oxadmin.system.dto.request.SystUserPageReqDTO;
-import com.java668.oxadmin.system.dto.request.SystUserReqDTO;
-import com.java668.oxadmin.system.dto.response.SystUserRespDTO;
-import com.java668.oxadmin.system.service.ISystUserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+package com.java668.oxadmin.test.controller;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import com.java668.oxadmin.test.dto.request.SystUserPageReqDTO;
+import com.java668.oxadmin.test.dto.request.SystUserReqDTO;
+import com.java668.oxadmin.test.dto.response.SystUserRespDTO;
+import com.java668.oxadmin.test.service.ISystUserService;
+import lombok.RequiredArgsConstructor;
+import com.java668.common.model.R;
+import com.java668.common.model.PageResult;
 
 /**
  * 系统用户Controller
- *
+ * 
  * @author jerry.chen
- * @date 2023-06-04 17:20:10
+ * @date 2023-06-05 22:45:17
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/user")
+@RequestMapping("/test/user")
 public class SystUserController {
 
     private final ISystUserService systUserService;
@@ -31,7 +30,7 @@ public class SystUserController {
      * @param body
      * @return
      */
-    @PreAuthorize("hasAuthority('system:user:add')")
+    @PreAuthorize("hasAuthority('test:user:add')")
     @PostMapping
     public R<Integer> add(@RequestBody SystUserReqDTO body) {
         return R.success(systUserService.add(body));
@@ -43,7 +42,7 @@ public class SystUserController {
      * @param ids
      * @return
      */
-    @PreAuthorize("hasAuthority('system:user:remove')")
+    @PreAuthorize("hasAuthority('test:user:remove')")
     @DeleteMapping("/{ids}")
     public R<Integer> remove(@PathVariable List<Long> ids) {
         return R.success(systUserService.remove(ids));
@@ -55,7 +54,7 @@ public class SystUserController {
      * @param body
      * @return
      */
-    @PreAuthorize("hasAuthority('system:user:edit')")
+    @PreAuthorize("hasAuthority('test:user:edit')")
     @PutMapping
     public R<Integer> update(@RequestBody SystUserReqDTO body) {
         return R.success(systUserService.update(body));
@@ -67,7 +66,7 @@ public class SystUserController {
      * @param id
      * @return
      */
-    @PreAuthorize("hasAuthority('system:user:query')")
+    @PreAuthorize("hasAuthority('test:user:query')")
     @GetMapping(value = "/{id}")
     public R<SystUserRespDTO> detail(@PathVariable("id") Long id) {
         return R.success(systUserService.detail(id));
@@ -79,9 +78,10 @@ public class SystUserController {
      * @param req
      * @return
      */
-    @PreAuthorize("hasAuthority('system:user:page')")
-    @GetMapping("/page")
+    @PreAuthorize("hasAuthority('test:user:list')")
+    @GetMapping("/list")
     public R<PageResult<SystUserRespDTO>> page(SystUserPageReqDTO req) {
         return R.success(systUserService.page(req));
     }
+
 }
