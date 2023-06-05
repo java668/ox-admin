@@ -59,15 +59,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Boolean add(MenuReqDTO body) {
+    public Integer add(MenuReqDTO body) {
         checkParams(body);
         Menu menu = BeanUtil.copyProperties(body, Menu.class);
-        return save(menu);
+        return baseMapper.insert(menu);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean delete(List<Long> ids) {
+    public Integer delete(List<Long> ids) {
         // 查询是否有子菜单
         List<Menu> menuList = listByPids(ids);
         if (CollUtil.isNotEmpty(menuList)) {
@@ -76,19 +76,19 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 删除菜单关联关系
         roleMenuService.deleteByMenuIds(ids);
         // 删除菜单
-        return removeBatchByIds(ids);
+        return baseMapper.deleteBatchIds(ids);
     }
 
     @Override
-    public Boolean update(MenuReqDTO body) {
+    public Integer update(MenuReqDTO body) {
         checkParams(body);
         Menu menu = BeanUtil.copyProperties(body, Menu.class);
-        return updateById(menu);
+        return baseMapper.updateById(menu);
     }
 
     @Override
     public MenuRespDTO get(Long id) {
-        Menu menu = getById(id);
+        Menu menu = baseMapper.selectById(id);
         return BeanUtil.copyProperties(menu, MenuRespDTO.class);
     }
 
@@ -172,12 +172,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     private List<Menu> listByPid(Long pid) {
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.<Menu>lambdaQuery().eq(Menu::getPid, pid);
-        return list(queryWrapper);
+        return baseMapper.selectList(queryWrapper);
     }
 
     private List<Menu> listByPids(List<Long> pids) {
         LambdaQueryWrapper<Menu> queryWrapper = Wrappers.<Menu>lambdaQuery().in(Menu::getPid, pids);
-        return list(queryWrapper);
+        return baseMapper.selectList(queryWrapper);
     }
 
     private List<Tree<Long>> buildTree(List<Menu> menuList) {

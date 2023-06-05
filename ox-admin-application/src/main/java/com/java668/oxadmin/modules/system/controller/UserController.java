@@ -40,7 +40,7 @@ public class UserController {
     @PostMapping
     @ApiOperation("新增用户")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public R<Boolean> add(@RequestBody @Validated(Insert.class) UserReqDTO body) {
+    public R<Integer> add(@RequestBody @Validated(Insert.class) UserReqDTO body) {
         return R.success(userService.add(body));
     }
 
@@ -53,7 +53,7 @@ public class UserController {
     @DeleteMapping
     @ApiOperation("删除用户")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<Boolean> delete(@RequestParam(name = "ids") List<Long> ids) {
+    public R<Integer> delete(@RequestParam(name = "ids") List<Long> ids) {
         return R.success(userService.delete(ids));
     }
 
@@ -66,7 +66,7 @@ public class UserController {
     @PatchMapping
     @ApiOperation("更新用户")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<Boolean> update(@RequestBody @Validated(Update.class) UserReqDTO body) {
+    public R<Integer> update(@RequestBody @Validated(Update.class) UserReqDTO body) {
         return R.success(userService.update(body));
     }
 
@@ -105,7 +105,7 @@ public class UserController {
     @ApiOperation("修改用户状态")
     @PatchMapping("/{userId}/changeStatus")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public R<Boolean> changeStatus(@PathVariable(name = "userId") Long userId,
+    public R<Integer> changeStatus(@PathVariable(name = "userId") Long userId,
                                    @RequestParam(name = "status") Integer status) {
         return R.success(userService.changeStatus(userId, status));
     }
@@ -119,7 +119,7 @@ public class UserController {
     @ApiOperation("修改密码")
     @PatchMapping(value = "/modifyPass")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public R<Boolean> modifyPass(@RequestBody @Validated UserPassReqDTO dto) {
+    public R<Integer> modifyPass(@RequestBody @Validated UserPassReqDTO dto) {
         return R.success(userService.modifyPass(dto));
     }
 

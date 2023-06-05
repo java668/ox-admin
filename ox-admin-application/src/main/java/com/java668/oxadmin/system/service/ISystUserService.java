@@ -23,7 +23,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param body
      * @return
      */
-    Boolean add(SystUserReqDTO body);
+    int add(SystUserReqDTO body);
 
     /**
      * 删除系统用户
@@ -31,7 +31,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param ids
      * @return
      */
-    Boolean remove(List<Long> ids);
+    int remove(List<Long> ids);
 
     /**
      * 更新系统用户
@@ -39,7 +39,7 @@ public interface ISystUserService extends IService<SystUser> {
      * @param body
      * @return
      */
-    Boolean update(SystUserReqDTO body);
+    int update(SystUserReqDTO body);
 
     /**
      * 获取系统用户详细信息

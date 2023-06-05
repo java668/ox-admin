@@ -33,7 +33,7 @@ public class SystUserController {
      */
     @PreAuthorize("hasAuthority('system:user:add')")
     @PostMapping
-    public R<Boolean> add(@RequestBody SystUserReqDTO body) {
+    public R<Integer> add(@RequestBody SystUserReqDTO body) {
         return R.success(systUserService.add(body));
     }
 
@@ -45,7 +45,7 @@ public class SystUserController {
      */
     @PreAuthorize("hasAuthority('system:user:remove')")
     @DeleteMapping("/{ids}")
-    public R<Boolean> remove(@PathVariable List<Long> ids) {
+    public R<Integer> remove(@PathVariable List<Long> ids) {
         return R.success(systUserService.remove(ids));
     }
 
@@ -57,7 +57,7 @@ public class SystUserController {
      */
     @PreAuthorize("hasAuthority('system:user:edit')")
     @PutMapping
-    public R<Boolean> update(@RequestBody SystUserReqDTO body) {
+    public R<Integer> update(@RequestBody SystUserReqDTO body) {
         return R.success(systUserService.update(body));
     }
 

@@ -44,33 +44,33 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     private final UserRoleService userRoleService;
 
     @Override
-    public Boolean add(RoleReqDTO body) {
+    public Integer add(RoleReqDTO body) {
         checkParams(body);
         Role role = BeanUtil.copyProperties(body, Role.class);
-        return save(role);
+        return baseMapper.insert(role);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean delete(List<Long> ids) {
+    public Integer delete(List<Long> ids) {
         // 删除角色菜单关系
         roleMenuService.deleteByRoleIds(ids);
         // 删除用户角色关系
         userRoleService.deleteByRoleIds(ids);
         // 删除角色
-        return removeBatchByIds(ids);
+        return baseMapper.deleteBatchIds(ids);
     }
 
     @Override
-    public Boolean update(RoleReqDTO body) {
+    public Integer update(RoleReqDTO body) {
         checkParams(body);
         Role role = BeanUtil.copyProperties(body, Role.class);
-        return updateById(role);
+        return baseMapper.updateById(role);
     }
 
     @Override
     public RoleRespDTO get(Long id) {
-        Role role = getById(id);
+        Role role = baseMapper.selectById(id);
         List<RoleMenu> roleMenuList = roleMenuService.listByRoleId(id);
         Set<Long> menuList = roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toSet());
         RoleRespDTO roleRespDTO = BeanUtil.copyProperties(role, RoleRespDTO.class);
@@ -105,13 +105,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         );
         queryWrapper.ge(StrUtil.isNotBlank(params.getStartTime()), Role::getCreateTime, params.getStartTime());
         queryWrapper.le(StrUtil.isNotBlank(params.getEndTime()), Role::getCreateTime, params.getEndTime());
-        Page<Role> resultPage = page(page, queryWrapper);
+        Page<Role> resultPage = baseMapper.selectPage(page, queryWrapper);
         return PageResult.of(resultPage, RoleRespDTO.class);
     }
 
     private void checkParams(RoleReqDTO body) {
         // 检查角色名是否重复
-        if(ObjectUtil.isNotNull(getByName(body.getId(), body.getName()))) {
+        if (ObjectUtil.isNotNull(getByName(body.getId(), body.getName()))) {
             throw new BusinessException("角色名称已存在，请重新输入");
         }
         // 检查角色编码是否重复

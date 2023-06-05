@@ -21,21 +21,21 @@ public interface MenuService extends IService<Menu> {
      * @param body
      * @return
      */
-    Boolean add(MenuReqDTO body);
+    Integer add(MenuReqDTO body);
 
     /**
      * 删除菜单
      * @param ids
      * @return
      */
-    Boolean delete(List<Long> ids);
+    Integer delete(List<Long> ids);
 
     /**
      * 修改菜单
      * @param body
      * @return
      */
-    Boolean update(MenuReqDTO body);
+    Integer update(MenuReqDTO body);
 
     /**
      * 查询菜单详情

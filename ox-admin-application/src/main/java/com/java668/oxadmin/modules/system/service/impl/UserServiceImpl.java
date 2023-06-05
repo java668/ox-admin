@@ -48,18 +48,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean add(UserReqDTO body) {
+    public Integer add(UserReqDTO body) {
         checkParams(body);
         User entity = BeanUtil.copyProperties(body, User.class, "id");
         entity.setPassword(passwordEncoder.encode(body.getPass()));
-        boolean saveRes = save(entity);
+        Integer result = baseMapper.insert(entity);
         userRoleService.batchSave(entity.getId(), body.getRoles());
-        return saveRes;
+        return result;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean delete(List<Long> ids) {
+    public Integer delete(List<Long> ids) {
         // 不能删除自己
         Long userId = AuthUtils.getUserId();
         if (CollUtil.contains(ids, userId)) {
@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 删除用户角色
         userRoleService.deleteByUserIds(ids);
         // 删除用户
-        boolean result = removeBatchByIds(ids);
+        int result = baseMapper.deleteBatchIds(ids);
         // 清除 session
         authService.removeUserSession(ids);
         return result;
@@ -76,10 +76,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean update(UserReqDTO body) {
+    public Integer update(UserReqDTO body) {
         checkParams(body);
         User user = BeanUtil.copyProperties(body, User.class);
-        boolean result = updateById(user);
+        int result = baseMapper.updateById(user);
         List<Long> roles = body.getRoles();
         if (CollUtil.isNotEmpty(roles)) {
             userRoleService.updateByUserId(user.getId(), roles);
@@ -115,7 +115,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.ge(StrUtil.isNotBlank(params.getStartTime()), User::getCreateTime, params.getStartTime());
         queryWrapper.le(StrUtil.isNotBlank(params.getEndTime()), User::getCreateTime, params.getEndTime());
         queryWrapper.eq(Objects.nonNull(params.getEnabled()), User::getEnabled, params.getEnabled());
-        Page<User> resultPage = page(page, queryWrapper);
+        Page<User> resultPage = baseMapper.selectPage(page, queryWrapper);
         return PageResult.of(resultPage, UserRespDTO.class);
     }
 
@@ -127,15 +127,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery()
                 .eq(User::getUsername, username)
                 .ne(ObjectUtil.isNotNull(userId), User::getId, userId);
-        return getOne(wrapper);
+        return baseMapper.selectOne(wrapper);
     }
 
     @Override
-    public Boolean changeStatus(Long userId, Integer status) {
+    public Integer changeStatus(Long userId, Integer status) {
         User entity = new User();
         entity.setId(userId);
         entity.setEnabled(status);
-        boolean result = updateById(entity);
+        int result = baseMapper.updateById(entity);
         if (status == 1) {
             authService.removeUserSession(userId);
         }
@@ -143,19 +143,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Boolean modifyPass(UserPassReqDTO dto) {
+    public Integer modifyPass(UserPassReqDTO dto) {
         Long userId = AuthUtils.getUserId();
         User user = getById(userId);
-        if(!passwordEncoder.matches(dto.getOldPass(), user.getPassword())){
+        if (!passwordEncoder.matches(dto.getOldPass(), user.getPassword())) {
             throw new BusinessException("修改失败，旧密码错误");
         }
-        if(passwordEncoder.matches(dto.getNewPass(), user.getPassword())){
+        if (passwordEncoder.matches(dto.getNewPass(), user.getPassword())) {
             throw new BusinessException("新密码不能与旧密码相同");
         }
         User entity = new User();
         entity.setId(userId);
         entity.setPassword(passwordEncoder.encode(dto.getNewPass()));
-        return updateById(entity);
+        return baseMapper.updateById(entity);
     }
 
     /**
@@ -171,7 +171,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery()
                 .eq(User::getEmail, email)
                 .ne(ObjectUtil.isNotNull(userId), User::getId, userId);
-        return getOne(wrapper);
+        return baseMapper.selectOne(wrapper);
     }
 
     /**

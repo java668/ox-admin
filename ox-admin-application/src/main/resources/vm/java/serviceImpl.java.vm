@@ -33,14 +33,14 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     @Transactional
     #end
     @Override
-    public Boolean add(${ClassName}ReqDTO body) {
+    public Integer add(${ClassName}ReqDTO body) {
     #if($table.sub)
         int rows = ${className}Mapper.insert${ClassName}(${className});
         insert${subClassName}(${className});
         return rows;
     #else
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
-        return save(entity);
+        return baseMapper.insert(entity);;
     #end
     }
 
@@ -54,11 +54,11 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     @Transactional
     #end
     @Override
-    public Boolean remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
+    public Integer remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
         #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
         #end
-        return removeBatchByIds(${pkColumn.javaField}s);
+        return baseMapper.deleteByIds(${pkColumn.javaField}s);
     }
 
     /**
@@ -71,13 +71,13 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     @Transactional
 #end
     @Override
-    public Boolean update${ClassName}(${ClassName} ${className}) {
+    public Integer update${ClassName}(${ClassName} ${className}) {
 #if($table.sub)
         ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
 #end
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
-        return updateById(entity);
+        return baseMapper.updateById(entity);
     }
 
 
@@ -89,7 +89,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      */
     @Override
     public ${ClassName}RespDTO detail(${pkColumn.javaType} ${pkColumn.javaField}) {
-        ${ClassName} entity = getById(${pkColumn.javaField});
+        ${ClassName} entity = baseMapper.selectById(${pkColumn.javaField});
         return BeanUtil.copyProperties(entity, ${ClassName}RespDTO.class);
     }
 
@@ -160,7 +160,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
 #end
     #end
 #end
-        Page<${ClassName}> page = page(req.buildPage(), queryWrapper);
+        Page<${ClassName}> page = baseMapper.selectPage(req.buildPage(), queryWrapper);
         return PageResult.of(page, ${ClassName}RespDTO.class);
     }
 

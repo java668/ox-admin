@@ -25,7 +25,7 @@ public interface I${ClassName}Service extends IService<${ClassName}> {
      * @param body
      * @return
      */
-    Boolean add(${ClassName}ReqDTO body);
+    Integer add(${ClassName}ReqDTO body);
 
     /**
      * 删除${functionName}
@@ -33,7 +33,7 @@ public interface I${ClassName}Service extends IService<${ClassName}> {
      * @param ${pkColumn.javaField}s
      * @return
      */
-    Boolean remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s);
+    Integer remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s);
 
     /**
      * 更新${functionName}
@@ -41,7 +41,7 @@ public interface I${ClassName}Service extends IService<${ClassName}> {
      * @param body
      * @return
      */
-    Boolean update(${ClassName}ReqDTO body);
+    Integer update(${ClassName}ReqDTO body);
 
     /**
      * 获取${functionName}详细信息

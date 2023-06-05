@@ -34,7 +34,7 @@ public class ${ClassName}Controller {
      */
     @PreAuthorize("hasAuthority('${permissionPrefix}:add')")
     @PostMapping
-    public R<Boolean> add(@RequestBody ${ClassName}ReqDTO body) {
+    public R<Integer> add(@RequestBody ${ClassName}ReqDTO body) {
         return R.success(${className}Service.add(body));
     }
 
@@ -45,8 +45,8 @@ public class ${ClassName}Controller {
      * @return
      */
     @PreAuthorize("hasAuthority('${permissionPrefix}:remove')")
-	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public R<Boolean> remove(@PathVariable List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
+    @DeleteMapping("/{${pkColumn.javaField}s}")
+    public R<Integer> remove(@PathVariable List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
         return R.success(${className}Service.remove(${pkColumn.javaField}s));
     }
 
@@ -58,7 +58,7 @@ public class ${ClassName}Controller {
      */
     @PreAuthorize("hasAuthority('${permissionPrefix}:edit')")
     @PutMapping
-    public R<Boolean> update(@RequestBody ${ClassName}ReqDTO body) {
+    public R<Integer> update(@RequestBody ${ClassName}ReqDTO body) {
         return R.success(${className}Service.update(${className}));
     }
 

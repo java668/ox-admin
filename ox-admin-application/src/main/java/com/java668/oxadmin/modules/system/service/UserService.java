@@ -23,7 +23,7 @@ public interface UserService extends IService<User> {
      * @param body
      * @return
      */
-    Boolean add(UserReqDTO body);
+    Integer add(UserReqDTO body);
 
     /**
      * 删除用户
@@ -31,7 +31,7 @@ public interface UserService extends IService<User> {
      * @param ids
      * @return
      */
-    Boolean delete(List<Long> ids);
+    Integer delete(List<Long> ids);
 
     /**
      * 更新用户
@@ -39,7 +39,7 @@ public interface UserService extends IService<User> {
      * @param body
      * @return
      */
-    Boolean update(UserReqDTO body);
+    Integer update(UserReqDTO body);
 
     /**
      * 获取用户详情
@@ -73,7 +73,7 @@ public interface UserService extends IService<User> {
      * @param status
      * @return
      */
-    Boolean changeStatus(Long userId, Integer status);
+    Integer changeStatus(Long userId, Integer status);
 
     /**
      * 修改密码
@@ -81,5 +81,5 @@ public interface UserService extends IService<User> {
      * @param dto
      * @return
      */
-    Boolean modifyPass(UserPassReqDTO dto);
+    Integer modifyPass(UserPassReqDTO dto);
 }

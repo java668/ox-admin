@@ -22,21 +22,21 @@ public interface RoleService extends IService<Role> {
      * @param body
      * @return
      */
-    Boolean add(RoleReqDTO body);
+    Integer add(RoleReqDTO body);
 
     /**
      * 批量删除
      * @param ids
      * @return
      */
-    Boolean delete(List<Long> ids);
+    Integer delete(List<Long> ids);
 
     /**
      * 修改角色
      * @param body
      * @return
      */
-    Boolean update(RoleReqDTO body);
+    Integer update(RoleReqDTO body);
 
     /**
      * 查询角色详情

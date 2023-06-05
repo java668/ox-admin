@@ -29,25 +29,25 @@ import java.util.List;
 public class SystUserServiceImpl extends ServiceImpl<SystUserMapper, SystUser> implements ISystUserService {
 
     @Override
-    public Boolean add(SystUserReqDTO body) {
+    public int add(SystUserReqDTO body) {
         SystUser entity = BeanUtil.copyProperties(body, SystUser.class);
-        return save(entity);
+        return baseMapper.insert(entity);
     }
 
     @Override
-    public Boolean remove(List<Long> ids) {
-        return removeBatchByIds(ids);
+    public int remove(List<Long> ids) {
+        return baseMapper.deleteByIds(ids);
     }
 
     @Override
-    public Boolean update(SystUserReqDTO body) {
+    public int update(SystUserReqDTO body) {
         SystUser entity = BeanUtil.copyProperties(body, SystUser.class);
-        return updateById(entity);
+        return baseMapper.updateById(entity);
     }
 
     @Override
     public SystUserRespDTO detail(Long id) {
-        SystUser entity = getById(id);
+        SystUser entity = baseMapper.selectById(id);
         return BeanUtil.copyProperties(entity, SystUserRespDTO.class);
     }
 
@@ -55,7 +55,7 @@ public class SystUserServiceImpl extends ServiceImpl<SystUserMapper, SystUser> i
     public PageResult<SystUserRespDTO> page(SystUserPageReqDTO req) {
         LambdaQueryWrapper<SystUser> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StrUtil.isNotBlank(req.getUsername()), SystUser::getUsername, req.getUsername());
-        Page<SystUser> page = page(req.buildPage(), queryWrapper);
+        Page<SystUser> page = baseMapper.selectPage(req.buildPage(), queryWrapper);
         return PageResult.of(page, SystUserRespDTO.class);
     }
 }

@@ -37,7 +37,7 @@ public class RoleController {
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiOperation("新增角色")
-    public R<Boolean> add(@RequestBody @Validated RoleReqDTO body) {
+    public R<Integer> add(@RequestBody @Validated RoleReqDTO body) {
         return R.success(roleService.add(body));
     }
 
@@ -50,7 +50,7 @@ public class RoleController {
     @DeleteMapping
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("删除角色")
-    public R<Boolean> delete(@RequestParam(name = "ids") List<Long> ids) {
+    public R<Integer> delete(@RequestParam(name = "ids") List<Long> ids) {
         return R.success(roleService.delete(ids));
     }
 
@@ -63,7 +63,7 @@ public class RoleController {
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("修改角色")
-    public R<Boolean> update(@RequestBody @Validated RoleReqDTO body) {
+    public R<Integer> update(@RequestBody @Validated RoleReqDTO body) {
         return R.success(roleService.update(body));
     }
 

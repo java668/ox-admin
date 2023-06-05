@@ -34,14 +34,14 @@ public class MenuController {
     @PostMapping
     @ApiOperation("新增菜单")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public R<Boolean> add(@RequestBody @Validated(Insert.class) MenuReqDTO body) {
+    public R<Integer> add(@RequestBody @Validated(Insert.class) MenuReqDTO body) {
         return R.success(menuService.add(body));
     }
 
     @DeleteMapping
     @ApiOperation("删除菜单")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<Boolean> delete(@Size(min = 1, max = 5, message = "批量删除个数须在{min}-{max}范围")
+    public R<Integer> delete(@Size(min = 1, max = 5, message = "批量删除个数须在{min}-{max}范围")
                              @RequestParam(name = "ids", required = true) List<Long> ids) {
         return R.success(menuService.delete(ids));
     }
@@ -49,7 +49,7 @@ public class MenuController {
     @PatchMapping
     @ApiOperation("修改菜单")
     @PreAuthorize("hasRole('ADMIN')")
-    public R<Boolean> update(@RequestBody @Validated(Update.class) MenuReqDTO body) {
+    public R<Integer> update(@RequestBody @Validated(Update.class) MenuReqDTO body) {
         return R.success(menuService.update(body));
     }
 
