@@ -24,7 +24,7 @@
       <el-form-item label="${comment}" prop="${column.javaField}">
         <el-select v-model="queryParams.${column.javaField}" placeholder="请选择${comment}" clearable>
           <el-option
-            v-for="dict in dict.type.${dictType}"
+            v-for="dict in $dict.${dictType}.values"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
@@ -123,9 +123,9 @@
       <el-table-column label="${comment}" align="center" prop="${javaField}">
         <template slot-scope="scope">
 #if($column.htmlType == "checkbox")
-          <dict-tag :options="dict.type.${column.dictType}" :value="scope.row.${javaField} ? scope.row.${javaField}.split(',') : []"/>
+          <dict-tag :options="$dict.${column.dictType}.values" :value="scope.row.${javaField} ? scope.row.${javaField}.split(',') : []"/>
 #else
-          <dict-tag :options="dict.type.${column.dictType}" :value="scope.row.${javaField}"/>
+          <dict-tag :options="$dict.${column.dictType}.values" :value="scope.row.${javaField}"/>
 #end
         </template>
       </el-table-column>
@@ -202,7 +202,7 @@
         <el-form-item label="${comment}" prop="${field}">
           <el-select v-model="form.${field}" placeholder="请选择${comment}">
             <el-option
-              v-for="dict in dict.type.${dictType}"
+              v-for="dict in $dict.${dictType}.values"
               :key="dict.value"
               :label="dict.label"
 #if($column.javaType == "Integer" || $column.javaType == "Long")
@@ -223,7 +223,7 @@
         <el-form-item label="${comment}" prop="${field}">
           <el-checkbox-group v-model="form.${field}">
             <el-checkbox
-              v-for="dict in dict.type.${dictType}"
+              v-for="dict in $dict.${dictType}.values"
               :key="dict.value"
               :label="dict.value">
               {{dict.label}}
@@ -240,7 +240,7 @@
         <el-form-item label="${comment}" prop="${field}">
           <el-radio-group v-model="form.${field}">
             <el-radio
-              v-for="dict in dict.type.${dictType}"
+              v-for="dict in $dict.${dictType}.values"
               :key="dict.value"
 #if($column.javaType == "Integer" || $column.javaType == "Long")
               :label="parseInt(dict.value)"
