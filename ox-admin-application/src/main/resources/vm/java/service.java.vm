@@ -57,6 +57,9 @@ public interface I${ClassName}Service extends IService<${ClassName}> {
      * @param req
      * @return
      */
+#if($table.crud || $table.sub)
     PageResult<${ClassName}RespDTO> page(${ClassName}PageReqDTO req);
-
+#elseif($table.tree)
+    List<${ClassName}RespDTO> list(${ClassName}PageReqDTO req);
+#end
 }

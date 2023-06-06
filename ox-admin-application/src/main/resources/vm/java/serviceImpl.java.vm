@@ -114,6 +114,7 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * @param req
      * @return ${functionName}
      */
+#if($table.crud || $table.sub)
     @Override
     public PageResult<${ClassName}RespDTO> page(${ClassName}PageReqDTO req) {
         LambdaQueryWrapper<${ClassName}> queryWrapper = Wrappers.lambdaQuery();
@@ -178,6 +179,71 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         Page<${ClassName}> page = baseMapper.selectPage(req.buildPage(), queryWrapper);
         return PageResult.of(page, ${ClassName}RespDTO.class);
     }
+#elseif($table.tree)
+    @Override
+    public List<${ClassName}RespDTO> list(${ClassName}PageReqDTO req) {
+        LambdaQueryWrapper<${ClassName}> queryWrapper = Wrappers.lambdaQuery();
+#foreach($column in $columns)
+#set($queryType=$column.queryType)
+#set($javaField=$column.javaField)
+#set($javaType=$column.javaType)
+#set($columnName=$column.columnName)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#if($column.query)
+#if($column.queryType == "EQ")
+    #if($javaType == 'String')
+        queryWrapper.eq(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.eq(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "NE")
+    #if($javaType == 'String')
+        queryWrapper.ne(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.ne(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "GT")
+    #if($javaType == 'String')
+        queryWrapper.gt(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.gt(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "GTE")
+    #if($javaType == 'String')
+        queryWrapper.ge(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.ge(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LT")
+    #if($javaType == 'String')
+        queryWrapper.lt(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.lt(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LTE")
+    #if($javaType == 'String')
+        queryWrapper.le(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.le(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "LIKE")
+    #if($javaType == 'String')
+        queryWrapper.like(StrUtil.isNotBlank(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #else
+        queryWrapper.like(ObjectUtil.isNotNull(req.get$AttrName()), ${ClassName}::get$AttrName, req.get$AttrName());
+    #end
+#elseif($queryType == "BETWEEN")
+    #if($javaType == 'String')
+        queryWrapper.between(StrUtil.isAllNotBlank(req.getBegin$AttrName(), req.getEnd$AttrName()), ${ClassName}::get$AttrName, req.getBegin$AttrName(), req.getEnd$AttrName());
+    #else
+        queryWrapper.between(ObjectUtil.isAllNotEmpty(req.getBegin$AttrName(), req.getEnd$AttrName()), ${ClassName}::get$AttrName, req.getBegin$AttrName(),req.getEnd$AttrName());
+    #end
+#end
+#end
+#end
+        return BeanUtil.copyToList(baseMapper.selectList(queryWrapper), ${ClassName}RespDTO.class);
+    }
+#end
 
 #if($table.sub)
 

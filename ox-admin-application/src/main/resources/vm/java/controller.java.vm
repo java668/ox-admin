@@ -88,11 +88,10 @@ public class ${ClassName}Controller {
         return R.success(${className}Service.page(req));
     }
     #elseif($table.tree)
-        public AjaxResult list(${ClassName} ${className})
-        {
-            List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
-            return success(list);
-        }
+    public R<List<${ClassName}RespDTO>> list(${ClassName}PageReqDTO req) {
+        List<${ClassName}RespDTO> list = ${className}Service.list(req);
+        return R.success(list);
+    }
     #end
 
 }

@@ -6,65 +6,49 @@ spring:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      # 初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
-      initial-size: 5
+      # 初始连接数
+      initialSize: 5
       # 最小连接池数量
-      min-idle: 5
+      minIdle: 10
       # 最大连接池数量
-      max-active: 50
-      # 获取连接时最大等待时间，单位毫秒。
-      max-wait: 60000
-      # 用来检测连接是否有效的sql
-      validation-query: SELECT 1 FROM DUAL
-      # 建议配置为true，不影响性能，并且保证安全性。
-      test-while-idle: true
-      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
-      test-on-borrow: true
-      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
-      test-on-return: false
-      #有两个含义：
-      #1) Destroy线程会检测连接的间隔时间，如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。
-      #2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
-      time-between-eviction-runs-millis: 2000
-      # 连接保持空闲而不被驱逐的最小时间
-      min-evictable-idle-time-millis: 30000
-      # 连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作。
-      keepAlive: true
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置连接超时时间
+      connectTimeout: 30000
+      # 配置网络超时时间
+      socketTimeout: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: oxadmin
+        login-password: 123456
       filter:
         stat:
           enabled: true
-          db-type: mysql
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
         wall:
-          enabled: true
-          db-type: mysql
-      ######### 配置statViewFilter（配置Druid后台管理Servlet页面），用于展示Druid的统计信息
-      stat-view-servlet:
-        # sql监控开关
-        enabled: true
-        # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
-        url-pattern: /druid/*
-        # 是否允许清空统计数据，重新计算  true:允许  false:不允许
-        reset-enable: true
-        # 配置监控页面访问账号密码
-        login-username: admin
-        login-password: admin
-        # 允许访问的地址，如果allow没有配置或者为空，则允许所有访问
-        allow: 127.0.0.1
-        # 拒绝访问的地址，deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝
-        deny:
-
-      ######### 配置WebStatFilter，用于采集web关联监控的数据#########
-      web-stat-filter:
-        # web url监控
-        enabled: true
-        # session监控
-        session-stat-enable: true
-        # session的最大个数，默认100
-        session-stat-max-count: 1000
-        # 过滤所有url
-        url-pattern: /*
-        # 排除一些不必要的url
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+          config:
+            multi-statement-allow: true
 
 # knife4j 接口文档
 knife4j:

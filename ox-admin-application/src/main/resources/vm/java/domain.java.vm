@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.java668.common.db.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 #elseif($table.tree)
-import com.java668.common.db.entity.TreeEntity;
+import com.java668.common.db.entity.BaseEntity;
 #end
 
 /**
@@ -22,7 +22,7 @@ import com.java668.common.db.entity.TreeEntity;
 #if($table.crud || $table.sub)
 #set($Entity="BaseEntity")
 #elseif($table.tree)
-#set($Entity="TreeEntity")
+#set($Entity="BaseEntity")
 #end
 @Data
 @ToString
