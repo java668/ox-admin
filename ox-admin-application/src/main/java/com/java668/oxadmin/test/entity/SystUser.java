@@ -56,6 +56,6 @@ public class SystUser extends BaseEntity {
     /**
      * 是否删除（0:否，1：是）
      */
-    private Long isDeleted;
+    private Integer isDeleted;
 
 }

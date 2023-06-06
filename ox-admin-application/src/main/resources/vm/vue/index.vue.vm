@@ -217,7 +217,7 @@
               :key="dict.value"
               :label="dict.label"
 #if($column.javaType == "Integer" || $column.javaType == "Long")
-              :value="parseInt(dict.value)"
+              :value="String(dict.value)"
 #else
               :value="dict.value"
 #end

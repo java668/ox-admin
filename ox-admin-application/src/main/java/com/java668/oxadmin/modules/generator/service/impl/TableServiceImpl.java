@@ -53,7 +53,7 @@ import java.util.zip.ZipOutputStream;
  * @author jerry.chen
  * @since 2023-06-02 10:23:29
  */
-@Service("tableService")
+@Service("tableService" )
 @RequiredArgsConstructor
 public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements ITableService {
 
@@ -73,12 +73,13 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
     @Override
     public JSONObject getInfo(Long tableId) {
         Table table = baseMapper.selectById(tableId);
+        setTableFromOptions(table);
         List<Table> tables = baseMapper.selectTableAll();
         List<TableColumnRespDTO> list = tableColumnService.listByTableId(tableId);
         JSONObject info = new JSONObject();
-        info.put("info", table);
-        info.put("rows", list);
-        info.put("tables", tables);
+        info.put("info" , table);
+        info.put("rows" , list);
+        info.put("tables" , tables);
         return info;
     }
 
@@ -99,7 +100,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
             GenUtils.initTable(table);
             int row = baseMapper.insert(table);
             if (row == 0) {
-                throw new BusinessException("插入失败");
+                throw new BusinessException("插入失败" );
             }
             // 保存列信息
             String tableName = table.getTableName();
@@ -178,7 +179,7 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
         // 获取模板列表
         List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
         for (String template : templates) {
-            if (!StringUtils.containsAny(template, "sql.vm", "api.js.vm", "index.vue.vm", "index-tree.vue.vm")) {
+            if (!StringUtils.containsAny(template, "sql.vm" , "api.js.vm" , "index.vue.vm" , "index-tree.vue.vm" )) {
                 // 渲染模板
                 StringWriter sw = new StringWriter();
                 Template tpl = Velocity.getTemplate(template, Constants.UTF8);
@@ -244,6 +245,28 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
     }
 
     /**
+     * 设置代码生成其他选项值
+     *
+     * @param genTable 设置后的生成对象
+     */
+    public void setTableFromOptions(Table genTable) {
+        com.alibaba.fastjson2.JSONObject paramsObj = JSON.parseObject(genTable.getOptions());
+        if (ObjectUtil.isNotNull(paramsObj)) {
+            String treeCode = paramsObj.getString(GenConstants.TREE_CODE);
+            String treeParentCode = paramsObj.getString(GenConstants.TREE_PARENT_CODE);
+            String treeName = paramsObj.getString(GenConstants.TREE_NAME);
+            String parentMenuId = paramsObj.getString(GenConstants.PARENT_MENU_ID);
+            String parentMenuName = paramsObj.getString(GenConstants.PARENT_MENU_NAME);
+
+            genTable.setTreeCode(treeCode);
+            genTable.setTreeParentCode(treeParentCode);
+            genTable.setTreeName(treeName);
+            genTable.setParentMenuId(parentMenuId);
+            genTable.setParentMenuName(parentMenuName);
+        }
+    }
+
+    /**
      * 设置主键列信息
      *
      * @param table 业务表信息
@@ -288,16 +311,16 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
             String options = JSON.toJSONString(genTable.getParams());
             com.alibaba.fastjson2.JSONObject paramsObj = JSON.parseObject(options);
             if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_CODE))) {
-                throw new BusinessException("树编码字段不能为空");
+                throw new BusinessException("树编码字段不能为空" );
             } else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_PARENT_CODE))) {
-                throw new BusinessException("树父编码字段不能为空");
+                throw new BusinessException("树父编码字段不能为空" );
             } else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_NAME))) {
-                throw new BusinessException("树名称字段不能为空");
+                throw new BusinessException("树名称字段不能为空" );
             } else if (GenConstants.TPL_SUB.equals(genTable.getTplCategory())) {
                 if (StringUtils.isEmpty(genTable.getSubTableName())) {
-                    throw new BusinessException("关联子表的表名不能为空");
+                    throw new BusinessException("关联子表的表名不能为空" );
                 } else if (StringUtils.isEmpty(genTable.getSubTableFkName())) {
-                    throw new BusinessException("子表关联的外键名不能为空");
+                    throw new BusinessException("子表关联的外键名不能为空" );
                 }
             }
         }
@@ -347,8 +370,8 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
      */
     public static String getGenPath(Table table, String template) {
         String genPath = table.getGenPath();
-        if (StringUtils.equals(genPath, "/")) {
-            return System.getProperty("user.dir") + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
+        if (StringUtils.equals(genPath, "/" )) {
+            return System.getProperty("user.dir" ) + File.separator + "src" + File.separator + VelocityUtils.getFileName(template, table);
         }
         return genPath + File.separator + VelocityUtils.getFileName(template, table);
     }

@@ -18,6 +18,7 @@ import ${packageName}.dto.request.${ClassName}PageReqDTO;
 #if($table.sub)
 import java.util.ArrayList;
 import cn.hutool.core.collection.CollUtil;
+import com.java668.common.utils.AuthUtils;
 import org.springframework.transaction.annotation.Transactional;
 import ${packageName}.entity.${subClassName};
 #end
@@ -49,8 +50,9 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     public Integer add(${ClassName}ReqDTO body) {
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
     #if($table.sub)
+        int rows = baseMapper.insert(entity);
         insert${subClassName}(entity);
-        return baseMapper.insert(entity);
+        return rows;
     #else
         return baseMapper.insert(entity);
     #end
@@ -188,9 +190,13 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
         List<${subClassName}> ${subclassName}List = ${className}.get${subClassName}List();
         ${pkColumn.javaType} ${pkColumn.javaField} = ${className}.get${pkColumn.capJavaField}();
         if (CollUtil.isNotEmpty(${subclassName}List)) {
+            String username = AuthUtils.getUsername();
             List<${subClassName}> list = new ArrayList<${subClassName}>();
             for (${subClassName} ${subclassName} : ${subclassName}List) {
                 ${subclassName}.set${subTableFkClassName}(${pkColumn.javaField});
+                ${subclassName}.setCreateBy(username);
+                ${subclassName}.setUpdateBy(username);
+                ${subclassName}.setIsDeleted(0);
                 list.add(${subclassName});
             }
             if (list.size() > 0) {

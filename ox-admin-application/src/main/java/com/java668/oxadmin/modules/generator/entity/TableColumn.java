@@ -320,7 +320,7 @@ public class TableColumn extends BaseEntity<TableColumn> {
     public static boolean isSuperColumn(String javaField) {
         return StringUtils.equalsAnyIgnoreCase(javaField,
                 // BaseEntity
-                "createBy", "createTime", "updateBy", "updateTime", "remark",
+                "createBy", "createTime", "updateBy", "updateTime", "isDeleted",
                 // TreeEntity
                 "parentName", "parentId", "orderNum", "ancestors");
     }

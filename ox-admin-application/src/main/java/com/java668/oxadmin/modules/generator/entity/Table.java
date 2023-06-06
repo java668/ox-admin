@@ -82,7 +82,6 @@ public class Table extends BaseEntity<Table> {
      */
     private String options;
 
-
     /**
      * 子表信息
      */
@@ -100,6 +99,26 @@ public class Table extends BaseEntity<Table> {
      */
     @TableField(exist = false)
     private TableColumn pkColumn;
+
+    /** 树编码字段 */
+    @TableField(exist = false)
+    private String treeCode;
+
+    /** 树父编码字段 */
+    @TableField(exist = false)
+    private String treeParentCode;
+
+    /** 树名称字段 */
+    @TableField(exist = false)
+    private String treeName;
+
+    /** 上级菜单ID字段 */
+    @TableField(exist = false)
+    private String parentMenuId;
+
+    /** 上级菜单名称字段 */
+    @TableField(exist = false)
+    private String parentMenuName;
 
     public Long getTableId() {
         return tableId;
@@ -245,45 +264,45 @@ public class Table extends BaseEntity<Table> {
         this.options = options;
     }
 
-//    public String getTreeCode() {
-//        return treeCode;
-//    }
-//
-//    public void setTreeCode(String treeCode) {
-//        this.treeCode = treeCode;
-//    }
-//
-//    public String getTreeParentCode() {
-//        return treeParentCode;
-//    }
-//
-//    public void setTreeParentCode(String treeParentCode) {
-//        this.treeParentCode = treeParentCode;
-//    }
-//
-//    public String getTreeName() {
-//        return treeName;
-//    }
-//
-//    public void setTreeName(String treeName) {
-//        this.treeName = treeName;
-//    }
-//
-//    public String getParentMenuId() {
-//        return parentMenuId;
-//    }
-//
-//    public void setParentMenuId(String parentMenuId) {
-//        this.parentMenuId = parentMenuId;
-//    }
-//
-//    public String getParentMenuName() {
-//        return parentMenuName;
-//    }
-//
-//    public void setParentMenuName(String parentMenuName) {
-//        this.parentMenuName = parentMenuName;
-//    }
+    public String getTreeCode() {
+        return treeCode;
+    }
+
+    public void setTreeCode(String treeCode) {
+        this.treeCode = treeCode;
+    }
+
+    public String getTreeParentCode() {
+        return treeParentCode;
+    }
+
+    public void setTreeParentCode(String treeParentCode) {
+        this.treeParentCode = treeParentCode;
+    }
+
+    public String getTreeName() {
+        return treeName;
+    }
+
+    public void setTreeName(String treeName) {
+        this.treeName = treeName;
+    }
+
+    public String getParentMenuId() {
+        return parentMenuId;
+    }
+
+    public void setParentMenuId(String parentMenuId) {
+        this.parentMenuId = parentMenuId;
+    }
+
+    public String getParentMenuName() {
+        return parentMenuName;
+    }
+
+    public void setParentMenuName(String parentMenuName) {
+        this.parentMenuName = parentMenuName;
+    }
 
     public boolean isSub() {
         return isSub(this.tplCategory);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java668.oxadmin.test2.mapper.SystRoleMapper">
+    
+    <resultMap type="SystRole" id="SystRoleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="level"    column="level"    />
+        <result property="description"    column="description"    />
+        <result property="dataScope"    column="data_scope"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+    <resultMap id="SystRoleSystRoleMenuResult" type="SystRole" extends="SystRoleResult">
+        <collection property="systRoleMenuList" notNullColumn="sub_id" javaType="java.util.List" resultMap="SystRoleMenuResult" />
+    </resultMap>
+
+    <resultMap type="SystRoleMenu" id="SystRoleMenuResult">
+        <result property="id"    column="sub_id"    />
+        <result property="roleId"    column="sub_role_id"    />
+        <result property="menuId"    column="sub_menu_id"    />
+        <result property="createBy"    column="sub_create_by"    />
+        <result property="updateBy"    column="sub_update_by"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="updateTime"    column="sub_update_time"    />
+        <result property="isDeleted"    column="sub_is_deleted"    />
+    </resultMap>
+    <select id="selectById" parameterType="Long" resultMap="SystRoleSystRoleMenuResult">
+        select a.id, a.name, a.code, a.level, a.description, a.data_scope, a.create_by, a.update_by, a.create_time, a.update_time, a.is_deleted,
+ b.id as sub_id, b.role_id as sub_role_id, b.menu_id as sub_menu_id, b.create_by as sub_create_by, b.update_by as sub_update_by, b.create_time as sub_create_time, b.update_time as sub_update_time, b.is_deleted as sub_is_deleted        from syst_role a
+        left join syst_role_menu b on b.role_id = a.id
+        where a.id = #{id}
+    </select>
+
+    <delete id="deleteByIds" parameterType="String">
+        delete from syst_role where id in 
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSystRoleMenuByRoleIds" parameterType="String">
+        delete from syst_role_menu where role_id in
+        <foreach item="roleId" collection="list" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSystRoleMenuByRoleId" parameterType="Long">
+        delete from syst_role_menu where role_id = #{roleId}
+    </delete>
+
+    <insert id="batchSystRoleMenu">
+        insert into syst_role_menu( id, role_id, menu_id, create_by, update_by, create_time, update_time, is_deleted) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.roleId}, #{item.menuId}, #{item.createBy}, #{item.updateBy}, #{item.createTime}, #{item.updateTime}, #{item.isDeleted})
+        </foreach>
+    </insert>
+</mapper>
