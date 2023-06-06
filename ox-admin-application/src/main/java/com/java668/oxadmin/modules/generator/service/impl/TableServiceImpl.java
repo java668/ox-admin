@@ -72,8 +72,8 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
 
     @Override
     public JSONObject getInfo(Long tableId) {
-        Table table = getById(tableId);
-        List<Table> tables = list();
+        Table table = baseMapper.selectById(tableId);
+        List<Table> tables = baseMapper.selectTableAll();
         List<TableColumnRespDTO> list = tableColumnService.listByTableId(tableId);
         JSONObject info = new JSONObject();
         info.put("info", table);

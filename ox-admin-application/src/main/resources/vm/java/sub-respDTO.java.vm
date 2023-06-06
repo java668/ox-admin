@@ -1,32 +1,30 @@
-package ${packageName}.entity;
+package ${packageName}.domain;
 
-#foreach ($import in $subImportList)
-import ${import};
-#end
+    #foreach ($import in $subImportList)
+    import ${import};
+    #end
 import lombok.Data;
 import lombok.ToString;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.java668.common.db.entity.BaseEntity;
+import com.java668.common.model.BaseDTO;
 
 /**
  * ${subTable.functionName}对象 ${subTableName}
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
 @Data
 @ToString
-@TableName("${subTableName}")
-public class ${subClassName} extends BaseEntity {
+public class ${subClassName}RespDTO extends BaseDTO {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $subTable.columns)
-#if(!$table.isSuperColumn($column.javaField))
-
+    #if(!$table.isSuperColumn($column.javaField))
     /**
      * $column.columnComment
      */
     private $column.javaType $column.javaField;
+    #end
 #end
-#end
+
 }

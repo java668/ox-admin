@@ -49,7 +49,7 @@ public interface I${ClassName}Service extends IService<${ClassName}> {
      * @param ${pkColumn.javaField}
      * @return
      */
-    SystUserRespDTO detail(${pkColumn.javaType} ${pkColumn.javaField});
+     ${ClassName}RespDTO detail(${pkColumn.javaType} ${pkColumn.javaField});
 
     /**
      * 查询${functionName}列表

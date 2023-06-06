@@ -30,7 +30,7 @@ public interface ${ClassName}Mapper extends EasyBaseMapper<${ClassName}> {
      * @param ${pkColumn.javaField}s 需要删除的数据主键集合
      * @return 结果
      */
-    int delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaType}[] ${pkColumn.javaField}s);
+    int delete${subClassName}By${subTableFkClassName}s(List<${pkColumn.javaType}> ${pkColumn.javaField}s);
     
     /**
      * 批量新增${subTable.functionName}
@@ -46,6 +46,6 @@ public interface ${ClassName}Mapper extends EasyBaseMapper<${ClassName}> {
      * @param ${pkColumn.javaField} ${functionName}ID
      * @return 结果
      */
-    public int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
+     int delete${subClassName}By${subTableFkClassName}(${pkColumn.javaType} ${pkColumn.javaField});
 #end
 }

@@ -23,5 +23,8 @@ public interface TableMapper extends EasyBaseMapper<Table> {
     Table selectTableByName(@Param("tableName") String subTableName);
 
     Table selectTableById(@Param("tableId") Long tableId);
+
+    List<Table> selectTableAll();
+
 }
 

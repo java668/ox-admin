@@ -1,23 +1,23 @@
-package ${packageName}.dto.request;
+package ${packageName}.domain;
 
-#foreach ($import in $importList)
+    #foreach ($import in $subImportList)
 import ${import};
-#end
+    #end
 import lombok.Data;
 import lombok.ToString;
 
 /**
- * ${functionName}对象 ${tableName}
- * 
+ * ${subTable.functionName}对象 ${subTableName}
+ *
  * @author ${author}
  * @date ${datetime}
  */
 @Data
 @ToString
-public class ${ClassName}ReqDTO {
+public class ${subClassName}ReqDTO {
     private static final long serialVersionUID = 1L;
 
-#foreach ($column in $columns)
+#foreach ($column in $subTable.columns)
     #if(!$table.isSuperColumn($column.javaField))
     /**
      * $column.columnComment
@@ -25,10 +25,5 @@ public class ${ClassName}ReqDTO {
     private $column.javaType $column.javaField;
     #end
 #end
-#if($table.sub)
-    /**
-     * $table.subTable.functionName信息
-     */
-    private List<${subClassName}ReqDTO> ${subclassName}List;
-#end
+
 }

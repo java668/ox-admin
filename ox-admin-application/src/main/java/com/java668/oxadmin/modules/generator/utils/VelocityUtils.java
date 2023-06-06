@@ -141,6 +141,8 @@ public class VelocityUtils {
         } else if (GenConstants.TPL_SUB.equals(tplCategory)) {
             templates.add("vm/vue/index.vue.vm");
             templates.add("vm/java/sub-domain.java.vm");
+            templates.add("vm/java/sub-reqDTO.java.vm");
+            templates.add("vm/java/sub-respDTO.java.vm");
         }
         return templates;
     }
@@ -169,7 +171,11 @@ public class VelocityUtils {
         }
         if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
             fileName = StringUtils.format("{}/entity/{}.java", javaPath, genTable.getSubTable().getClassName());
-        } else if (template.contains("pageReqDTO.java.vm")) {
+        } else if (template.contains("sub-reqDTO.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
+            fileName = StringUtils.format("{}/dto/request/{}ReqDTO.java", javaPath, genTable.getSubTable().getClassName());
+        } else if (template.contains("sub-respDTO.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
+            fileName = StringUtils.format("{}/dto/response/{}RespDTO.java", javaPath, genTable.getSubTable().getClassName());
+        }  else if (template.contains("pageReqDTO.java.vm")) {
             fileName = StringUtils.format("{}/dto/request/{}PageReqDTO.java", javaPath, className);
         } else if (template.contains("reqDTO.java.vm")) {
             fileName = StringUtils.format("{}/dto/request/{}ReqDTO.java", javaPath, className);

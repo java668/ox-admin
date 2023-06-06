@@ -39,15 +39,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #if($table.sub)
 
     <delete id="delete${subClassName}By${subTableFkClassName}s" parameterType="String">
-        delete from ${subTableName} where ${subTableFkName} in 
-        <foreach item="${subTableFkclassName}" collection="array" open="(" separator="," close=")">
+        delete from ${subTableName} where ${subTableFkName} in
+        <foreach item="${subTableFkclassName}" collection="list" open="(" separator="," close=")">
             #{${subTableFkclassName}}
         </foreach>
     </delete>
 
+    <delete id="delete${subClassName}By${subTableFkClassName}" parameterType="${pkColumn.javaType}">
+        delete from ${subTableName} where ${subTableFkName} = #{${subTableFkclassName}}
+    </delete>
+
     <insert id="batch${subClassName}">
         insert into ${subTableName}(#foreach($column in $subTable.columns) $column.columnName#if($foreach.count != $subTable.columns.size()),#end#end) values
-		<foreach item="item" index="index" collection="list" separator=",">
+        <foreach item="item" index="index" collection="list" separator=",">
             (#foreach($column in $subTable.columns) #{item.$column.javaField}#if($foreach.count != $subTable.columns.size()),#end#end)
         </foreach>
     </insert>

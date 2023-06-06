@@ -30,6 +30,6 @@ public class ${ClassName}RespDTO extends BaseDTO {
     /**
      * $table.subTable.functionName信息
      */
-    private List<${subClassName}> ${subclassName}List;
+    private List<${subClassName}RespDTO> ${subclassName}List;
 #end
 }

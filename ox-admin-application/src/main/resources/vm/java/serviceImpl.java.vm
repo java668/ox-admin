@@ -11,12 +11,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import com.java668.common.model.PageResult;
-import ${packageName}.dto.request.SystUserReqDTO;
-import ${packageName}.dto.response.SystUserRespDTO;
-import ${packageName}.dto.request.SystUserPageReqDTO;
+import ${packageName}.dto.request.${ClassName}ReqDTO;
+import ${packageName}.dto.response.${ClassName}RespDTO;
+import ${packageName}.dto.request.${ClassName}PageReqDTO;
 
 #if($table.sub)
 import java.util.ArrayList;
+import cn.hutool.core.collection.CollUtil;
 import org.springframework.transaction.annotation.Transactional;
 import ${packageName}.entity.${subClassName};
 #end
@@ -41,17 +42,16 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * @param body ${functionName}
      * @return 结果
      */
-    #if($table.sub)
-    @Transactional
-    #end
     @Override
-    public Integer add(${ClassName}ReqDTO body) {
     #if($table.sub)
-        int rows = ${className}Mapper.insert${ClassName}(${className});
-        insert${subClassName}(${className});
-        return rows;
-    #else
+    @Transactional(rollbackFor = Exception.class)
+    #end
+    public Integer add(${ClassName}ReqDTO body) {
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
+    #if($table.sub)
+        insert${subClassName}(entity);
+        return baseMapper.insert(entity);
+    #else
         return baseMapper.insert(entity);
     #end
     }
@@ -62,13 +62,13 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * @param ${pkColumn.javaField}s 需要删除的${functionName}主键
      * @return 结果
      */
-    #if($table.sub)
-    @Transactional
-    #end
     @Override
+    #if($table.sub)
+    @Transactional(rollbackFor = Exception.class)
+    #end
     public Integer remove(List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
         #if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
+        baseMapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
         #end
         return baseMapper.deleteByIds(${pkColumn.javaField}s);
     }
@@ -79,16 +79,17 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * @param body ${functionName}
      * @return 结果
      */
-#if($table.sub)
-    @Transactional
-#end
     @Override
+    #if($table.sub)
+    @Transactional(rollbackFor = Exception.class)
+    #end
     public Integer update(${ClassName}ReqDTO body) {
-#if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
-        insert${subClassName}(${className});
-#end
         ${ClassName} entity = BeanUtil.copyProperties(body, ${ClassName}.class);
+#if($table.sub)
+        baseMapper.delete${subClassName}By${subTableFkClassName}(entity.get${pkColumn.capJavaField}());
+        insert${subClassName}(entity);
+#end
+
         return baseMapper.updateById(entity);
     }
 
@@ -183,21 +184,17 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
      * 
      * @param ${className} ${functionName}对象
      */
-    public void insert${subClassName}(${ClassName} ${className})
-    {
+    public void insert${subClassName}(${ClassName} ${className}) {
         List<${subClassName}> ${subclassName}List = ${className}.get${subClassName}List();
         ${pkColumn.javaType} ${pkColumn.javaField} = ${className}.get${pkColumn.capJavaField}();
-        if (StringUtils.isNotNull(${subclassName}List))
-        {
+        if (CollUtil.isNotEmpty(${subclassName}List)) {
             List<${subClassName}> list = new ArrayList<${subClassName}>();
-            for (${subClassName} ${subclassName} : ${subclassName}List)
-            {
+            for (${subClassName} ${subclassName} : ${subclassName}List) {
                 ${subclassName}.set${subTableFkClassName}(${pkColumn.javaField});
                 list.add(${subclassName});
             }
-            if (list.size() > 0)
-            {
-                ${className}Mapper.batch${subClassName}(list);
+            if (list.size() > 0) {
+                baseMapper.batch${subClassName}(list);
             }
         }
     }

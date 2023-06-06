@@ -8,6 +8,7 @@ import lombok.ToString;
 import com.baomidou.mybatisplus.annotation.TableName;
 #if($table.crud || $table.sub)
 import com.java668.common.db.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
 #elseif($table.tree)
 import com.java668.common.db.entity.TreeEntity;
 #end
@@ -61,6 +62,7 @@ public class ${ClassName} extends ${Entity} {
     /**
      * $table.subTable.functionName信息
      */
+    @TableField(exist = false)
     private List<${subClassName}> ${subclassName}List;
 
 #end
