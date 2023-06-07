@@ -22,5 +22,11 @@ public interface ITableColumnService extends IService<TableColumn> {
     Boolean update(TableColumnReqDTO tableColumn);
 
     Boolean removeByTableIds(List<Long> tableIds);
+
+    int updateGenTableColumn(TableColumn column);
+
+    int insertGenTableColumn(TableColumn column);
+
+    int deleteGenTableColumns(List<TableColumn> delColumns);
 }
 

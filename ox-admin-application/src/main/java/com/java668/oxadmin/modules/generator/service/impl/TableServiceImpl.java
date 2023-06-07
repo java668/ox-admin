@@ -1,6 +1,7 @@
 package com.java668.oxadmin.modules.generator.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -44,6 +45,8 @@ import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -198,43 +201,43 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncDb(String tableName) {
-//        Table table = baseMapper.selectTableByName(tableName);
-//        List<TableColumn> tableColumns = table.getColumns();
-//        Map<String, TableColumn> tableColumnMap = tableColumns.stream().collect(Collectors.toMap(TableColumn::getColumnName, Function.identity()));
-//
-//        List<TableColumn> dbTableColumns = tableColumnService.listByTableName(tableName);
-//        if (CollUtil.isEmpty(dbTableColumns)) {
-//            throw new BusinessException("同步数据失败，原表结构不存在");
-//        }
-//        List<String> dbTableColumnNames = dbTableColumns.stream().map(TableColumn::getColumnName).collect(Collectors.toList());
-//
-//        dbTableColumns.forEach(column -> {
-//            GenUtils.initColumnField(column, table);
-//            if (tableColumnMap.containsKey(column.getColumnName())) {
-//                TableColumn prevColumn = tableColumnMap.get(column.getColumnName());
-//                column.setColumnId(prevColumn.getColumnId());
-//                if (column.isList()) {
-//                    // 如果是列表，继续保留查询方式/字典类型选项
-//                    column.setDictType(prevColumn.getDictType());
-//                    column.setQueryType(prevColumn.getQueryType());
-//                }
-//                if (StringUtils.isNotEmpty(prevColumn.getIsRequired()) && !column.isPk()
-//                        && (column.isInsert() || column.isEdit())
-//                        && ((column.isUsableColumn()) || (!column.isSuperColumn()))) {
-//                    // 如果是(新增/修改&非主键/非忽略及父属性)，继续保留必填/显示类型选项
-//                    column.setIsRequired(prevColumn.getIsRequired());
-//                    column.setHtmlType(prevColumn.getHtmlType());
-//                }
-//                tableColumnService.updateGenTableColumn(column);
-//            } else {
-//                tableColumnService.insertGenTableColumn(column);
-//            }
-//        });
-//
-//        List<TableColumn> delColumns = tableColumns.stream().filter(column -> !dbTableColumnNames.contains(column.getColumnName())).collect(Collectors.toList());
-//        if (CollUtil.isNotEmpty(delColumns)) {
-//            tableColumnService.deleteGenTableColumns(delColumns);
-//        }
+        Table table = baseMapper.selectTableByName(tableName);
+        List<TableColumn> tableColumns = table.getColumns();
+        Map<String, TableColumn> tableColumnMap = tableColumns.stream().collect(Collectors.toMap(TableColumn::getColumnName, Function.identity()));
+
+        List<TableColumn> dbTableColumns = tableColumnService.listByTableName(tableName);
+        if (CollUtil.isEmpty(dbTableColumns)) {
+            throw new BusinessException("同步数据失败，原表结构不存在" );
+        }
+        List<String> dbTableColumnNames = dbTableColumns.stream().map(TableColumn::getColumnName).collect(Collectors.toList());
+
+        dbTableColumns.forEach(column -> {
+            GenUtils.initColumnField(column, table);
+            if (tableColumnMap.containsKey(column.getColumnName())) {
+                TableColumn prevColumn = tableColumnMap.get(column.getColumnName());
+                column.setColumnId(prevColumn.getColumnId());
+                if (column.isList()) {
+                    // 如果是列表，继续保留查询方式/字典类型选项
+                    column.setDictType(prevColumn.getDictType());
+                    column.setQueryType(prevColumn.getQueryType());
+                }
+                if (StringUtils.isNotEmpty(prevColumn.getIsRequired()) && !column.isPk()
+                        && (column.isInsert() || column.isEdit())
+                        && ((column.isUsableColumn()) || (!column.isSuperColumn()))) {
+                    // 如果是(新增/修改&非主键/非忽略及父属性)，继续保留必填/显示类型选项
+                    column.setIsRequired(prevColumn.getIsRequired());
+                    column.setHtmlType(prevColumn.getHtmlType());
+                }
+                tableColumnService.updateGenTableColumn(column);
+            } else {
+                tableColumnService.insertGenTableColumn(column);
+            }
+        });
+
+        List<TableColumn> delColumns = tableColumns.stream().filter(column -> !dbTableColumnNames.contains(column.getColumnName())).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(delColumns)) {
+            tableColumnService.deleteGenTableColumns(delColumns);
+        }
     }
 
     @Override

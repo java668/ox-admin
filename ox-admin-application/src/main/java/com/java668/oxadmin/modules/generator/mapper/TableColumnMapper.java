@@ -18,5 +18,10 @@ public interface TableColumnMapper extends EasyBaseMapper<TableColumn> {
 
     List<TableColumn> listByTableName(@Param("tableName") String tableName);
 
+    int updateGenTableColumn(TableColumn column);
+
+    int insertGenTableColumn(TableColumn column);
+
+    int deleteGenTableColumns(List<TableColumn> delColumns);
 }
 

@@ -49,5 +49,20 @@ public class TableColumnServiceImpl extends ServiceImpl<TableColumnMapper, Table
         return remove(queryWrapper);
     }
 
+    @Override
+    public int updateGenTableColumn(TableColumn column) {
+        return baseMapper.updateGenTableColumn(column);
+    }
+
+    @Override
+    public int insertGenTableColumn(TableColumn column) {
+        return baseMapper.insertGenTableColumn(column);
+    }
+
+    @Override
+    public int deleteGenTableColumns(List<TableColumn> delColumns) {
+        return baseMapper.deleteGenTableColumns(delColumns);
+    }
+
 }
 
