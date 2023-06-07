@@ -9,6 +9,7 @@ import com.java668.oxadmin.modules.system.dto.request.groups.Insert;
 import com.java668.oxadmin.modules.system.dto.request.groups.Update;
 import com.java668.oxadmin.modules.system.dto.response.UserRespDTO;
 import com.java668.oxadmin.modules.system.service.UserService;
+import com.mzt.logapi.starter.annotation.LogRecord;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +90,14 @@ public class UserController {
      * @param params
      * @return
      */
+    @LogRecord(
+            fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
+            success = "结果:{{#_ret}}",
+            extra = "{{#requestInfo.toString()}}",
+            subType = "USER_VIEW",
+            type = "用户管理",
+            bizNo = ""
+    )
     @GetMapping("/page")
     @ApiOperation("分页查询用户列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")

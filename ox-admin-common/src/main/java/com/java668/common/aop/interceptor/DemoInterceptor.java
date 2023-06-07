@@ -18,7 +18,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  **/
 @Aspect
 @RequiredArgsConstructor
-@EnableConfigurationProperties({SystemSettingProperties.class})
 public class DemoInterceptor {
 
     private final SystemSettingProperties systemSettingProperties;

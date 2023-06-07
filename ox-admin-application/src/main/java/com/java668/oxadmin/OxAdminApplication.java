@@ -1,5 +1,6 @@
 package com.java668.oxadmin;
 
+import com.mzt.logapi.starter.annotation.EnableLogRecord;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import java.net.UnknownHostException;
  * @date 2023/03/29 18:05
  **/
 @Slf4j
+@EnableLogRecord(tenant = "oxadmin")
 @SpringBootApplication
 public class OxAdminApplication {
 

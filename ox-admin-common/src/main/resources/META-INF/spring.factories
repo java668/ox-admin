@@ -2,4 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.java668.common.db.config.MybatisPlusAutoConfigure,   \
 com.java668.common.web.WebConfigurer,   \
 com.java668.common.properties.GeneratorProperties,  \
-com.java668.common.utils.SpringUtils
+com.java668.common.utils.SpringUtils,   \
+  com.java668.common.aop.interceptor.ApiLogAop
