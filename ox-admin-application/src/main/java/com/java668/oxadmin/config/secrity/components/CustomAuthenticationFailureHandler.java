@@ -1,6 +1,8 @@
 package com.java668.oxadmin.config.secrity.components;
 
 import com.java668.common.model.R;
+import com.java668.oxadmin.modules.system.service.ILogRecordEventService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -20,8 +22,10 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    private final ILogRecordEventService logRecordEventService;
 
     /**
      * @param exception 认证失败时抛出异常
@@ -32,9 +36,11 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         if (exception instanceof InternalAuthenticationServiceException) {
             log.error("登录系统内部错误：", exception);
             response.getWriter().write(R.failed("系统繁忙，请稍候重试").toJsonString());
+            logRecordEventService.pushEvent("登录系统内部错误");
         } else {
             response.getWriter().write(R.failed(exception.getMessage()).toJsonString());
+            logRecordEventService.pushEvent(exception.getMessage());
         }
-
+        // 登陆认证失败新增日志
     }
 }

@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 
@@ -72,7 +74,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http     // 认证请求
+        http
+                .addFilterBefore(new LoginTimingFilter(), LogoutFilter.class)
+                // 认证请求
                 .authorizeRequests()
                 .anyRequest()
                 //所有访问该应用的http请求都要通过身份认证才可以访问
@@ -127,6 +131,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         /**
          * 密码加密
+         *
          * @return
          */
         @Bean
@@ -137,6 +142,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         /**
          * 加载中文的认证提示信息
+         *
          * @return
          */
         @Bean

@@ -1,6 +1,5 @@
 package com.java668.oxadmin.modules.system.controller;
 
-import com.java668.common.enums.BusinessType;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.oxadmin.modules.system.dto.request.UserPageReqDTO;

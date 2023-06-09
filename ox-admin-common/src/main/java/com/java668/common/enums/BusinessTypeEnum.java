@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 @Getter
 @AllArgsConstructor
-public enum BusinessType implements ICommonEnum {
+public enum BusinessTypeEnum implements ICommonEnum {
     /**
      * 其它
      */
@@ -24,49 +24,59 @@ public enum BusinessType implements ICommonEnum {
     INSERT(1, "新增"),
 
     /**
+     * 删除
+     */
+    DELETE(2, "删除"),
+
+    /**
      * 修改
      */
-    UPDATE(2, "修改"),
+    UPDATE(3, "修改"),
 
     /**
      * 查询
      */
-    QUERY(3, "查询"),
+    QUERY(4, "查询"),
 
     /**
-     * 删除
+     * 登陆
      */
-    DELETE(4, "删除"),
+    LOGIN(5, "登陆"),
+
+    /**
+     * 登出
+     */
+    LOGOUT(6, "登出"),
 
     /**
      * 授权
      */
-    GRANT(5, "授权"),
+    GRANT(7, "授权"),
 
     /**
      * 导出
      */
-    EXPORT(6, "导出"),
+    EXPORT(8, "导出"),
 
     /**
      * 导入
      */
-    IMPORT(7, "导入"),
+    IMPORT(9, "导入"),
 
     /**
      * 强退
      */
-    FORCE(8, "强退"),
+    FORCE(10, "强退"),
 
     /**
      * 生成代码
      */
-    GEN_CODE(9, "生成代码"),
+    GEN_CODE(11, "生成代码"),
 
     /**
      * 清空数据
      */
-    CLEAN(10, "其它"),
+    CLEAN(12, "其它"),
     ;
 
     private Integer code;
@@ -79,9 +89,9 @@ public enum BusinessType implements ICommonEnum {
      * @return
      */
     public static int getByEnum(String item) {
-        BusinessType businessType = ICommonEnum.getEnum(item, BusinessType.class);
+        BusinessTypeEnum businessType = ICommonEnum.getEnum(item, BusinessTypeEnum.class);
         return Optional.ofNullable(businessType)
                 .map(v -> businessType.getCode())
-                .orElse(BusinessType.OTHER.getCode());
+                .orElse(BusinessTypeEnum.OTHER.getCode());
     }
 }

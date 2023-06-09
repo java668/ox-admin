@@ -3,7 +3,7 @@ package com.java668.oxadmin.modules.system.service.impl;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.java668.common.enums.BusinessType;
+import com.java668.common.enums.BusinessTypeEnum;
 import com.java668.common.utils.AddressUtils;
 import com.java668.oxadmin.modules.system.entity.OperLog;
 import com.java668.oxadmin.modules.system.service.IOperLogService;
@@ -48,7 +48,7 @@ public class LogRecordServiceImpl implements ILogRecordService {
         entity.setBusinessType(1L);
         entity.setMethod(className + "." + methodName);
         entity.setRequestMethod(requestMethod);
-        entity.setOperatorType((long) BusinessType.getByEnum(logRecord.getSubType()));
+        entity.setOperatorType((long) BusinessTypeEnum.getByEnum(logRecord.getSubType()));
         entity.setOperName(logRecord.getOperator());
         entity.setOperUrl(requestUrl);
         entity.setOperIp(requestIp);

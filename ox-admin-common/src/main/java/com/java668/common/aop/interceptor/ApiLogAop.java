@@ -33,7 +33,7 @@ public class ApiLogAop {
      * 记录module下所有rest子包的controller
      */
     @Pointcut("execution(public * com.java668.oxadmin.modules.*.controller.*.*(..))"
-            + "||execution(public * com.java668.oxadmin.*.modules.*.*(..))" )
+            + "||execution(public * com.java668.oxadmin.*.modules.*.*(..))")
     public void webLog() {
     }
 
@@ -42,7 +42,7 @@ public class ApiLogAop {
      *
      * @param joinPoint 连接点
      */
-    @Before(value = "webLog()" )
+    @Before(value = "webLog()")
     private void doBefore(JoinPoint joinPoint) {
         //判空，如果为空则返回
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -50,7 +50,7 @@ public class ApiLogAop {
             return;
         }
         HttpServletRequest request = (requestAttributes).getRequest();
-        log.info("========================= Request Start =========================" );
+        log.info("========================= Request Start =========================");
         log.info("url : " + request.getRequestURL().toString());
         log.info("http_method: " + request.getMethod());
 
@@ -58,8 +58,8 @@ public class ApiLogAop {
          * add 客户端信息
          */
         UserAgent ua = UserAgentUtil.parse(request.getHeader(Header.USER_AGENT.toString()));
-        log.info("Platform: {}" , ua.getPlatform().toString());
-        log.info("客户端信息: {}" , JSONUtil.toJsonStr(ua));
+        log.info("Platform: {}", ua.getPlatform().toString());
+        log.info("客户端信息: {}", JSONUtil.toJsonStr(ua));
 
         log.info("IP : " + request.getRemoteAddr());
         log.info(
@@ -71,18 +71,18 @@ public class ApiLogAop {
         if (contentType != null && contentType.contains(MimeTypeUtils.APPLICATION_JSON_VALUE)) {
             Object[] args = joinPoint.getArgs();
             if (args.length > 0) {
-                log.info("args : {}" , JSONObject.toJSONString(args[0]));
+                log.info("args : {}", JSONObject.toJSONString(args[0]));
             }
         } else {
-            log.info("args : {}" , Arrays.toString(joinPoint.getArgs()));
+            log.info("args : {}", Arrays.toString(joinPoint.getArgs()));
         }
     }
 
-    @AfterReturning(returning = "ret" , pointcut = "webLog()" )
+    @AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
         // 处理完请求，返回内容
         log.info("resp: " + JSONObject.toJSONString(ret));
-        log.info("========================= Request End =========================" );
+        log.info("========================= Request End =========================");
     }
 
 }
