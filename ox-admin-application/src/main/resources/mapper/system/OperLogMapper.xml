@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java668.oxadmin.modules.system.mapper.OperLogMapper">
+    
+    <resultMap type="OperLog" id="SystOperLogResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="businessType"    column="business_type"    />
+        <result property="method"    column="method"    />
+        <result property="requestMethod"    column="request_method"    />
+        <result property="operatorType"    column="operator_type"    />
+        <result property="operName"    column="oper_name"    />
+        <result property="operUrl"    column="oper_url"    />
+        <result property="operIp"    column="oper_ip"    />
+        <result property="browser"    column="browser"    />
+        <result property="os"    column="os"    />
+        <result property="operLocation"    column="oper_location"    />
+        <result property="operParam"    column="oper_param"    />
+        <result property="jsonResult"    column="json_result"    />
+        <result property="status"    column="status"    />
+        <result property="costTime"    column="cost_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <delete id="deleteByIds" parameterType="String">
+        delete from syst_oper_log where id in 
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

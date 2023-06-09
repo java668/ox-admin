@@ -1,7 +1,7 @@
 package com.java668.oxadmin.modules.generator.controller;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.oxadmin.modules.generator.dto.request.TablePageReqDTO;

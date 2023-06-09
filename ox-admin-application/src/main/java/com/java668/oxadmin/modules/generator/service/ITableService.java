@@ -1,14 +1,12 @@
 package com.java668.oxadmin.modules.generator.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.java668.common.model.PageResult;
 import com.java668.oxadmin.modules.generator.dto.request.TablePageReqDTO;
 import com.java668.oxadmin.modules.generator.dto.request.TableReqDTO;
-import com.java668.oxadmin.modules.generator.dto.response.TableColumnRespDTO;
 import com.java668.oxadmin.modules.generator.dto.response.TableRespDTO;
 import com.java668.oxadmin.modules.generator.entity.Table;
-import com.java668.oxadmin.modules.system.dto.response.UserRespDTO;
 
 import java.util.List;
 import java.util.Map;

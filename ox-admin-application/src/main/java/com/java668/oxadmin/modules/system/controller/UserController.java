@@ -1,5 +1,6 @@
 package com.java668.oxadmin.modules.system.controller;
 
+import com.java668.common.enums.BusinessType;
 import com.java668.common.model.PageResult;
 import com.java668.common.model.R;
 import com.java668.oxadmin.modules.system.dto.request.UserPageReqDTO;
@@ -91,10 +92,9 @@ public class UserController {
      * @return
      */
     @LogRecord(
-            fail = "创建订单失败，失败原因：「{{#_errorMsg}}」",
-            success = "结果:{{#_ret}}",
-            extra = "{{#requestInfo.toString()}}",
-            subType = "USER_VIEW",
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "QUERY",
             type = "用户管理",
             bizNo = ""
     )

@@ -3,6 +3,10 @@ package com.java668.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * @author Jerry.chen
+ */
+
 @Getter
 @AllArgsConstructor
 public enum MenuTypeEnum implements ICommonEnum<Integer>  {

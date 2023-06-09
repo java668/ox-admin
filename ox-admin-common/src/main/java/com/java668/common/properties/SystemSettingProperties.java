@@ -19,4 +19,9 @@ public class SystemSettingProperties {
      */
     private Boolean isDemoSite = false;
 
+    /**
+     * 是否是演示站点
+     */
+    private Boolean addressEnabled = true;
+
 }

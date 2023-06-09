@@ -29,11 +29,25 @@ public interface ICommonEnum<T> {
     /**
      * 获取枚举
      *
+     * @param item
+     * @param clazz
+     * @return E
+     */
+    static <E extends Enum<E> & ICommonEnum, T> E getEnum(String item, Class<E> clazz) {
+        Objects.requireNonNull(item);
+
+        EnumSet<E> all = EnumSet.allOf(clazz);
+        return all.stream().filter(e -> e.toString().equals(item)).findFirst().orElse(null);
+    }
+
+    /**
+     * 获取枚举
+     *
      * @param code
      * @param clazz
      * @return E
      */
-    static <E extends Enum<E> & ICommonEnum, T> E getEnmu(T code, Class<E> clazz) {
+    static <E extends Enum<E> & ICommonEnum, T> E getEnum(T code, Class<E> clazz) {
         Objects.requireNonNull(code);
 
         EnumSet<E> all = EnumSet.allOf(clazz);
@@ -50,7 +64,7 @@ public interface ICommonEnum<T> {
     static <E extends Enum<E> & ICommonEnum, T> boolean isValidCode(T code, Class<E> clazz) {
         Objects.requireNonNull(code);
 
-        return ICommonEnum.getEnmu(code,clazz) != null;
+        return ICommonEnum.getEnum(code,clazz) != null;
     }
 
 }
