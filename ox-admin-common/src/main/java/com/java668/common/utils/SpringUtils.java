@@ -2,12 +2,10 @@ package com.java668.common.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Jerry
  */
-@Component
 public class SpringUtils implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 

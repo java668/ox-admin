@@ -3,7 +3,6 @@ package com.java668.oxadmin.modules.system.service.impl;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.java668.common.enums.BusinessTypeEnum;
 import com.java668.common.utils.AddressUtils;
 import com.java668.oxadmin.modules.system.entity.OperLog;
 import com.java668.oxadmin.modules.system.service.IOperLogService;
@@ -45,10 +44,10 @@ public class LogRecordServiceImpl implements ILogRecordService {
 
         OperLog entity = new OperLog();
         entity.setTitle(logRecord.getType());
-        entity.setBusinessType(1L);
+        entity.setBusinessType(logRecord.getSubType());
         entity.setMethod(className + "." + methodName);
         entity.setRequestMethod(requestMethod);
-        entity.setOperatorType((long) BusinessTypeEnum.getByEnum(logRecord.getSubType()));
+        entity.setOperatorType(1L);
         entity.setOperName(logRecord.getOperator());
         entity.setOperUrl(requestUrl);
         entity.setOperIp(requestIp);
@@ -57,8 +56,10 @@ public class LogRecordServiceImpl implements ILogRecordService {
         entity.setOperLocation(realAddressByIP);
         entity.setOperParam(requestParam);
         entity.setJsonResult(logRecord.getAction());
-        entity.setStatus(logRecord.isFail() ? 0L : 1L);
+        entity.setStatus(logRecord.isFail() ? 1L : 0L);
         entity.setCostTime(costTime);
+        entity.setCreateBy(logRecord.getOperator());
+        entity.setUpdateBy(logRecord.getOperator());
         systOperLogService.save(entity);
     }
 

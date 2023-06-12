@@ -7,5 +7,6 @@ package com.java668.oxadmin.modules.system.service;
  **/
 public interface ILogRecordEventService {
 
-    void pushEvent(String businessType);
+    void pushEvent(String type, String subType, String message, Long costTime, String operName, Boolean isFail);
+
 }

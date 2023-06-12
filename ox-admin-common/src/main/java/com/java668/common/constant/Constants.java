@@ -16,4 +16,9 @@ public interface Constants {
      * https请求
      */
     String HTTPS = "https://";
+
+    /**
+     * logStartTime
+     */
+    String LOG_START_TIME_ATTRIBUTE = "logStartTime";
 }

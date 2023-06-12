@@ -22,13 +22,13 @@ public class AuthUtils {
      */
     public static SysUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object details = authentication.getDetails();
-        Object principal = authentication.getPrincipal();
-        SysUser user = null;
-        if (principal instanceof SysUser) {
-            user = ((SysUser) principal);
-        }
-        return user;
+        return Optional.ofNullable(authentication).map(item -> {
+            Object principal = item.getPrincipal();
+            if (principal instanceof SysUser) {
+                return (SysUser) principal;
+            }
+            return null;
+        }).orElse(null);
     }
 
     /**

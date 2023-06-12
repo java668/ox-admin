@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
  * @date 2023/03/29 18:05
  **/
 @Slf4j
+@EnableAsync
 @EnableLogRecord(tenant = "oxadmin")
 @SpringBootApplication
 public class OxAdminApplication {

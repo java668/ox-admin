@@ -38,6 +38,13 @@ public class UserController {
      * @param body
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "新增用户",
+            type = "用户管理",
+            bizNo = ""
+    )
     @PostMapping
     @ApiOperation("新增用户")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -51,6 +58,13 @@ public class UserController {
      * @param ids
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "删除用户",
+            type = "用户管理",
+            bizNo = ""
+    )
     @DeleteMapping
     @ApiOperation("删除用户")
     @PreAuthorize("hasRole('ADMIN')")
@@ -64,6 +78,13 @@ public class UserController {
      * @param body
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "更新用户",
+            type = "用户管理",
+            bizNo = ""
+    )
     @PatchMapping
     @ApiOperation("更新用户")
     @PreAuthorize("hasRole('ADMIN')")
@@ -77,6 +98,13 @@ public class UserController {
      * @param id
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "查询用户详情",
+            type = "用户管理",
+            bizNo = ""
+    )
     @GetMapping("{id}")
     @ApiOperation("查询用户详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -93,7 +121,7 @@ public class UserController {
     @LogRecord(
             fail = "{{#_errorMsg}}",
             success = "{{#_ret}}",
-            subType = "QUERY",
+            subType = "分页查询用户列表",
             type = "用户管理",
             bizNo = ""
     )
@@ -110,6 +138,13 @@ public class UserController {
      * @param status
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "修改用户状态",
+            type = "用户管理",
+            bizNo = ""
+    )
     @ApiOperation("修改用户状态")
     @PatchMapping("/{userId}/changeStatus")
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -124,6 +159,13 @@ public class UserController {
      * @param dto
      * @return
      */
+    @LogRecord(
+            fail = "{{#_errorMsg}}",
+            success = "{{#_ret}}",
+            subType = "修改密码",
+            type = "用户管理",
+            bizNo = ""
+    )
     @ApiOperation("修改密码")
     @PatchMapping(value = "/modifyPass")
     @PreAuthorize("hasAnyRole('ADMIN')")

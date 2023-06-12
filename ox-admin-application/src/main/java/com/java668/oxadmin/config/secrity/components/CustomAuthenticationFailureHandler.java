@@ -1,5 +1,6 @@
 package com.java668.oxadmin.config.secrity.components;
 
+import com.java668.common.constant.Constants;
 import com.java668.common.model.R;
 import com.java668.oxadmin.modules.system.service.ILogRecordEventService;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +37,14 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         if (exception instanceof InternalAuthenticationServiceException) {
             log.error("登录系统内部错误：", exception);
             response.getWriter().write(R.failed("系统繁忙，请稍候重试").toJsonString());
-            logRecordEventService.pushEvent("登录系统内部错误");
         } else {
             response.getWriter().write(R.failed(exception.getMessage()).toJsonString());
-            logRecordEventService.pushEvent(exception.getMessage());
         }
         // 登陆认证失败新增日志
+        Long loginStartTime = (Long) request.getAttribute(Constants.LOG_START_TIME_ATTRIBUTE);
+        Long loginDuration = System.currentTimeMillis() - loginStartTime;
+        log.info("登录耗时: {}毫秒 错误描述: {}", loginDuration, exception.getMessage());
+        String username = request.getParameter("username");
+        logRecordEventService.pushEvent("认证授权", "用户登录", exception.getMessage(), loginDuration, username, Boolean.TRUE);
     }
 }

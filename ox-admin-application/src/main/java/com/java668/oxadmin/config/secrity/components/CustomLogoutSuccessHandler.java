@@ -1,6 +1,8 @@
 package com.java668.oxadmin.config.secrity.components;
 
+import com.java668.common.constant.Constants;
 import com.java668.common.model.R;
+import com.java668.common.model.SysUser;
 import com.java668.oxadmin.modules.system.service.ILogRecordEventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +31,20 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(R.success(authentication).toJsonString());
+        String message = R.success(authentication).toJsonString();
+        response.getWriter().write(message);
+
+        Long loginStartTime = (Long) request.getAttribute(Constants.LOG_START_TIME_ATTRIBUTE);
+        Long loginDuration = System.currentTimeMillis() - loginStartTime;
+        log.info("登录耗时: {}毫秒", loginDuration);
         // 新增退出登录日志
-        logRecordEventService.pushEvent("退出登录");
+        String username = "";
+        if (null != authentication) {
+            SysUser principal = (SysUser) authentication.getPrincipal();
+            username = principal.getUsername();
+        }
+        logRecordEventService.pushEvent("认证模块", "退出登录", message, loginDuration, username, Boolean.FALSE);
+
     }
 
 }
