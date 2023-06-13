@@ -1,6 +1,6 @@
 package com.java668.common.exception;
 
-import com.java668.common.enums.ResultCodeEnum;
+import com.java668.common.enums.ResultEnum;
 import lombok.Data;
 
 /**
@@ -22,14 +22,14 @@ public class BusinessException extends RuntimeException {
     /**
      * 错误码
      */
-    private ResultCodeEnum resultCode;
+    private ResultEnum resultCode;
 
     public BusinessException(String message) {
-        this.resultCode = ResultCodeEnum.ERROR;
+        this.resultCode = ResultEnum.ERROR;
         this.message = message;
     }
 
-    public BusinessException(ResultCodeEnum resultCode) {
+    public BusinessException(ResultEnum resultCode) {
         this.resultCode = resultCode;
     }
 }

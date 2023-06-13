@@ -2,14 +2,13 @@ package com.java668.common.aop.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import com.java668.common.aop.annotation.DemoSite;
-import com.java668.common.enums.ResultCodeEnum;
+import com.java668.common.enums.ResultEnum;
 import com.java668.common.exception.BusinessException;
 import com.java668.common.properties.SystemSettingProperties;
 import com.java668.common.utils.AuthUtils;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author Jerry.chen
@@ -25,7 +24,7 @@ public class DemoInterceptor {
     @Before("@annotation(demoSite)")
     public void doAfter(DemoSite demoSite) {
         if (systemSettingProperties.getIsDemoSite() && !StrUtil.equals(AuthUtils.getUsername(), "admin")) {
-            throw new BusinessException(ResultCodeEnum.DEMO_SITE_EXCEPTION);
+            throw new BusinessException(ResultEnum.DEMO_SITE_EXCEPTION);
         }
     }
 

@@ -69,10 +69,11 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.github.mouzt/bizlog-sdk -->
         <dependency>
             <groupId>io.github.mouzt</groupId>
             <artifactId>bizlog-sdk</artifactId>
-            <version>3.0.6-SNAPSHOT</version>
+            <version>3.0.6-oxadmin</version>
         </dependency>
 
     </dependencies>

@@ -10,7 +10,7 @@ import lombok.Getter;
  **/
 @Getter
 @AllArgsConstructor
-public enum  ResultCodeEnum {
+public enum ResultEnum {
 
     /**
      * 成功状态码
