@@ -6,6 +6,20 @@ server:
 spring:
   profiles:
     active: @profileActive@
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true # 开启端点
+    health:
+      show-details: always # 是否展示健康检查详情
+  endpoints:
+    web:
+      exposure:
+        include: '*' # 暴露所有端点
 
 mybatis-plus:
   type-aliases-package: com.java668.oxadmin.modules.**.entity,com.java668.oxadmin.**.entity
