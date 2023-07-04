@@ -32,7 +32,7 @@ public class TableColumnController {
      */
     @GetMapping(value = "/column/{tableId}")
     public R<List<TableColumnRespDTO>> columnList(@PathVariable("tableId") Long tableId) {
-        return R.success(tableColumnService.listByTableId(tableId));
+        return R.succeed(tableColumnService.listByTableId(tableId));
     }
 }
 

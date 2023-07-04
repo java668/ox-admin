@@ -56,7 +56,6 @@ public class DateMetaObjectHandler implements MetaObjectHandler {
             }
         }
 
-
         Object createTime = getFieldValByName(autoFillProperties.getCreateTimeField(), metaObject);
         Object updateTime = getFieldValByName(autoFillProperties.getUpdateTimeField(), metaObject);
         if (createTime == null || updateTime == null) {

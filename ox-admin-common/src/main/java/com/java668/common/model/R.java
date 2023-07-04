@@ -1,5 +1,7 @@
 package com.java668.common.model;
 
+import com.java668.common.enums.ResultEnum;
+import com.java668.common.exception.BizException;
 import com.java668.common.utils.JSONUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,16 +24,16 @@ public class R<T> implements Serializable {
     private String message;
     private Boolean isSuccess;
 
-    public static <T> R<T> success(String message) {
-        return of(null, CodeEnum.SUCCESS.getCode(), message, Boolean.TRUE);
+    public static <T> R<T> succeed(String message) {
+        return of(null, ResultEnum.SUCCESS.getCode(), message, Boolean.TRUE);
     }
 
-    public static <T> R<T> success(T model, String message) {
-        return of(model, CodeEnum.SUCCESS.getCode(), message, Boolean.TRUE);
+    public static <T> R<T> succeed(T model, String message) {
+        return of(model, ResultEnum.SUCCESS.getCode(), message, Boolean.TRUE);
     }
 
-    public static <T> R<T> success(T model) {
-        return of(model, CodeEnum.SUCCESS.getCode(), "success", Boolean.TRUE);
+    public static <T> R<T> succeed(T model) {
+        return of(model, ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), Boolean.TRUE);
     }
 
     public static <T> R<T> of(T data, Integer code, String message, Boolean isSuccess) {
@@ -39,11 +41,22 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> failed(String message) {
-        return of(null, CodeEnum.ERROR.getCode(), message, Boolean.FALSE);
+        return of(null, ResultEnum.INTERNAL_SERVER_ERROR.getCode(), message, Boolean.FALSE);
     }
 
     public static <T> R<T> failed(T model, String message) {
-        return of(model, CodeEnum.ERROR.getCode(), message, Boolean.FALSE);
+        return of(model, ResultEnum.INTERNAL_SERVER_ERROR.getCode(), message, Boolean.FALSE);
+    }
+
+    public static <T> R<T> failed(ResultEnum resultEnum) {
+        return of(null, resultEnum.getCode(), resultEnum.getMessage(), Boolean.FALSE);
+    }
+
+    public static <T> R<T> failed(BizException exception) {
+        if (exception == null) {
+            return failed(ResultEnum.INTERNAL_SERVER_ERROR);
+        }
+        return of(null, exception.getCode(), exception.getMessage(), Boolean.FALSE);
     }
 
     public String toJsonString() {

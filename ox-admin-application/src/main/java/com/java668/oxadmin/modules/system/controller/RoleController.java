@@ -38,7 +38,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ApiOperation("新增角色")
     public R<Integer> add(@RequestBody @Validated RoleReqDTO body) {
-        return R.success(roleService.add(body));
+        return R.succeed(roleService.add(body));
     }
 
     /**
@@ -51,7 +51,7 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("删除角色")
     public R<Integer> delete(@RequestParam(name = "ids") List<Long> ids) {
-        return R.success(roleService.delete(ids));
+        return R.succeed(roleService.delete(ids));
     }
 
     /**
@@ -64,7 +64,7 @@ public class RoleController {
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation("修改角色")
     public R<Integer> update(@RequestBody @Validated RoleReqDTO body) {
-        return R.success(roleService.update(body));
+        return R.succeed(roleService.update(body));
     }
 
     /**
@@ -77,7 +77,7 @@ public class RoleController {
     @ApiOperation("查询角色详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<RoleRespDTO> get(@PathVariable("id") Long id) {
-        return R.success(roleService.get(id));
+        return R.succeed(roleService.get(id));
     }
 
     /**
@@ -89,7 +89,7 @@ public class RoleController {
     @ApiOperation("查询角色列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<RoleRespDTO>> list() {
-        return R.success(roleService.findList());
+        return R.succeed(roleService.findList());
     }
 
     /**
@@ -102,7 +102,7 @@ public class RoleController {
     @ApiOperation("分页查询角色列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<PageResult<RoleRespDTO>> page(RolePageReqDTO params) {
-        return R.success(roleService.page(params));
+        return R.succeed(roleService.page(params));
     }
 
     /**
@@ -117,7 +117,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Integer> saveMenu(@PathVariable(name = "roleId") Long roleId,
                                @RequestBody List<Long> menuIds) {
-        return R.success(roleService.saveMenu(roleId, menuIds));
+        return R.succeed(roleService.saveMenu(roleId, menuIds));
     }
 
 }

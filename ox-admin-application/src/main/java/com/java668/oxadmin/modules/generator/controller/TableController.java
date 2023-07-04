@@ -38,7 +38,7 @@ public class TableController {
      */
     @GetMapping("/page")
     public R<PageResult<TableRespDTO>> page(TablePageReqDTO params) {
-        return R.success(tableService.page(params));
+        return R.succeed(tableService.page(params));
     }
 
     /**
@@ -46,7 +46,7 @@ public class TableController {
      */
     @GetMapping(value = "/{tableId}")
     public R<JSONObject> getInfo(@PathVariable Long tableId) {
-        return R.success(tableService.getInfo(tableId));
+        return R.succeed(tableService.getInfo(tableId));
     }
 
     /**
@@ -54,7 +54,7 @@ public class TableController {
      */
     @GetMapping("/dbTablePage")
     public R<PageResult<TableRespDTO>> dbTablePage(TablePageReqDTO params) {
-        return R.success(tableService.dbTablePage(params));
+        return R.succeed(tableService.dbTablePage(params));
     }
 
     /**
@@ -62,7 +62,7 @@ public class TableController {
      */
     @PostMapping("/importTable")
     public R<Boolean> importTable(@RequestParam("tables") List<String> tables) {
-        return R.success(tableService.importTable(tables));
+        return R.succeed(tableService.importTable(tables));
     }
 
     /**
@@ -70,7 +70,7 @@ public class TableController {
      */
     @PutMapping
     public R<Integer> update(@Validated @RequestBody TableReqDTO genTable) {
-        return R.success(tableService.update(genTable));
+        return R.succeed(tableService.update(genTable));
     }
 
     /**
@@ -78,7 +78,7 @@ public class TableController {
      */
     @DeleteMapping("/{tableIds}")
     public R<Boolean> delete(@PathVariable List<Long> tableIds) {
-        return R.success(tableService.delete(tableIds));
+        return R.succeed(tableService.delete(tableIds));
     }
 
     /**
@@ -86,7 +86,7 @@ public class TableController {
      */
     @GetMapping("/preview/{tableId}")
     public R<Map<String, String>> preview(@PathVariable("tableId") Long tableId) {
-        return R.success(tableService.previewCode(tableId));
+        return R.succeed(tableService.previewCode(tableId));
     }
 
     /**
@@ -103,7 +103,7 @@ public class TableController {
      */
     @GetMapping("/genCode/{tableName}")
     public R<Boolean> genCode(@PathVariable("tableName") String tableName) {
-        return R.success(tableService.generatorCode(tableName));
+        return R.succeed(tableService.generatorCode(tableName));
     }
 
     /**
@@ -112,7 +112,7 @@ public class TableController {
     @GetMapping("/syncDb/{tableName}")
     public R<Boolean> syncDb(@PathVariable("tableName") String tableName) {
         tableService.syncDb(tableName);
-        return R.success(Boolean.TRUE);
+        return R.succeed(Boolean.TRUE);
     }
 
     /**

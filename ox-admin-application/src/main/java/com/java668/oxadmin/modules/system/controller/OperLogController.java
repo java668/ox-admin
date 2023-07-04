@@ -33,7 +33,7 @@ public class OperLogController {
     @PreAuthorize("hasAuthority('system:log:add')")
     @PostMapping
     public R<Integer> add(@RequestBody OperLogReqDTO body) {
-        return R.success(systOperLogService.add(body));
+        return R.succeed(systOperLogService.add(body));
     }
 
     /**
@@ -45,7 +45,7 @@ public class OperLogController {
     @PreAuthorize("hasAuthority('system:log:remove')")
     @DeleteMapping("/{ids}")
     public R<Integer> remove(@PathVariable List<Long> ids) {
-        return R.success(systOperLogService.remove(ids));
+        return R.succeed(systOperLogService.remove(ids));
     }
 
     /**
@@ -57,7 +57,7 @@ public class OperLogController {
     @PreAuthorize("hasAuthority('system:log:edit')")
     @PutMapping
     public R<Integer> update(@RequestBody OperLogReqDTO body) {
-        return R.success(systOperLogService.update(body));
+        return R.succeed(systOperLogService.update(body));
     }
 
     /**
@@ -69,7 +69,7 @@ public class OperLogController {
     @PreAuthorize("hasAuthority('system:log:query')")
     @GetMapping(value = "/{id}")
     public R<OperLogRespDTO> detail(@PathVariable("id") Long id) {
-        return R.success(systOperLogService.detail(id));
+        return R.succeed(systOperLogService.detail(id));
     }
 
     /**
@@ -81,7 +81,7 @@ public class OperLogController {
     @PreAuthorize("hasAuthority('system:log:list')")
     @GetMapping("/list")
     public R<PageResult<OperLogRespDTO>> page(OperLogPageReqDTO req) {
-        return R.success(systOperLogService.page(req));
+        return R.succeed(systOperLogService.page(req));
     }
 
 }

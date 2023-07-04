@@ -16,21 +16,27 @@ import lombok.Getter;
 public enum ResultEnum implements IResultEnum {
 
     /**
-     * 成功状态码
+     * 基础响应结果码
      */
     SUCCESS(200, "成功"),
-    VALIDATE_FAILED(400, "参数检验失败"),
-    UNAUTHORIZED(401, "暂未登录或token已经过期"),
-    FORBIDDEN(403, "没有相关权限，请联系系统管理员"),
-    /**
-     * 失败返回码
-     */
-    ERROR(500, "服务器繁忙，请稍后重试"),
+    BAD_REQUEST(400, "参数解析失败"),
+    UNAUTHORIZED(401, "未认证"),
+    FORBIDDEN(403, "未授权"),
+    METHOD_NOT_ALLOWED(405, "不支持当前请求方法"),
+    UNSUPPORTED_MEDIA_TYPE(415, "媒体格式类型不支持"),
+    INTERNAL_SERVER_ERROR(500, "服务器繁忙，请稍后重试"),
 
     /**
-     * 失败返回码
+     * 系统管理 业务异常错误码
      */
-    DEMO_SITE_EXCEPTION(10001, "演示站点禁止使用"),
+    SYSTEM_DEMO_SITE_EXCEPTION(10001, "演示站点禁止使用"),
+
+
+
+    /**
+     * 代码生成 业务异常错误码
+     */
+    GEN_EXCEPTION(20001, "代码生成 异常错误码"),
     ;
 
     private final int code;

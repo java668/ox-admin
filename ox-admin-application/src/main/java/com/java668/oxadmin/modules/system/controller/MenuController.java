@@ -35,7 +35,7 @@ public class MenuController {
     @ApiOperation("新增菜单")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Integer> add(@RequestBody @Validated(Insert.class) MenuReqDTO body) {
-        return R.success(menuService.add(body));
+        return R.succeed(menuService.add(body));
     }
 
     @DeleteMapping
@@ -43,35 +43,35 @@ public class MenuController {
     @PreAuthorize("hasRole('ADMIN')")
     public R<Integer> delete(@Size(min = 1, max = 5, message = "批量删除个数须在{min}-{max}范围")
                              @RequestParam(name = "ids", required = true) List<Long> ids) {
-        return R.success(menuService.delete(ids));
+        return R.succeed(menuService.delete(ids));
     }
 
     @PatchMapping
     @ApiOperation("修改菜单")
     @PreAuthorize("hasRole('ADMIN')")
     public R<Integer> update(@RequestBody @Validated(Update.class) MenuReqDTO body) {
-        return R.success(menuService.update(body));
+        return R.succeed(menuService.update(body));
     }
 
     @GetMapping("{id}")
     @ApiOperation("查询菜单详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<MenuRespDTO> get(@PathVariable(name = "id") Long id) {
-        return R.success(menuService.get(id));
+        return R.succeed(menuService.get(id));
     }
 
     @GetMapping(value = "/treeList")
     @ApiOperation("查询树型列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<Tree<Long>>> treeList() {
-        return R.success(menuService.treeList());
+        return R.succeed(menuService.treeList());
     }
 
     @GetMapping(value = "/lazy/{pid}")
     @ApiOperation("懒加载菜单数据")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<MenuRespDTO>> lazy(@PathVariable(value = "pid") Long pid) {
-        return R.success(menuService.lazy(pid));
+        return R.succeed(menuService.lazy(pid));
     }
 
     @GetMapping(value = "/superior")
@@ -79,7 +79,7 @@ public class MenuController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<List<Tree<Long>>> superior(@Size(min = 1, max = 5, message = "ids元素个数须在{min}-{max}范围")
                                         @RequestParam(name = "ids", required = true) List<Long> ids) {
-        return R.success(menuService.superior(ids));
+        return R.succeed(menuService.superior(ids));
     }
 
 }

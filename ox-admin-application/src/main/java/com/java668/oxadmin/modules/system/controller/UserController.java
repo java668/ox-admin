@@ -49,7 +49,7 @@ public class UserController {
     @ApiOperation("新增用户")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<Integer> add(@RequestBody @Validated(Insert.class) UserReqDTO body) {
-        return R.success(userService.add(body));
+        return R.succeed(userService.add(body));
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserController {
     @ApiOperation("删除用户")
     @PreAuthorize("hasRole('ADMIN')")
     public R<Integer> delete(@RequestParam(name = "ids") List<Long> ids) {
-        return R.success(userService.delete(ids));
+        return R.succeed(userService.delete(ids));
     }
 
     /**
@@ -89,7 +89,7 @@ public class UserController {
     @ApiOperation("更新用户")
     @PreAuthorize("hasRole('ADMIN')")
     public R<Integer> update(@RequestBody @Validated(Update.class) UserReqDTO body) {
-        return R.success(userService.update(body));
+        return R.succeed(userService.update(body));
     }
 
     /**
@@ -109,7 +109,7 @@ public class UserController {
     @ApiOperation("查询用户详情")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<UserRespDTO> get(@PathVariable("id") Long id) {
-        return R.success(userService.get(id));
+        return R.succeed(userService.get(id));
     }
 
     /**
@@ -129,7 +129,7 @@ public class UserController {
     @ApiOperation("分页查询用户列表")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public R<PageResult<UserRespDTO>> page(UserPageReqDTO params) {
-        return R.success(userService.page(params));
+        return R.succeed(userService.page(params));
     }
 
     /**
@@ -150,7 +150,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Integer> changeStatus(@PathVariable(name = "userId") Long userId,
                                    @RequestParam(name = "status") Integer status) {
-        return R.success(userService.changeStatus(userId, status));
+        return R.succeed(userService.changeStatus(userId, status));
     }
 
     /**
@@ -170,7 +170,7 @@ public class UserController {
     @PatchMapping(value = "/modifyPass")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Integer> modifyPass(@RequestBody @Validated UserPassReqDTO dto) {
-        return R.success(userService.modifyPass(dto));
+        return R.succeed(userService.modifyPass(dto));
     }
 
     /**
@@ -183,7 +183,7 @@ public class UserController {
     @ApiOperation("测试接口")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public R<Boolean> test(@RequestBody @Validated UserReqDTO body) {
-        return R.success(Boolean.FALSE);
+        return R.succeed(Boolean.FALSE);
     }
 
 }

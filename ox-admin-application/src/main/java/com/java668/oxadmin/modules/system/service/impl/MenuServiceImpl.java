@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.java668.common.exception.BusinessException;
+import com.java668.common.exception.BizException;
 import com.java668.common.utils.AuthUtils;
 import com.java668.oxadmin.modules.system.dto.request.MenuReqDTO;
 import com.java668.oxadmin.modules.system.dto.response.MenuRespDTO;
@@ -71,7 +71,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 查询是否有子菜单
         List<Menu> menuList = listByPids(ids);
         if (CollUtil.isNotEmpty(menuList)) {
-            throw new BusinessException("不能删除含有子节点的菜单");
+            throw new BizException("不能删除含有子节点的菜单");
         }
         // 删除菜单关联关系
         roleMenuService.deleteByMenuIds(ids);
@@ -211,25 +211,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         Integer type = body.getType();
         if (MenuTypeEnum.DIRECTORY.getCode().equals(type) || MenuTypeEnum.MENU.getCode().equals(type)) {
             if (ObjectUtil.isNull(body.getIcon())) {
-                throw new BusinessException("菜单图标必填");
+                throw new BizException("菜单图标必填");
             }
             if (StrUtil.isBlank(body.getTitle())) {
-                throw new BusinessException("菜单标题必填");
+                throw new BizException("菜单标题必填");
             }
             if (StrUtil.isBlank(body.getPath())) {
-                throw new BusinessException("路由地址必填");
+                throw new BizException("路由地址必填");
             }
             if (StrUtil.isBlank(body.getName())) {
-                throw new BusinessException("组件名称必填");
+                throw new BizException("组件名称必填");
             }
             if (MenuTypeEnum.MENU.getCode().equals(type)) {
                 if (StrUtil.isBlank(body.getComponent())) {
-                    throw new BusinessException("组件路径必填");
+                    throw new BizException("组件路径必填");
                 }
             }
         } else {
             if (StrUtil.isBlank(body.getTitle())) {
-                throw new BusinessException("按钮名称必填");
+                throw new BizException("按钮名称必填");
             }
         }
     }

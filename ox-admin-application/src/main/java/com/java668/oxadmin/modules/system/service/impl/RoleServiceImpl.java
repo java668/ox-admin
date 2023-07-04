@@ -8,8 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.java668.common.exception.BusinessException;
-import com.java668.common.model.PageParam;
+import com.java668.common.exception.BizException;
 import com.java668.common.model.PageResult;
 import com.java668.oxadmin.modules.system.dto.request.RolePageReqDTO;
 import com.java668.oxadmin.modules.system.dto.request.RoleReqDTO;
@@ -88,7 +87,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Transactional(rollbackFor = Exception.class)
     public Integer saveMenu(Long roleId, List<Long> menuIds) {
         if (CollUtil.isEmpty(menuIds)) {
-            throw new BusinessException("请选择菜单");
+            throw new BizException("请选择菜单");
         }
         return roleMenuService.batchSave(roleId, menuIds);
     }
@@ -112,11 +111,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     private void checkParams(RoleReqDTO body) {
         // 检查角色名是否重复
         if (ObjectUtil.isNotNull(getByName(body.getId(), body.getName()))) {
-            throw new BusinessException("角色名称已存在，请重新输入");
+            throw new BizException("角色名称已存在，请重新输入");
         }
         // 检查角色编码是否重复
         if (ObjectUtil.isNotNull(getByCode(body.getId(), body.getCode()))) {
-            throw new BusinessException("角色编码已存在，请重新输入");
+            throw new BizException("角色编码已存在，请重新输入");
         }
     }
 

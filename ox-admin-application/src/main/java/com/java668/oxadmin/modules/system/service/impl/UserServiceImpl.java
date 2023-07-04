@@ -8,8 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.java668.common.exception.BusinessException;
-import com.java668.common.model.PageParam;
+import com.java668.common.exception.BizException;
 import com.java668.common.model.PageResult;
 import com.java668.common.utils.AuthUtils;
 import com.java668.oxadmin.modules.system.dto.request.UserPageReqDTO;
@@ -63,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 不能删除自己
         Long userId = AuthUtils.getUserId();
         if (CollUtil.contains(ids, userId)) {
-            throw new BusinessException("不能删除自己登录的账号");
+            throw new BizException("不能删除自己登录的账号");
         }
         // 删除用户角色
         userRoleService.deleteByUserIds(ids);
@@ -147,10 +146,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Long userId = AuthUtils.getUserId();
         User user = getById(userId);
         if (!passwordEncoder.matches(dto.getOldPass(), user.getPassword())) {
-            throw new BusinessException("修改失败，旧密码错误");
+            throw new BizException("修改失败，旧密码错误");
         }
         if (passwordEncoder.matches(dto.getNewPass(), user.getPassword())) {
-            throw new BusinessException("新密码不能与旧密码相同");
+            throw new BizException("新密码不能与旧密码相同");
         }
         User entity = new User();
         entity.setId(userId);
@@ -182,17 +181,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private void checkParams(UserReqDTO body) {
         // 检查用户名是否重复
         if (ObjectUtil.isNotNull(getByUsername(body.getId(), body.getUsername()))) {
-            throw new BusinessException("用户名已存在，请重新输入");
+            throw new BizException("用户名已存在，请重新输入");
         }
         // 检查邮箱是否重复
         if (ObjectUtil.isNotNull(getByEmail(body.getId(), body.getEmail()))) {
-            throw new BusinessException("邮箱已存在，请重新输入");
+            throw new BizException("邮箱已存在，请重新输入");
         }
         // 检查密码和确认密码是否一致
         String pass = body.getPass();
         String checkPass = body.getCheckPass();
         if (ObjectUtil.isNull(body.getId()) && !StrUtil.equals(pass, checkPass)) {
-            throw new BusinessException("密码和确认密码不一致，请重新输入");
+            throw new BizException("密码和确认密码不一致，请重新输入");
         }
     }
 

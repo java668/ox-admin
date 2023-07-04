@@ -31,7 +31,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        String message = R.success(authentication, "认证成功").toJsonString();
+        String message = R.succeed(authentication, "认证成功").toJsonString();
         response.getWriter().write(message);
         Long loginStartTime = (Long) request.getAttribute(Constants.LOG_START_TIME_ATTRIBUTE);
         Long loginDuration = System.currentTimeMillis() - loginStartTime;

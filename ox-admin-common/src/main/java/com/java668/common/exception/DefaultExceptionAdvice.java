@@ -1,5 +1,6 @@
 package com.java668.common.exception;
 
+import com.java668.common.enums.ResultEnum;
 import com.java668.common.model.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -34,9 +34,9 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class})
     public R badRequestException(IllegalArgumentException e) {
-        return defHandler("参数解析失败", e);
+        ResultEnum resultEnum = ResultEnum.BAD_REQUEST;
+        return defHandler(resultEnum.getCode(), resultEnum.getMessage(), e);
     }
-
 
     /**
      * 返回状态码:405
@@ -44,7 +44,8 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public R handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return defHandler("不支持当前请求方法", e);
+        ResultEnum resultEnum = ResultEnum.METHOD_NOT_ALLOWED;
+        return defHandler(resultEnum.getCode(), resultEnum.getMessage(), e);
     }
 
     /**
@@ -53,7 +54,8 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
     public R handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return defHandler("不支持当前媒体类型", e);
+        ResultEnum resultEnum = ResultEnum.UNSUPPORTED_MEDIA_TYPE;
+        return defHandler(resultEnum.getCode(), resultEnum.getMessage(), e);
     }
 
     /**
@@ -63,7 +65,8 @@ public class DefaultExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({SQLException.class})
     public R handleSQLException(SQLException e) {
-        return defHandler("服务运行SQLException异常", e);
+        ResultEnum resultEnum = ResultEnum.INTERNAL_SERVER_ERROR;
+        return defHandler(resultEnum.getCode(), "服务运行SQLException异常", e);
     }
 
     /**
@@ -71,9 +74,9 @@ public class DefaultExceptionAdvice {
      * 返回状态码:500
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(BusinessException.class)
-    public R handleException(BusinessException e) {
-        return defHandler(e.getMessage(), e);
+    @ExceptionHandler(BizException.class)
+    public R handleException(BizException e) {
+        return R.failed(e);
     }
 
     /**
@@ -86,7 +89,8 @@ public class DefaultExceptionAdvice {
         if (e instanceof AccessDeniedException) {
             throw e;
         }
-        return defHandler("系统繁忙，请稍候重试", e);
+        ResultEnum resultEnum = ResultEnum.INTERNAL_SERVER_ERROR;
+        return defHandler(resultEnum.getCode(), resultEnum.getMessage(), e);
     }
 
     /**
@@ -100,7 +104,7 @@ public class DefaultExceptionAdvice {
     public R exceptionHandler2(MethodArgumentNotValidException e) {
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
         String message = allErrors.stream().map(s -> s.getDefaultMessage()).collect(Collectors.joining(";"));
-        return defHandler(message, e);
+        return defHandler(ResultEnum.BAD_REQUEST.getCode(), message, e);
     }
 
     /**
@@ -116,7 +120,7 @@ public class DefaultExceptionAdvice {
         String type = e.getParameterType();
         String value = e.getLocalizedMessage();
         String message = String.format("'%s' should be a valid '%s' and '%s' isn't", name, type, value);
-        return defHandler(message, e);
+        return defHandler(ResultEnum.BAD_REQUEST.getCode(), message, e);
     }
 
     /**
@@ -135,9 +139,9 @@ public class DefaultExceptionAdvice {
     }*/
 
 
-    private R defHandler(String msg, Exception e) {
-        log.error(msg, e);
-        return R.failed(msg);
+    private R defHandler(Integer code, String message, Exception e) {
+        log.error(message, e);
+        return R.failed(code, message);
     }
 
 }
