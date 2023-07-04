@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.math.BigInteger;
@@ -19,20 +17,10 @@ import java.util.TimeZone;
 
 /**
  * @author Jerry.chen
- * @desc WebMvc配置
- * @date 2023/03/29 18:05
- **/
+ */
 @Slf4j
 @Order(-100)
-@EnableWebMvc
-public class WebConfigurer implements WebMvcConfigurer {
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        log.info("addResourceHandlers init success");
-    }
+public class OxWebMvcConfigurer implements WebMvcConfigurer {
 
     /**
      * 添加消息转化类
@@ -55,5 +43,6 @@ public class WebConfigurer implements WebMvcConfigurer {
         list.add(jsonConverter);
         log.info("configureMessageConverters init success");
     }
+
 }
 

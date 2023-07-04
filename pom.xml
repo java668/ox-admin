@@ -21,8 +21,7 @@
     </modules>
 
     <properties>
-        <java.version>8</java.version>
-        <springboot.version>2.2.5.RELEASE</springboot.version>
+        <springboot.version>2.6.4</springboot.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
@@ -133,4 +132,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>
