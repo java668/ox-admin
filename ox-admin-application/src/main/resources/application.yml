@@ -6,9 +6,6 @@ server:
 spring:
   profiles:
     active: @profileActive@
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
 
 management:
   endpoint:

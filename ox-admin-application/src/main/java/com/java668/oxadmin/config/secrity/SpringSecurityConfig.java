@@ -1,11 +1,13 @@
 package com.java668.oxadmin.config.secrity;
 
 import com.java668.oxadmin.config.secrity.components.CustomAccessDeniedHandler;
+import com.java668.oxadmin.config.secrity.properties.SecurityProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,6 +53,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SessionRegistry sessionRegistry;
 
+    private final SecurityProperties securityProperties;
+
     /**
      * 认证管理器：
      * 1. 认证信息（用户名，密码）
@@ -78,6 +82,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new LoginTimingFilter(), LogoutFilter.class)
                 // 认证请求
                 .authorizeRequests()
+                .antMatchers(securityProperties.getIgnore().getUrls()).permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest()
                 //所有访问该应用的http请求都要通过身份认证才可以访问
                 .authenticated()

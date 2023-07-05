@@ -1,5 +1,8 @@
 package com.java668.common.constant;
 
+/**
+ * @author Jerry.chen
+ */
 public class GenConstants {
     /**
      * 单表（增删改查）
