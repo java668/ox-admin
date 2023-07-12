@@ -60,14 +60,51 @@ public interface ITableService extends IService<Table> {
      */
     Integer update(TableReqDTO genTable);
 
+    /**
+     * 预览
+     *
+     * @param tableId
+     * @return
+     */
     Map<String, String> previewCode(Long tableId);
 
+    /**
+     * 下载
+     *
+     * @param tableName
+     * @return
+     */
     byte[] downloadCode(String tableName);
 
+    /**
+     * 批量生成
+     *
+     * @param tableNames
+     * @return
+     */
+    byte[] downloadCode(String[] tableNames);
+
+    /**
+     * 生成代码
+     *
+     * @param tableName
+     * @return
+     */
     Boolean generatorCode(String tableName);
 
+    /**
+     * 同步数据库
+     *
+     * @param tableName
+     */
     void syncDb(String tableName);
 
+    /**
+     * 删除
+     *
+     * @param tableIds
+     * @return
+     */
     Boolean delete(List<Long> tableIds);
 }
 

@@ -119,7 +119,7 @@ public class TableController {
      * 批量生成代码
      */
     @GetMapping("/batchGenCode")
-    public void batchGenCode(HttpServletResponse response, String tables) throws IOException {
+    public void batchGenCode(HttpServletResponse response, String[] tables) throws IOException {
         byte[] data = tableService.downloadCode(tables);
         genCode(response, data);
     }

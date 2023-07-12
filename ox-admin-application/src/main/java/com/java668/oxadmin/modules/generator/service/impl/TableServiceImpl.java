@@ -156,11 +156,29 @@ public class TableServiceImpl extends ServiceImpl<TableMapper, Table> implements
         return dataMap;
     }
 
+    /**
+     * 生成代码（下载方式）
+     *
+     * @param tableName 表名称
+     * @return 数据
+     */
     @Override
     public byte[] downloadCode(String tableName) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
         generatorCode(tableName, zip);
+        IOUtils.closeQuietly(zip);
+        return outputStream.toByteArray();
+    }
+
+    @Override
+    public byte[] downloadCode(String[] tableNames) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(outputStream);
+        for(String tableName : tableNames) {
+            generatorCode(tableName, zip);
+        }
+
         IOUtils.closeQuietly(zip);
         return outputStream.toByteArray();
     }
